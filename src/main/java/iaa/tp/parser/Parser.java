@@ -2,6 +2,7 @@ package iaa.tp.parser;
 
 import io.jenetics.ext.util.TreeNode;
 import io.jenetics.prog.op.Op;
+import org.apache.commons.lang3.StringUtils;
 import sun.tools.jstat.ParserException;
 import iaa.tp.tree.*;
 
@@ -14,31 +15,32 @@ public class Parser {
     Token lookahead;
 
     public ExpressionNode parse(TreeNode<Op<Double>> expression) throws ParserException, ParseException{
-        String infixExpression = this.getAsInfix(expression);
-        System.out.println(infixExpression);
-        return null;
-        //return this.parse(infixExpression);
+        return this.parse(this.getAsInfix(expression));
     }
 
     private String getAsInfix(TreeNode<Op<Double>> expression){
-        String currentExpression = expression.getValue().name();
-        switch (currentExpression){
-            case "add":
-                return this.sumAsInfix(expression);
-            case "x":
-                return "x";
-            default:
-                return currentExpression;
+        try{
+            return Double.valueOf(expression.toString()).toString();
+        }catch (Exception e){
+            String currentExpression = expression.getValue().name();
+            switch (currentExpression){
+                case "ADD":
+                    return this.sumOrMinusAsInfix(expression, "+");
+                case "SUB":
+                    return this.sumOrMinusAsInfix(expression, "-");
+                default:
+                    return currentExpression;
+            }
         }
     }
 
-    private String sumAsInfix(TreeNode<Op<Double>> expression){
+    private String sumOrMinusAsInfix(TreeNode<Op<Double>> expression, String operator){
         String sum = "";
         Integer childCount = expression.childCount();
         for(int i = 0; i < childCount ; i++){
-            sum += this.getAsInfix(expression.getChild(i)) + "+";
+            sum += this.getAsInfix(expression.getChild(i)) + operator;
         }
-        return sum;
+        return sum.substring(0, sum.length() - 1);
     }
 
     public ExpressionNode parse(String expression) throws ParserException, ParseException{

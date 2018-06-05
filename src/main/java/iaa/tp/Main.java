@@ -2,6 +2,7 @@ package iaa.tp;
 
 import iaa.tp.fitness.NeuralNetworkSimilarExpressionCalculator;
 import iaa.tp.fitness.SimilarExpressionCalculator;
+import iaa.tp.tree.ExpressionNode;
 import io.jenetics.Genotype;
 import io.jenetics.engine.Codec;
 import io.jenetics.ext.util.TreeNode;
@@ -103,14 +104,13 @@ public class Main {
                         .attach(TreeNode.of((Op<Double>) MathOp.COS)
                                 .attach(VAR_X)));*/
 
-        TreeNode<Op<Double>> exp = TreeNode.of((Op<Double>)MathOp.ADD).attach(ANY_NUMBER).attach(VAR_X);
+        TreeNode<Op<Double>> exp = TreeNode.of((Op<Double>)MathOp.ADD).attach(ANY_NUMBER).attach(TreeNode.of((Op<Double>)MathOp.SUB).attach(ANY_NUMBER).attach(ANY_NUMBER));
         System.out.println(exp.toString());
 
         Parser parser = new Parser();
         try {
-            System.out.println(parser.parse(exp));
-            //ExpressionNode expression = iaa.tp.parser.parse("(2+3) * (2-3) + (4)");
-            //System.out.println("The value of the expression is " + expression.getValue());
+            ExpressionNode expression = parser.parse(exp);
+            System.out.println("The value of the expression is " + expression.getValue());
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
