@@ -4,8 +4,7 @@ import com.sun.tools.corba.se.idl.constExpr.EvaluationException;
 
 public class MultiplicationExpressionNode extends SequenceExpressionNode{
 
-    public MultiplicationExpressionNode(ExpressionNode a,
-                                        boolean positive) {
+    public MultiplicationExpressionNode(ExpressionNode a, boolean positive) {
         super(a, positive);
     }
 

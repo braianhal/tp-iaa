@@ -21,6 +21,9 @@ public class FunctionExpressionNode implements ExpressionNode{
     public static final int LOG = 10;
     public static final int LOG2 = 11;
 
+    public static final int DERIVATIVE = 12;
+    public static final int INTEGRAL = 13;
+
     private int function;
     private ExpressionNode argument;
 
@@ -69,10 +72,13 @@ public class FunctionExpressionNode implements ExpressionNode{
         if (str.equals("log"))return FunctionExpressionNode.LOG;
         if (str.equals("log2")) return FunctionExpressionNode.LOG2;
 
+        if (str.equals("integral")) return FunctionExpressionNode.INTEGRAL;
+        if (str.equals("derivative")) return FunctionExpressionNode.DERIVATIVE;
+
         throw new ParseException("Unexpected Function " + str + " found!", 0);
     }
 
     public static String getAllFunctions() {
-        return "sin|cos|tan|asin|acos|atan|sqrt|exp|ln|log|log2";
+        return "sin|cos|tan|asin|acos|atan|sqrt|exp|ln|log|log2|integral|derivative";
     }
 }

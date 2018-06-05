@@ -1,5 +1,7 @@
 package parser;
 
+import io.jenetics.ext.util.TreeNode;
+import io.jenetics.prog.op.Op;
 import sun.tools.jstat.ParserException;
 import tree.*;
 
@@ -10,6 +12,34 @@ public class Parser {
 
     LinkedList<Token> tokens;
     Token lookahead;
+
+    public ExpressionNode parse(TreeNode<Op<Double>> expression) throws ParserException, ParseException{
+        String infixExpression = this.getAsInfix(expression);
+        System.out.println(infixExpression);
+        return null;
+        //return this.parse(infixExpression);
+    }
+
+    private String getAsInfix(TreeNode<Op<Double>> expression){
+        String currentExpression = expression.getValue().name();
+        switch (currentExpression){
+            case "add":
+                return this.sumAsInfix(expression);
+            case "x":
+                return "x";
+            default:
+                return currentExpression;
+        }
+    }
+
+    private String sumAsInfix(TreeNode<Op<Double>> expression){
+        String sum = "";
+        Integer childCount = expression.childCount();
+        for(int i = 0; i < childCount ; i++){
+            sum += this.getAsInfix(expression.getChild(i)) + "+";
+        }
+        return sum;
+    }
 
     public ExpressionNode parse(String expression) throws ParserException, ParseException{
         Tokenizer tokenizer = Tokenizer.getExpressionTokenizer();

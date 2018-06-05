@@ -96,17 +96,20 @@ public class Main {
         // Define the original expression (ex.: int(N + cos(x))
         // TODO should be received by program parameter
         // Esto debería estar definido con nuestro tipo
-        /*TreeNode<Op<Double>> e =  TreeNode.of((Op<Double>) ExtraMathOp.INTEGRAL)
+        /*TreeNode<Op<Double>> exp =  TreeNode.of((Op<Double>) ExtraMathOp.INTEGRAL)
                 .attach(TreeNode.of((Op<Double>)MathOp.ADD)
                         .attach(ANY_NUMBER)
                         .attach(TreeNode.of((Op<Double>) MathOp.COS)
-                                .attach(VAR_X)));
-*/
+                                .attach(VAR_X)));*/
+
+        TreeNode<Op<Double>> exp = TreeNode.of((Op<Double>)MathOp.ADD).attach(ANY_NUMBER).attach(VAR_X);
+        System.out.println(exp.toString());
 
         Parser parser = new Parser();
         try {
-            ExpressionNode expression = parser.parse("(2+3) * (2-3) + (4)");
-            System.out.println("The value of the expression is " + expression.getValue());
+            System.out.println(parser.parse(exp));
+            //ExpressionNode expression = parser.parse("(2+3) * (2-3) + (4)");
+            //System.out.println("The value of the expression is " + expression.getValue());
         }
         catch (Exception e) {
             System.out.println(e.getMessage());
