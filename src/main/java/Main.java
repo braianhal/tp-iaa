@@ -1,10 +1,6 @@
+import com.sun.tools.corba.se.idl.constExpr.EvaluationException;
 import io.jenetics.Genotype;
-import io.jenetics.Mutator;
 import io.jenetics.engine.Codec;
-import io.jenetics.engine.Engine;
-import io.jenetics.engine.EvolutionResult;
-import io.jenetics.ext.SingleNodeCrossover;
-import io.jenetics.ext.util.Tree;
 import io.jenetics.ext.util.TreeNode;
 import io.jenetics.prog.ProgramChromosome;
 import io.jenetics.prog.ProgramGene;
@@ -14,6 +10,10 @@ import io.jenetics.prog.op.Op;
 import io.jenetics.prog.op.Var;
 import io.jenetics.util.ISeq;
 import io.jenetics.util.RandomRegistry;
+import parser.Parser;
+import tree.ExpressionNode;
+
+import java.text.ParseException;
 
 public class Main {
 
@@ -55,28 +55,22 @@ public class Main {
             Genotype::getGene
     );
 
-    // Define the original expression (ex.: int(N + cos(x))
-    // TODO should be received by program parameter
-    static final TreeNode<Op<Double>> EXPRESSION =  TreeNode.of((Op<Double>) ExtraMathOp.INTEGRAL)
-            .attach(TreeNode.of((Op<Double>)MathOp.ADD)
-                    .attach(ANY_NUMBER)
-                    .attach(TreeNode.of((Op<Double>) MathOp.COS)
-                            .attach(VAR_X)));
-
-    // Define the fitness function
-    static final SimilarExpressionCalculator SIMILAR_EXPRESSION_CALCULATOR = new SimilarExpressionCalculator(EXPRESSION);
+    static final String EXPRESSION_PATTERN = "1+2";
 
     static final Double fitnessFunction(final ProgramGene<Double> expression) {
-        return SIMILAR_EXPRESSION_CALCULATOR.similarityWith(TreeNode.ofTree(expression));
+        //return SimilarExpressionCalculator.percentageOfsimilarityOf(EXPRESSION_PATTERN, Parser.treeNodeToString(TreeNode.ofTree(expression)));
+        return 0.0;
     }
 
     public static void main(final String[] args) {
         // Configure the engine with a crossover specific for trees
-        Engine<ProgramGene<Double>, Double> engine = Engine.builder(Main::fitnessFunction, CODEC)
+
+
+
+        /*Engine<ProgramGene<Double>, Double> engine = Engine.builder(Main::fitnessFunction, CODEC)
                 .alterers(
                         new Mutator<>(),
                         new SingleNodeCrossover<>())
-                .minimizing() // TODO should be maximizing for our fitness function
                 .populationSize(INITIAL_POPULATION_SIZE) // default 50
                 .build();
 
@@ -86,6 +80,27 @@ public class Main {
                 .getGene();
 
         System.out.println(Tree.toString(bestExpression)); // TODO should be program output
+        */
+
+
+        // Define the original expression (ex.: int(N + cos(x))
+        // TODO should be received by program parameter
+        // Esto debería estar definido con nuestro tipo
+        /*TreeNode<Op<Double>> e =  TreeNode.of((Op<Double>) ExtraMathOp.INTEGRAL)
+                .attach(TreeNode.of((Op<Double>)MathOp.ADD)
+                        .attach(ANY_NUMBER)
+                        .attach(TreeNode.of((Op<Double>) MathOp.COS)
+                                .attach(VAR_X)));
+*/
+
+        Parser parser = new Parser();
+        try {
+            ExpressionNode expression = parser.parse("(2+3) * (2-3) + (4)");
+            System.out.println("The value of the expression is " + expression.getValue());
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 
