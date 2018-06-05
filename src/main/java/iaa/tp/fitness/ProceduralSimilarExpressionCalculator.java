@@ -1,4 +1,4 @@
-package fitness;
+package iaa.tp.fitness;
 
 import io.jenetics.ext.util.TreeNode;
 import io.jenetics.prog.op.Op;
@@ -35,7 +35,7 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
 
 
 
-        return (double) Math.abs(originalExpression.size() - otherExpression.size()); // TODO change for fitness function real code*/
+        return (double) Math.abs(originalExpression.size() - otherExpression.size()); // TODO change for iaa.tp.fitness function real code*/
       return 0.0;
     }
 

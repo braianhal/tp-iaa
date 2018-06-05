@@ -1,4 +1,4 @@
-package fitness;
+package iaa.tp.fitness;
 
 import io.jenetics.ext.util.TreeNode;
 import io.jenetics.prog.op.Op;

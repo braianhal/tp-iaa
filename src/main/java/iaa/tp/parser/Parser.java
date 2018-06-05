@@ -1,9 +1,9 @@
-package parser;
+package iaa.tp.parser;
 
 import io.jenetics.ext.util.TreeNode;
 import io.jenetics.prog.op.Op;
 import sun.tools.jstat.ParserException;
-import tree.*;
+import iaa.tp.tree.*;
 
 import java.text.ParseException;
 import java.util.LinkedList;

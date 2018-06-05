@@ -1,4 +1,4 @@
-package tree;
+package iaa.tp.tree;
 
 public class ConstantExpressionNode implements ExpressionNode{
 

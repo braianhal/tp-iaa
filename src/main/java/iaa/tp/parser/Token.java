@@ -1,4 +1,4 @@
-package parser;
+package iaa.tp.parser;
 
 public class Token {
 

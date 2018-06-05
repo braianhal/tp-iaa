@@ -1,5 +1,7 @@
-import fitness.NeuralNetworkSimilarExpressionCalculator;
-import fitness.SimilarExpressionCalculator;
+package iaa.tp;
+
+import iaa.tp.fitness.NeuralNetworkSimilarExpressionCalculator;
+import iaa.tp.fitness.SimilarExpressionCalculator;
 import io.jenetics.Genotype;
 import io.jenetics.engine.Codec;
 import io.jenetics.ext.util.TreeNode;
@@ -11,8 +13,7 @@ import io.jenetics.prog.op.Op;
 import io.jenetics.prog.op.Var;
 import io.jenetics.util.ISeq;
 import io.jenetics.util.RandomRegistry;
-import parser.Parser;
-import tree.ExpressionNode;
+import iaa.tp.parser.Parser;
 
 public class Main {
 
@@ -44,7 +45,7 @@ public class Main {
     static final Op<Double> ANY_NUMBER = EphemeralConst.of(() -> (double) RandomRegistry.getRandom().nextInt(10)); // N between 0 and 10 exclusive
     static final ISeq<Op<Double>> TERMINALS = ISeq.of(VAR_X, ANY_NUMBER);
 
-    // Define the structure of solutions (max tree depth, operations and terminals to consider, etc)
+    // Define the structure of solutions (max iaa.tp.tree depth, operations and terminals to consider, etc)
     static final Codec<ProgramGene<Double>, ProgramGene<Double>> CODEC = Codec.of(
             Genotype.of(ProgramChromosome.of(
                     TREE_MAX_DEPTH,
@@ -64,7 +65,7 @@ public class Main {
                     .attach(TreeNode.of((Op<Double>) MathOp.COS)
                             .attach(VAR_X)));
 
-    // Define the fitness function
+    // Define the iaa.tp.fitness function
     static final SimilarExpressionCalculator SIMILAR_EXPRESSION_CALCULATOR = new NeuralNetworkSimilarExpressionCalculator(EXPRESSION);
 
     static final Double fitnessFunction(final ProgramGene<Double> expression) {
@@ -77,7 +78,7 @@ public class Main {
 
 
 
-        /*Engine<ProgramGene<Double>, Double> engine = Engine.builder(Main::fitnessFunction, CODEC)
+        /*Engine<ProgramGene<Double>, Double> engine = Engine.builder(iaa.tp.Main::fitnessFunction, CODEC)
                 .alterers(
                         new Mutator<>(),
                         new SingleNodeCrossover<>())
@@ -96,7 +97,7 @@ public class Main {
         // Define the original expression (ex.: int(N + cos(x))
         // TODO should be received by program parameter
         // Esto debería estar definido con nuestro tipo
-        /*TreeNode<Op<Double>> exp =  TreeNode.of((Op<Double>) ExtraMathOp.INTEGRAL)
+        /*TreeNode<Op<Double>> exp =  TreeNode.of((Op<Double>) iaa.tp.ExtraMathOp.INTEGRAL)
                 .attach(TreeNode.of((Op<Double>)MathOp.ADD)
                         .attach(ANY_NUMBER)
                         .attach(TreeNode.of((Op<Double>) MathOp.COS)
@@ -108,7 +109,7 @@ public class Main {
         Parser parser = new Parser();
         try {
             System.out.println(parser.parse(exp));
-            //ExpressionNode expression = parser.parse("(2+3) * (2-3) + (4)");
+            //ExpressionNode expression = iaa.tp.parser.parse("(2+3) * (2-3) + (4)");
             //System.out.println("The value of the expression is " + expression.getValue());
         }
         catch (Exception e) {
