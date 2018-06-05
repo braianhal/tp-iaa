@@ -1,13 +1,17 @@
+package fitness;
+
 import io.jenetics.ext.util.TreeNode;
-import io.jenetics.prog.op.MathOp;
 import io.jenetics.prog.op.Op;
 
-public class SimilarExpressionCalculator {
+public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalculator {
 
-    public TreeNode<Op<Double>> originalExpression;
+    @Override
+    public Double similarityWith(TreeNode<Op<Double>> otherExpression) {
+        return 0d;
+    }
 
-    public SimilarExpressionCalculator(TreeNode<Op<Double>> original) {
-        this.originalExpression = original;
+    public ProceduralSimilarExpressionCalculator(TreeNode<Op<Double>> original) {
+        super(original);
     }
 
     // The similarity check function

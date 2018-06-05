@@ -1,4 +1,5 @@
-import com.sun.tools.corba.se.idl.constExpr.EvaluationException;
+import fitness.NeuralNetworkSimilarExpressionCalculator;
+import fitness.SimilarExpressionCalculator;
 import io.jenetics.Genotype;
 import io.jenetics.engine.Codec;
 import io.jenetics.ext.util.TreeNode;
@@ -12,8 +13,6 @@ import io.jenetics.util.ISeq;
 import io.jenetics.util.RandomRegistry;
 import parser.Parser;
 import tree.ExpressionNode;
-
-import java.text.ParseException;
 
 public class Main {
 
@@ -56,6 +55,17 @@ public class Main {
     );
 
     static final String EXPRESSION_PATTERN = "1+2";
+
+    // Define the original expression (ex.: int(N + cos(x))
+    // TODO should be received by program parameter
+    static final TreeNode<Op<Double>> EXPRESSION =  TreeNode.of((Op<Double>) ExtraMathOp.INTEGRAL)
+            .attach(TreeNode.of((Op<Double>)MathOp.ADD)
+                    .attach(ANY_NUMBER)
+                    .attach(TreeNode.of((Op<Double>) MathOp.COS)
+                            .attach(VAR_X)));
+
+    // Define the fitness function
+    static final SimilarExpressionCalculator SIMILAR_EXPRESSION_CALCULATOR = new NeuralNetworkSimilarExpressionCalculator(EXPRESSION);
 
     static final Double fitnessFunction(final ProgramGene<Double> expression) {
         //return SimilarExpressionCalculator.percentageOfsimilarityOf(EXPRESSION_PATTERN, Parser.treeNodeToString(TreeNode.ofTree(expression)));

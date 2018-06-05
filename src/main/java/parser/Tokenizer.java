@@ -3,7 +3,6 @@ package parser;
 import sun.tools.jstat.ParserException;
 import tree.FunctionExpressionNode;
 
-import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
