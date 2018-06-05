@@ -33,7 +33,6 @@ public class Main {
             MathOp.MUL,
             MathOp.DIV,
             MathOp.POW,
-            MathOp.EXP,
             MathOp.COS,
             MathOp.SIN,
             MathOp.TAN,
@@ -104,7 +103,7 @@ public class Main {
                         .attach(TreeNode.of((Op<Double>) MathOp.COS)
                                 .attach(VAR_X)));*/
 
-        TreeNode<Op<Double>> exp = TreeNode.of((Op<Double>)MathOp.ADD).attach(ANY_NUMBER).attach(TreeNode.of((Op<Double>)MathOp.SUB).attach(ANY_NUMBER).attach(ANY_NUMBER));
+        TreeNode<Op<Double>> exp = TreeNode.of((Op<Double>)MathOp.TAN).attach(TreeNode.of((Op<Double>)MathOp.ADD).attach(ANY_NUMBER).attach(ANY_NUMBER));
         System.out.println(exp.toString());
 
         Parser parser = new Parser();

@@ -28,6 +28,18 @@ public class Parser {
                     return this.sumOrMinusAsInfix(expression, "+");
                 case "SUB":
                     return this.sumOrMinusAsInfix(expression, "-");
+                case "MUL":
+                    return this.mulOrDivOperation(expression, "*");
+                case "DIV":
+                    return this.mulOrDivOperation(expression, "/");
+                case "POW":
+                    return this.powOperation(expression);
+                case "SIN":
+                    return this.trigonometricOperation(expression, "sin");
+                case "COS":
+                    return this.trigonometricOperation(expression, "cos");
+                case "TAN":
+                    return this.trigonometricOperation(expression, "tan");
                 default:
                     return currentExpression;
             }
@@ -41,6 +53,33 @@ public class Parser {
             sum += this.getAsInfix(expression.getChild(i)) + operator;
         }
         return sum.substring(0, sum.length() - 1);
+    }
+
+    private String mulOrDivOperation(TreeNode<Op<Double>> expression, String operator){
+        String result = "";
+        Integer childCount = expression.childCount();
+        for(int i = 0; i < childCount ; i++){
+            result += "(" + this.getAsInfix(expression.getChild(i)) + ")" + operator;
+        }
+        return result.substring(0, result.length() - 1);
+    }
+
+    private String powOperation(TreeNode<Op<Double>> expression){
+        String result = "";
+        Integer childCount = expression.childCount();
+        for(int i = 0; i < childCount ; i++){
+            result += "(" + this.getAsInfix(expression.getChild(i)) + ")" + "^";
+        }
+        return result.substring(0, result.length() - 1);
+    }
+
+    private String trigonometricOperation(TreeNode<Op<Double>> expression, String operator){
+        String result = "";
+        Integer childCount = expression.childCount();
+        for(int i = 0; i < childCount ; i++){
+            result += operator + "(" + this.getAsInfix(expression.getChild(i)) + ")";
+        }
+        return result;
     }
 
     public ExpressionNode parse(String expression) throws ParserException, ParseException{
