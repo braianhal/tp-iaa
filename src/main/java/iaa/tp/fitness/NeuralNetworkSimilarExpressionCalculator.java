@@ -3,49 +3,89 @@ package iaa.tp.fitness;
 import io.jenetics.ext.util.TreeNode;
 import io.jenetics.prog.op.Op;
 import org.neuroph.core.data.DataSet;
-import org.neuroph.core.data.DataSetRow;
 import org.neuroph.nnet.Kohonen;
 
-import java.util.Arrays;
+import java.util.Random;
+
+import static iaa.tp.config.GeneticAlgorithmConfig.CHROMOSOME;
+import static iaa.tp.config.NeuralNetworkConfig.*;
 
 public class NeuralNetworkSimilarExpressionCalculator extends SimilarExpressionCalculator {
 
     private Kohonen network;
-
-    private static int INPUTS = 5;
-    private static int OUTPUTS = 16;
+    private double[] originalExpressionOutput;
 
     public NeuralNetworkSimilarExpressionCalculator(TreeNode<Op<Double>> original) {
         super(original);
         trainNetwork();
-    }
-
-    private void trainNetwork() {
-        network = new Kohonen(INPUTS, OUTPUTS);
-        network.learn(testTrainingSet());
-        network.setInput(3, 2, 3, 4, 1); // ln (int cos (x))
-        network.calculate();
-        System.out.println(Arrays.toString(network.getOutput()));
+        originalExpressionOutput = calculateOutput(original);
     }
 
     @Override
     public Double similarityWith(TreeNode<Op<Double>> otherExpression) {
-        return 1d;
+        double[] otherExpressionOutput = calculateOutput(otherExpression);
+        double baseSimilarity = baseSimilarity(originalExpressionOutput, otherExpressionOutput);
+        double fineSimilarity = fineSimilarity(originalExpressionOutput, otherExpressionOutput, 1 - baseSimilarity);
+        return baseSimilarity + fineSimilarity;
     }
 
-    // | Cant terminales | Cant operadores | Nodos de max rama | Max nivel | Min nivel
-    private DataSet testTrainingSet() {
+    private void trainNetwork() {
+        network = new Kohonen(INPUTS, OUTPUTS);
+        network.learn(generateTrainingSet());
+    }
+
+    private DataSet generateTrainingSet() {
         DataSet ds = new DataSet(INPUTS);
-        ds.addRow(new DataSetRow(3, 2, 3, 3, 0)); // 2*x + 3
-        ds.addRow(new DataSetRow(1, 1, 2, 6, 1)); // cos (x)
-        ds.addRow(new DataSetRow(2, 3, 4, 9, 0)); // ln (int 3*x)
-        ds.addRow(new DataSetRow(2, 3, 4, 7, 0)); // sen (sen (4^x))
-        ds.addRow(new DataSetRow(3, 2, 3, 4, 0)); // 25 * 3 + 58
-        ds.addRow(new DataSetRow(4, 4, 5, 8, 0)); // (8x + sen (2x))'
-        ds.addRow(new DataSetRow(3, 2, 3, 4, 1)); // x^x + x
-        ds.addRow(new DataSetRow(5, 5, 5, 4, 0)); // 4*x^2 + 3*x + 1
-        ds.addRow(new DataSetRow(6, 5, 4, 4, 0)); // (3*x+2)*(5 + 2*x)
+        for (int example = 0; example < TRAINING_EXAMPLES; example++) {
+            TreeNode<Op<Double>> exampleExpression = TreeNode.ofTree(CHROMOSOME.newInstance().getGene());
+            double[] features = extractFeaturesForExpression(exampleExpression);
+            ds.addRow(features);
+        }
         return ds;
+    }
+
+    // TODO calculate actual features
+    private double[] extractFeaturesForExpression(TreeNode<Op<Double>> expression) {
+        double[] features = new double[INPUTS];
+        for (int i = 0; i < INPUTS; i++) {
+            features[i] = new Random().nextDouble();
+        }
+        return features;
+    }
+
+    private double[] calculateOutput(TreeNode<Op<Double>> expression) {
+        double[] input = extractFeaturesForExpression(expression);
+        network.setInput(input);
+        network.calculate();
+        return network.getOutput();
+    }
+
+    private double baseSimilarity(double[] output1, double[] output2) {
+        int category1 = category(output1);
+        if (category1 == category(output2)) {
+            return BASE_SIMILARITY_MAIN_CATEOGORY;
+        }
+        if (output2[category1] <= SIMILAR_CATEGORY_LIMIT) {
+            return BASE_SIMILARITY_SECONDARY_CATEGORY;
+        }
+        return BASE_SIMILARITY_OTHER_CATEGORY;
+    }
+
+    private double fineSimilarity(double[] output1, double[] output2, double maxSimilarity) {
+        double difference = 0;
+        for (int i = 0; i < OUTPUTS; i++) {
+            difference += Math.abs(output1[i] - output2[i]);
+        }
+        return (1 - (difference / (double) OUTPUTS)) * maxSimilarity;
+    }
+
+    private int category(double[] output) {
+        for (int i = 0; i < OUTPUTS; i++) {
+            if (output[i] == 0.0) {
+                return i;
+            }
+        }
+        throw new RuntimeException("Unrecognized category"); // Shouldn't happen
     }
 
 }

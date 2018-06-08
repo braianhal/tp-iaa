@@ -8,22 +8,19 @@ import iaa.tp.tree.ExpressionNode;
 import io.jenetics.Genotype;
 import io.jenetics.engine.Codec;
 import io.jenetics.ext.util.TreeNode;
-import io.jenetics.prog.ProgramChromosome;
 import io.jenetics.prog.ProgramGene;
 import io.jenetics.prog.op.MathOp;
 import io.jenetics.prog.op.Op;
 
-import static iaa.tp.config.ExpressionsConfig.*;
+import static iaa.tp.config.ExpressionsConfig.ANY_NUMBER;
+import static iaa.tp.config.ExpressionsConfig.VAR_X;
+import static iaa.tp.config.GeneticAlgorithmConfig.CHROMOSOME;
 
 public class Main {
 
     // Define the structure of solutions (max iaa.tp.tree depth, operations and terminals to consider, etc)
     static final Codec<ProgramGene<Double>, ProgramGene<Double>> CODEC = Codec.of(
-            Genotype.of(ProgramChromosome.of(
-                    TREE_MAX_DEPTH,
-                    OPERATIONS,
-                    TERMINALS
-            )),
+            Genotype.of(CHROMOSOME),
             Genotype::getGene
     );
 
