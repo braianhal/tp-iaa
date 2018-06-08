@@ -1,49 +1,21 @@
 package iaa.tp;
 
+import iaa.tp.extension.ExtraMathOp;
 import iaa.tp.fitness.NeuralNetworkSimilarExpressionCalculator;
 import iaa.tp.fitness.SimilarExpressionCalculator;
+import iaa.tp.parser.Parser;
 import iaa.tp.tree.ExpressionNode;
 import io.jenetics.Genotype;
 import io.jenetics.engine.Codec;
 import io.jenetics.ext.util.TreeNode;
 import io.jenetics.prog.ProgramChromosome;
 import io.jenetics.prog.ProgramGene;
-import io.jenetics.prog.op.EphemeralConst;
 import io.jenetics.prog.op.MathOp;
 import io.jenetics.prog.op.Op;
-import io.jenetics.prog.op.Var;
-import io.jenetics.util.ISeq;
-import io.jenetics.util.RandomRegistry;
-import iaa.tp.parser.Parser;
+
+import static iaa.tp.config.ExpressionsConfig.*;
 
 public class Main {
-
-    static final int INITIAL_POPULATION_SIZE = 50;
-
-    static final int MAX_ITERATIONS = 10;
-
-    // Max amount of nodes in a branch
-    static final int TREE_MAX_DEPTH = 3;
-
-    // Define operations
-    static final ISeq<Op<Double>> OPERATIONS = ISeq.of(
-            // Operations given by the engine
-            MathOp.ADD,
-            MathOp.SUB,
-            MathOp.MUL,
-            MathOp.DIV,
-            MathOp.POW,
-            MathOp.COS,
-            MathOp.SIN,
-            MathOp.TAN,
-            ExtraMathOp.INTEGRAL,
-            ExtraMathOp.DERIVATIVE
-    );
-
-    // Define terminals
-    static final Op<Double> VAR_X = Var.of("x", 0);
-    static final Op<Double> ANY_NUMBER = EphemeralConst.of(() -> (double) RandomRegistry.getRandom().nextInt(10)); // N between 0 and 10 exclusive
-    static final ISeq<Op<Double>> TERMINALS = ISeq.of(VAR_X, ANY_NUMBER);
 
     // Define the structure of solutions (max iaa.tp.tree depth, operations and terminals to consider, etc)
     static final Codec<ProgramGene<Double>, ProgramGene<Double>> CODEC = Codec.of(
@@ -97,7 +69,7 @@ public class Main {
         // Define the original expression (ex.: int(N + cos(x))
         // TODO should be received by program parameter
         // Esto debería estar definido con nuestro tipo
-        /*TreeNode<Op<Double>> exp =  TreeNode.of((Op<Double>) iaa.tp.ExtraMathOp.INTEGRAL)
+        /*TreeNode<Op<Double>> exp =  TreeNode.of((Op<Double>) iaa.tp.extension.ExtraMathOp.INTEGRAL)
                 .attach(TreeNode.of((Op<Double>)MathOp.ADD)
                         .attach(ANY_NUMBER)
                         .attach(TreeNode.of((Op<Double>) MathOp.COS)

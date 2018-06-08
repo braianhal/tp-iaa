@@ -1,7 +1,7 @@
 package iaa.tp.parser;
 
-import sun.tools.jstat.ParserException;
 import iaa.tp.tree.FunctionExpressionNode;
+import sun.tools.jstat.ParserException;
 
 import java.util.LinkedList;
 import java.util.regex.Matcher;
