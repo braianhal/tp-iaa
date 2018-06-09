@@ -57,23 +57,23 @@ public class FunctionExpressionNode implements ExpressionNode{
     }
 
     public static int stringToFunction(String str) throws ParseException{
-        if (str.equals("sin")) return FunctionExpressionNode.SIN;
-        if (str.equals("cos")) return FunctionExpressionNode.COS;
-        if (str.equals("tan")) return FunctionExpressionNode.TAN;
+        if (str.equals("sin")) return SIN;
+        if (str.equals("cos")) return COS;
+        if (str.equals("tan")) return TAN;
 
-        if (str.equals("asin")) return FunctionExpressionNode.ASIN;
-        if (str.equals("acos")) return FunctionExpressionNode.ACOS;
-        if (str.equals("atan")) return FunctionExpressionNode.ATAN;
+        if (str.equals("asin")) return ASIN;
+        if (str.equals("acos")) return ACOS;
+        if (str.equals("atan")) return ATAN;
 
-        if (str.equals("sqrt")) return FunctionExpressionNode.SQRT;
-        if (str.equals("exp")) return FunctionExpressionNode.EXP;
+        if (str.equals("sqrt")) return SQRT;
+        if (str.equals("exp")) return EXP;
 
-        if (str.equals("ln")) return FunctionExpressionNode.LN;
-        if (str.equals("log"))return FunctionExpressionNode.LOG;
-        if (str.equals("log2")) return FunctionExpressionNode.LOG2;
+        if (str.equals("ln")) return LN;
+        if (str.equals("log"))return LOG;
+        if (str.equals("log2")) return LOG2;
 
-        if (str.equals("integral")) return FunctionExpressionNode.INTEGRAL;
-        if (str.equals("derivative")) return FunctionExpressionNode.DERIVATIVE;
+        if (str.equals("integral")) return INTEGRAL;
+        if (str.equals("derivative")) return DERIVATIVE;
 
         throw new ParseException("Unexpected Function " + str + " found!", 0);
     }

@@ -34,11 +34,15 @@ public class Parser {
                 case "POW":
                     return this.powOperation(expression);
                 case "SIN":
-                    return this.trigonometricOperation(expression, "sin");
+                    return this.functionOperation(expression, "sin");
                 case "COS":
-                    return this.trigonometricOperation(expression, "cos");
+                    return this.functionOperation(expression, "cos");
                 case "TAN":
-                    return this.trigonometricOperation(expression, "tan");
+                    return this.functionOperation(expression, "tan");
+                case "INTEGRAL":
+                    return this.functionOperation(expression, "integral");
+                case "DERIVATIVE":
+                    return this.functionOperation(expression, "derivative");
                 default:
                     return currentExpression;
             }
@@ -72,7 +76,7 @@ public class Parser {
         return result.substring(0, result.length() - 1);
     }
 
-    private String trigonometricOperation(TreeNode<Op<Double>> expression, String operator){
+    private String functionOperation(TreeNode<Op<Double>> expression, String operator){
         String result = "";
         Integer childCount = expression.childCount();
         for(int i = 0; i < childCount ; i++){

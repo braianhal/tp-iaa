@@ -12,8 +12,8 @@ import io.jenetics.prog.ProgramGene;
 import io.jenetics.prog.op.MathOp;
 import io.jenetics.prog.op.Op;
 
-import static iaa.tp.config.ExpressionsConfig.ANY_NUMBER;
 import static iaa.tp.config.ExpressionsConfig.VAR_X;
+import static iaa.tp.config.ExpressionsConfig.anyNumber;
 import static iaa.tp.config.GeneticAlgorithmConfig.CHROMOSOME;
 
 public class Main {
@@ -30,7 +30,7 @@ public class Main {
     // TODO should be received by program parameter
     static final TreeNode<Op<Double>> EXPRESSION =  TreeNode.of((Op<Double>) ExtraMathOp.INTEGRAL)
             .attach(TreeNode.of((Op<Double>)MathOp.ADD)
-                    .attach(ANY_NUMBER)
+                    .attach(anyNumber())
                     .attach(TreeNode.of((Op<Double>) MathOp.COS)
                             .attach(VAR_X)));
 
@@ -72,7 +72,7 @@ public class Main {
                         .attach(TreeNode.of((Op<Double>) MathOp.COS)
                                 .attach(VAR_X)));*/
 
-        TreeNode<Op<Double>> exp = TreeNode.of((Op<Double>)MathOp.TAN).attach(TreeNode.of((Op<Double>)MathOp.ADD).attach(ANY_NUMBER).attach(ANY_NUMBER));
+        TreeNode<Op<Double>> exp = TreeNode.of((Op<Double>) MathOp.ADD).attach(anyNumber()).attach(anyNumber());
         System.out.println(exp.toString());
 
         Parser parser = new Parser();
