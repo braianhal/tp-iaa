@@ -81,4 +81,9 @@ public class FunctionExpressionNode implements ExpressionNode{
     public static String getAllFunctions() {
         return "sin|cos|tan|asin|acos|atan|sqrt|exp|ln|log|log2|integral|derivative";
     }
+
+    public Integer getLevel(){
+        // TODO: falta aplicar regla del paso 2 del algoritmo del doc
+        return 0;
+    }
 }

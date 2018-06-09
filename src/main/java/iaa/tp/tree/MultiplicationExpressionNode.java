@@ -24,4 +24,9 @@ public class MultiplicationExpressionNode extends SequenceExpressionNode{
         }
         return prod;
     }
+
+    public Integer getLevel(){
+        // TODO: falta aplicar regla del paso 2 del algoritmo del doc
+        return 0;
+    }
 }

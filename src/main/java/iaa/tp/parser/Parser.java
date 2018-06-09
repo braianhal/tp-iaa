@@ -17,7 +17,7 @@ public class Parser {
         return this.parse(this.getAsInfix(expression));
     }
 
-    private String getAsInfix(TreeNode<Op<Double>> expression){
+    public String getAsInfix(TreeNode<Op<Double>> expression){
         try{
             return Double.valueOf(expression.toString()).toString();
         }catch (Exception e){

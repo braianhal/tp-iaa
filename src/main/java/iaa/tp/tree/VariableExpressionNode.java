@@ -30,5 +30,7 @@ public class VariableExpressionNode implements ExpressionNode{
         throw new EvaluationException("Variable '" + name + "' was not initialized.");
     }
 
-
+    public Integer getLevel(){
+        return 3;
+    }
 }

@@ -19,4 +19,9 @@ public class ExponentiationExpressionNode implements ExpressionNode{
     public double getValue() throws EvaluationException{
         return Math.pow(base.getValue(), exponent.getValue());
     }
+
+    public Integer getLevel(){
+        // TODO: falta aplicar regla del paso 2 del algoritmo del doc
+        return 0;
+    }
 }

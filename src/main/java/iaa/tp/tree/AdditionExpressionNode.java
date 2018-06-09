@@ -28,4 +28,9 @@ public class AdditionExpressionNode extends SequenceExpressionNode{
         }
         return sum;
     }
+
+    public Integer getLevel(){
+        // TODO: falta aplicar regla del paso 2 del algoritmo del doc
+        return 0;
+    }
 }

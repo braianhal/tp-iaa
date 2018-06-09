@@ -20,5 +20,7 @@ public class ConstantExpressionNode implements ExpressionNode{
         return ExpressionNode.CONSTANT_NODE;
     }
 
-
+    public Integer getLevel(){
+        return 0;
+    }
 }

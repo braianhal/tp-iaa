@@ -1,42 +1,48 @@
 package iaa.tp.fitness;
 
+import iaa.tp.parser.Parser;
+import iaa.tp.tree.ExpressionNode;
 import io.jenetics.ext.util.TreeNode;
 import io.jenetics.prog.op.Op;
 
 public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalculator {
 
+    private String originalExpression;
+
     @Override
     public Double similarityWith(TreeNode<Op<Double>> otherExpression) {
-        return 0d;
+        return this.similarityWith(new Parser().getAsInfix(otherExpression));
     }
 
-    public ProceduralSimilarExpressionCalculator(TreeNode<Op<Double>> original) {
-        super(original);
-    }
+    public Double similarityWith(String candidateExpression) {
+        Parser parser = new Parser();
+        try {
+            ExpressionNode originalExpressionTree = parser.parse(this.originalExpression);
+            ExpressionNode candidateExpressionTree = parser.parse(candidateExpression);
 
-    // The similarity check function
-    public static Double percentageOfsimilarityOf(String expressionPattern, String expressionOfChromosome/*TreeNode<Op<Double>> otherExpression*/) {
+            Double levelDifferenceBetween = this.levelDifferenceBetween(originalExpressionTree, candidateExpressionTree);
 
-      /*  // Instancio a un nodo nuestro:
-        // Node nuestroNodo = new Node();
-        //Para iterar los hijos de un TreeNode:
-        List<Node> hijos;
-        for (int i = 0; i <= otherExpression.childCount(); i++) {
-            hijos.add(nuestroHijo(otherExpression.getChild(i)))
-            // Cada hijo del nodo es: otherExpression.getChild(i)
-            // Aca instancio a un Node nuestro, que tenga una lista de nodos (hijos)
-            // nuestroHijo(otherExpression.getChild(i))
-            // nuestroNodo.agregarHijo(nuestroHijo)
-
-            // Invocar recursivamente a la función, para cada uno de los hijos generados. Es decir:
-            // nuestroNodo
+            return levelDifferenceBetween;
+        }catch (Exception e){
+            System.out.println("Expresión inválida: " + candidateExpression);
+            return 0.0;
         }
-        new Node(hijos)<
-
-
-
-        return (double) Math.abs(originalExpression.size() - otherExpression.size()); // TODO change for iaa.tp.fitness function real code*/
-      return 0.0;
     }
 
+    private Double levelDifferenceBetween(ExpressionNode originalExpressionTree, ExpressionNode candidateExpressionTree){
+        Integer originalExpressionTreeLevel = originalExpressionTree.getLevel();
+        Integer candidateExpressionTreeLevel = originalExpressionTree.getLevel();
+
+        Integer difference = Math.abs(originalExpressionTreeLevel - candidateExpressionTreeLevel);
+        return (10 - difference.doubleValue()) / 10;
+    }
+
+    public ProceduralSimilarExpressionCalculator(TreeNode<Op<Double>> originalExpression) {
+        super(originalExpression);
+    }
+
+    public ProceduralSimilarExpressionCalculator(String originalExpression) {
+        super(null);
+        this.originalExpression = originalExpression;
+    }
 }

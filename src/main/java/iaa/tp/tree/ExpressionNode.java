@@ -4,13 +4,13 @@ import com.sun.tools.corba.se.idl.constExpr.EvaluationException;
 
 public interface ExpressionNode {
 
-    public static final int VARIABLE_NODE = 1;
-    public static final int CONSTANT_NODE = 2;
-    public static final int ADDITION_NODE = 3;
-    public static final int MULTIPLICATION_NODE = 4;
-    public static final int EXPONENTIATION_NODE = 5;
-    public static final int FUNCTION_NODE = 6;
-    public int getType();
-    public double getValue() throws EvaluationException;
-
+    static final int VARIABLE_NODE = 1;
+    static final int CONSTANT_NODE = 2;
+    static final int ADDITION_NODE = 3;
+    static final int MULTIPLICATION_NODE = 4;
+    static final int EXPONENTIATION_NODE = 5;
+    static final int FUNCTION_NODE = 6;
+    int getType();
+    double getValue() throws EvaluationException;
+    Integer getLevel();
 }
