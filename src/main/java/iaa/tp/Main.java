@@ -75,10 +75,10 @@ public class Main {
         //System.out.println(exp.toString());
 
         //Parser parser = new Parser();
-        ProceduralSimilarExpressionCalculator calculator = new ProceduralSimilarExpressionCalculator("1+ e^3");
+        ProceduralSimilarExpressionCalculator calculator = new ProceduralSimilarExpressionCalculator("sqrt(log(1+3x))");
         try {
 
-            System.out.println(calculator.similarityWith("2x+2"));
+            System.out.println(calculator.similarityWith("1+3ln(x)"));
 
             //ExpressionNode expression = parser.parse(exp);
             //System.out.println("The value of the expression is " + expression.getValue());

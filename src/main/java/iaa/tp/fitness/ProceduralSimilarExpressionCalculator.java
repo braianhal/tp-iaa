@@ -4,7 +4,6 @@ import iaa.tp.parser.Parser;
 import iaa.tp.tree.ExpressionNode;
 import io.jenetics.ext.util.TreeNode;
 import io.jenetics.prog.op.Op;
-import org.apache.commons.lang3.StringUtils;
 
 public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalculator {
 
@@ -61,6 +60,14 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
         for(int i = 0 ; i <= 9 ; i++){
             expression = expression
                     .replaceAll(i + "\\(", i + "*(")
+                    .replaceAll(i + "sqrt", i + "*sqrt")
+                    .replaceAll(i + "sin", i + "*sin")
+                    .replaceAll(i + "cos", i + "*cos")
+                    .replaceAll(i + "tan", i + "*tan")
+                    .replaceAll(i + "ln", i + "*ln")
+                    .replaceAll(i + "log2", i + "*log2")
+                    .replaceAll(i + "derivative", i + "*derivative")
+                    .replaceAll(i + "integral", i + "*integral")
                     .replaceAll(i + "x", i + "*x");
         }
         return expression;

@@ -88,6 +88,7 @@ public class FunctionExpressionNode implements ExpressionNode{
 
     public Integer getLevel(){
         Integer functionLevel;
+        Boolean argumentHasVariable = argument.hasVariable();
 
         switch (function) {
             case SIN:
@@ -99,10 +100,8 @@ public class FunctionExpressionNode implements ExpressionNode{
                 functionLevel = 6;
                 break;
             case SQRT:
-                functionLevel = Math.max(2, argument.getLevel());
-                break;
             case EXP:
-                functionLevel = Math.max(2, argument.getLevel());
+                functionLevel = argumentHasVariable ? 5 : 2;
                 break;
             case LN:
             case LOG:
