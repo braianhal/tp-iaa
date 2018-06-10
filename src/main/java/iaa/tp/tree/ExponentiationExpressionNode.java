@@ -20,8 +20,24 @@ public class ExponentiationExpressionNode implements ExpressionNode{
         return Math.pow(base.getValue(), exponent.getValue());
     }
 
+    public Boolean hasVariable() {
+        return base.hasVariable() || exponent.hasVariable();
+    }
+
     public Integer getLevel(){
-        // TODO: falta aplicar regla del paso 2 del algoritmo del doc
-        return 0;
+        Boolean baseHasVariable = base.hasVariable();
+        Boolean exponentHasVariable = exponent.hasVariable();
+
+        // Base and exponent are numbers
+        if(!baseHasVariable && !exponentHasVariable){
+            return 2;
+        }
+
+        // Base has variable, but exponent is number
+        if(baseHasVariable && !exponentHasVariable){
+            return 5;
+        }
+
+        return 7;
     }
 }

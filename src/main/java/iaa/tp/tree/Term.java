@@ -10,4 +10,12 @@ public class Term {
         this.positive = positive;
         this.expression = expression;
     }
+
+    public Boolean hasVariable(){
+        return this.expression.hasVariable();
+    }
+
+    public Integer getLevel(){
+        return expression.getLevel();
+    }
 }

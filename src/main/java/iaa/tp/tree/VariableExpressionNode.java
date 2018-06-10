@@ -33,4 +33,8 @@ public class VariableExpressionNode implements ExpressionNode{
     public Integer getLevel(){
         return 3;
     }
+
+    public Boolean hasVariable(){
+        return true;
+    }
 }

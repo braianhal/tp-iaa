@@ -19,4 +19,17 @@ public abstract class SequenceExpressionNode implements ExpressionNode{
         this.terms.add(new Term(positive, a));
     }
 
+    public Boolean hasVariable() {
+        return terms.stream().anyMatch(Term::hasVariable);
+    }
+
+    public Integer maxLevelAgainst(Integer level){
+        return terms.stream().map(Term::getLevel).reduce(level, Math::max);
+    }
+
+    protected Integer getLevelFromBases(Integer lowerBase, Integer upperBase){
+        Boolean existsTermWithVariable = terms.stream().anyMatch(Term::hasVariable);
+        Integer base = existsTermWithVariable ? upperBase : lowerBase;
+        return this.maxLevelAgainst(base);
+    }
 }

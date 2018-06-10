@@ -82,8 +82,44 @@ public class FunctionExpressionNode implements ExpressionNode{
         return "sin|cos|tan|asin|acos|atan|sqrt|exp|ln|log|log2|integral|derivative";
     }
 
+    public Boolean hasVariable() {
+        return argument.hasVariable();
+    }
+
     public Integer getLevel(){
-        // TODO: falta aplicar regla del paso 2 del algoritmo del doc
-        return 0;
+        Integer functionLevel;
+
+        switch (function) {
+            case SIN:
+            case COS:
+            case TAN:
+            case ASIN:
+            case ACOS:
+            case ATAN:
+                functionLevel = 6;
+                break;
+            case SQRT:
+                functionLevel = Math.max(2, argument.getLevel());
+                break;
+            case EXP:
+                functionLevel = Math.max(2, argument.getLevel());
+                break;
+            case LN:
+            case LOG:
+            case LOG2:
+                functionLevel = 8;
+                break;
+            case DERIVATIVE:
+                functionLevel = 9;
+                break;
+            case INTEGRAL:
+                functionLevel = 10;
+                break;
+            default:
+                functionLevel = 0;
+                break;
+        }
+
+        return Math.max(functionLevel, this.argument.getLevel());
     }
 }

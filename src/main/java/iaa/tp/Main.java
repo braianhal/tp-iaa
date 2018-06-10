@@ -2,9 +2,8 @@ package iaa.tp;
 
 import iaa.tp.extension.ExtraMathOp;
 import iaa.tp.fitness.NeuralNetworkSimilarExpressionCalculator;
+import iaa.tp.fitness.ProceduralSimilarExpressionCalculator;
 import iaa.tp.fitness.SimilarExpressionCalculator;
-import iaa.tp.parser.Parser;
-import iaa.tp.tree.ExpressionNode;
 import io.jenetics.Genotype;
 import io.jenetics.engine.Codec;
 import io.jenetics.ext.util.TreeNode;
@@ -72,13 +71,17 @@ public class Main {
                         .attach(TreeNode.of((Op<Double>) MathOp.COS)
                                 .attach(VAR_X)));*/
 
-        TreeNode<Op<Double>> exp = TreeNode.of((Op<Double>) MathOp.ADD).attach(anyNumber()).attach(anyNumber());
-        System.out.println(exp.toString());
+        //TreeNode<Op<Double>> exp = TreeNode.of((Op<Double>) MathOp.ADD).attach(anyNumber()).attach(anyNumber());
+        //System.out.println(exp.toString());
 
-        Parser parser = new Parser();
+        //Parser parser = new Parser();
+        ProceduralSimilarExpressionCalculator calculator = new ProceduralSimilarExpressionCalculator("1+ e^3");
         try {
-            ExpressionNode expression = parser.parse(exp);
-            System.out.println("The value of the expression is " + expression.getValue());
+
+            System.out.println(calculator.similarityWith("2x+2"));
+
+            //ExpressionNode expression = parser.parse(exp);
+            //System.out.println("The value of the expression is " + expression.getValue());
         }
         catch (Exception e) {
             System.out.println(e.getMessage());

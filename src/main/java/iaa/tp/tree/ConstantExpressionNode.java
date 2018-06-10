@@ -23,4 +23,8 @@ public class ConstantExpressionNode implements ExpressionNode{
     public Integer getLevel(){
         return 0;
     }
+
+    public Boolean hasVariable() {
+        return false;
+    }
 }

@@ -13,4 +13,5 @@ public interface ExpressionNode {
     int getType();
     double getValue() throws EvaluationException;
     Integer getLevel();
+    Boolean hasVariable();
 }
