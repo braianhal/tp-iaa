@@ -4,6 +4,8 @@ import iaa.tp.extension.ExtraMathOp;
 import iaa.tp.fitness.NeuralNetworkSimilarExpressionCalculator;
 import iaa.tp.fitness.ProceduralSimilarExpressionCalculator;
 import iaa.tp.fitness.SimilarExpressionCalculator;
+import iaa.tp.parser.Parser;
+import iaa.tp.parser.tree.ExpressionNode;
 import io.jenetics.Genotype;
 import io.jenetics.engine.Codec;
 import io.jenetics.ext.util.TreeNode;
@@ -74,14 +76,14 @@ public class Main {
         //TreeNode<Op<Double>> exp = TreeNode.of((Op<Double>) MathOp.ADD).attach(anyNumber()).attach(anyNumber());
         //System.out.println(exp.toString());
 
-        //Parser parser = new Parser();
+        Parser parser = new Parser();
         ProceduralSimilarExpressionCalculator calculator = new ProceduralSimilarExpressionCalculator("sqrt(log2b(1+3x))");
         try {
 
             System.out.println(calculator.similarityWith("1+3x"));
 
-            //ExpressionNode expression = parser.parse(exp);
-            //System.out.println("The value of the expression is " + expression.getValue());
+            ExpressionNode expression = parser.parse("3^(-1)");
+            System.out.println("The value of the expression is " + expression.getValue());
         }
         catch (Exception e) {
             System.out.println(e.getMessage());

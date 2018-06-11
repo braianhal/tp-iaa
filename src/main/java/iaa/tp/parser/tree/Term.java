@@ -18,4 +18,12 @@ public class Term {
     public Integer getLevel(){
         return expression.getLevel();
     }
+
+    public Boolean isMinusOne(){
+        return !positive && expression.isOne();
+    }
+
+    public Boolean isMinusN(){
+        return !positive && expression.isN();
+    }
 }

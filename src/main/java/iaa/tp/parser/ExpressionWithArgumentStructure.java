@@ -2,29 +2,29 @@ package iaa.tp.parser;
 
 public class ExpressionWithArgumentStructure {
 
-    private String functionName;
-    private String functionArgumentToken;
+    private Integer functionToken;
+    private Integer functionArgumentToken;
     private Integer countOfOccurrences;
 
-    public ExpressionWithArgumentStructure(String functionName, String functionArgumentToken) {
-        this.functionName = functionName;
+    public ExpressionWithArgumentStructure(Integer functionToken, Integer functionArgumentToken) {
+        this.functionToken = functionToken;
         this.functionArgumentToken = functionArgumentToken;
         this.countOfOccurrences = 1;
     }
 
-    public String getFunctionName() {
-        return functionName;
+    public Integer getFunctionToken() {
+        return functionToken;
     }
 
-    public void setFunctionName(String functionName) {
-        this.functionName = functionName;
+    public void setFunctionToken(Integer functionToken) {
+        this.functionToken = functionToken;
     }
 
-    public String getFunctionArgumentToken() {
+    public Integer getFunctionArgumentToken() {
         return functionArgumentToken;
     }
 
-    public void setFunctionArgumentToken(String functionArgumentToken) {
+    public void setFunctionArgumentToken(Integer functionArgumentToken) {
         this.functionArgumentToken = functionArgumentToken;
     }
 

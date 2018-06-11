@@ -16,4 +16,12 @@ public interface ExpressionNode {
     Integer getLevel();
     Boolean hasVariable();
     ExpressionsWithArgumentStructures getStructureOf(ExpressionsWithArgumentStructures expressionsWithArgumentStructures);
+    Integer getToken();
+    Boolean isNumber();
+    Boolean isVariable();
+    Boolean isMinusOne();
+    Boolean isMinusN();
+    Boolean isOne();
+    Boolean isN();
+    Boolean isFractionalNumber();
 }

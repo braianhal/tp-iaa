@@ -11,7 +11,8 @@ public class ExpressionsWithArgumentStructures {
         this.expressionsWithArgument = new ArrayList<>();
     }
 
-    public void addExpressionWithArgument(ExpressionWithArgumentStructure expressionWithArgumentStructure){
+    public ExpressionsWithArgumentStructures addExpressionWithArgument(ExpressionWithArgumentStructure expressionWithArgumentStructure){
         this.expressionsWithArgument.add(expressionWithArgumentStructure);
+        return this;
     }
 }

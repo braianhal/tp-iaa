@@ -2,8 +2,9 @@ package iaa.tp.parser.tree;
 
 import com.sun.tools.corba.se.idl.constExpr.EvaluationException;
 import iaa.tp.parser.ExpressionsWithArgumentStructures;
+import iaa.tp.parser.Operator;
 
-public class ExponentiationExpressionNode implements ExpressionNode{
+public class ExponentiationExpressionNode extends AbstractExpressionNode implements ExpressionNode{
 
     private ExpressionNode base;
     private ExpressionNode exponent;
@@ -43,7 +44,38 @@ public class ExponentiationExpressionNode implements ExpressionNode{
     }
 
     public ExpressionsWithArgumentStructures getStructureOf(ExpressionsWithArgumentStructures expressionsWithArgumentStructures){
-        // TODO: fixear
+        return expressionsWithArgumentStructures;
+    }
+
+    public Integer getToken() {
+        Boolean baseHasVariable = base.hasVariable();
+        Boolean baseIsNumber = base.isNumber();
+        Boolean baseIsVariable = base.isVariable();
+
+        Boolean exponentIsVariable = exponent.isVariable();
+        Boolean exponentHasVariable = exponent.hasVariable();
+        Boolean exponentIsNumber = exponent.isNumber();
+        Boolean exponentIsMinusOne = exponent.isMinusOne();
+        Boolean exponentIsMinusN = exponent.isMinusN();
+        Boolean exponentIsFractionalNumber = exponent.isFractionalNumber();
+
+        // 3^4
+        if(baseIsNumber && exponentIsNumber){
+            return Operator.N_BY_N;
+        }
+
+        // 3^(-4)
+        if(baseIsNumber && exponentIsMinusN){
+            return Operator.N_RAISED_TO_MINUS_N;
+        }
+
+        if(baseIsNumber && exponentIsFractionalNumber){
+            // TODO: pending
+        }
+
+        //TODO: pending
+
         return null;
     }
+
 }

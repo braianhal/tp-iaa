@@ -1,11 +1,13 @@
 package iaa.tp.parser.tree;
 
 import com.sun.tools.corba.se.idl.constExpr.EvaluationException;
+import iaa.tp.parser.ExpressionWithArgumentStructure;
 import iaa.tp.parser.ExpressionsWithArgumentStructures;
+import iaa.tp.parser.Operator;
 
 import java.text.ParseException;
 
-public class FunctionExpressionNode implements ExpressionNode{
+public class FunctionExpressionNode extends AbstractExpressionNode implements ExpressionNode{
 
     public static final int SIN = 1;
     public static final int COS = 2;
@@ -124,7 +126,42 @@ public class FunctionExpressionNode implements ExpressionNode{
     }
 
     public ExpressionsWithArgumentStructures getStructureOf(ExpressionsWithArgumentStructures expressionsWithArgumentStructures){
-        // TODO: fixear
-        return null;
+        return expressionsWithArgumentStructures.addExpressionWithArgument(new ExpressionWithArgumentStructure(this.getToken(), this.argument.getToken()));
+    }
+
+    public Integer getToken(){
+        Integer token;
+        Boolean argumentHasVariable = argument.hasVariable();
+
+        switch (function) {
+            case SIN:
+            case COS:
+            case TAN:
+            case ASIN:
+            case ACOS:
+            case ATAN:
+                token = Operator.TRIGONOMETRIC;
+                break;
+            case SQRT:
+            case EXP:
+                token = argumentHasVariable ? Operator.ROOT_OF_TERM_WITH_X : Operator.ROOT_OF_N;
+                break;
+            case LN:
+            case LOG:
+            case LOG2:
+                token = Operator.LOGARITHM;
+                break;
+            case DERIVATIVE:
+                token = Operator.DERIVATIVE;
+                break;
+            case INTEGRAL:
+                token = Operator.INTEGRAL;
+                break;
+            default:
+                token = Operator.N;
+                break;
+        }
+
+        return token;
     }
 }

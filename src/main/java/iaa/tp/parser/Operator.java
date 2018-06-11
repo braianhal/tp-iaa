@@ -21,7 +21,7 @@ public class Operator {
     public static final int ROOT_OF_TERM_WITH_X = 16;
     public static final int TRIGONOMETRIC = 17;
     public static final int RAISED_TO_TERM_WITH_X = 18;
-    public static final int LOGARITH = 19;
+    public static final int LOGARITHM = 19;
     public static final int DERIVATIVE = 20;
     public static final int INTEGRAL = 21;
 }

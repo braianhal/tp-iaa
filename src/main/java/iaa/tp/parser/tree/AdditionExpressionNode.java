@@ -38,4 +38,8 @@ public class AdditionExpressionNode extends SequenceExpressionNode{
         // TODO: fixear
         return null;
     }
+
+    public Integer getToken() {
+        return null;
+    }
 }

@@ -34,4 +34,9 @@ public class MultiplicationExpressionNode extends SequenceExpressionNode{
         // TODO: fixear
         return null;
     }
+
+    public Integer getToken() {
+        // TODO: pending
+        return null;
+    }
 }

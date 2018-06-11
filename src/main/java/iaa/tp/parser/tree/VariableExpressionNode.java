@@ -2,8 +2,9 @@ package iaa.tp.parser.tree;
 
 import com.sun.tools.corba.se.idl.constExpr.EvaluationException;
 import iaa.tp.parser.ExpressionsWithArgumentStructures;
+import iaa.tp.parser.Operator;
 
-public class VariableExpressionNode implements ExpressionNode{
+public class VariableExpressionNode extends AbstractExpressionNode implements ExpressionNode{
 
     private String name;
     private double value;
@@ -40,7 +41,14 @@ public class VariableExpressionNode implements ExpressionNode{
     }
 
     public ExpressionsWithArgumentStructures getStructureOf(ExpressionsWithArgumentStructures expressionsWithArgumentStructures){
-        // TODO: fixear
-        return null;
+        return expressionsWithArgumentStructures;
+    }
+
+    public Integer getToken() {
+        return Operator.X;
+    }
+
+    public Boolean isVariable(){
+        return true;
     }
 }

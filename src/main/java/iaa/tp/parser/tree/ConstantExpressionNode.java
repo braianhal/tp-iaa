@@ -1,10 +1,11 @@
 package iaa.tp.parser.tree;
 
 import iaa.tp.parser.ExpressionsWithArgumentStructures;
+import iaa.tp.parser.Operator;
 
-public class ConstantExpressionNode implements ExpressionNode{
+public class ConstantExpressionNode extends AbstractExpressionNode implements ExpressionNode{
 
-    private double value;
+    private Double value;
 
     public ConstantExpressionNode(double value) {
         this.value = value;
@@ -26,12 +27,27 @@ public class ConstantExpressionNode implements ExpressionNode{
         return 0;
     }
 
-    public Boolean hasVariable() {
-        return false;
+    public ExpressionsWithArgumentStructures getStructureOf(ExpressionsWithArgumentStructures expressionsWithArgumentStructures){
+        return expressionsWithArgumentStructures;
     }
 
-    public ExpressionsWithArgumentStructures getStructureOf(ExpressionsWithArgumentStructures expressionsWithArgumentStructures){
-        // TODO: fixear
-        return null;
+    public Integer getToken() {
+        return Operator.N;
+    }
+
+    public Boolean isNumber(){
+        return true;
+    }
+
+    public Boolean isOne(){
+        return value == 1;
+    }
+
+    public Boolean isN(){
+        return value >= 2;
+    }
+
+    public Boolean isFractionalNumber(){
+        return (value - (value.intValue())) > 0;
     }
 }
