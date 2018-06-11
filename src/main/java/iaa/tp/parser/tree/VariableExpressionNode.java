@@ -1,6 +1,7 @@
-package iaa.tp.tree;
+package iaa.tp.parser.tree;
 
 import com.sun.tools.corba.se.idl.constExpr.EvaluationException;
+import iaa.tp.parser.ExpressionsWithArgumentStructures;
 
 public class VariableExpressionNode implements ExpressionNode{
 
@@ -36,5 +37,10 @@ public class VariableExpressionNode implements ExpressionNode{
 
     public Boolean hasVariable(){
         return true;
+    }
+
+    public ExpressionsWithArgumentStructures getStructureOf(ExpressionsWithArgumentStructures expressionsWithArgumentStructures){
+        // TODO: fixear
+        return null;
     }
 }

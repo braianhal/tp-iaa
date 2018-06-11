@@ -17,7 +17,7 @@ import static iaa.tp.config.GeneticAlgorithmConfig.CHROMOSOME;
 
 public class Main {
 
-    // Define the structure of solutions (max iaa.tp.tree depth, operations and terminals to consider, etc)
+    // Define the structure of solutions (max iaa.tp.parser.tree depth, operations and terminals to consider, etc)
     static final Codec<ProgramGene<Double>, ProgramGene<Double>> CODEC = Codec.of(
             Genotype.of(CHROMOSOME),
             Genotype::getGene
@@ -75,10 +75,10 @@ public class Main {
         //System.out.println(exp.toString());
 
         //Parser parser = new Parser();
-        ProceduralSimilarExpressionCalculator calculator = new ProceduralSimilarExpressionCalculator("sqrt(log(1+3x))");
+        ProceduralSimilarExpressionCalculator calculator = new ProceduralSimilarExpressionCalculator("sqrt(log2b(1+3x))");
         try {
 
-            System.out.println(calculator.similarityWith("1+3ln(x)"));
+            System.out.println(calculator.similarityWith("1+3x"));
 
             //ExpressionNode expression = parser.parse(exp);
             //System.out.println("The value of the expression is " + expression.getValue());

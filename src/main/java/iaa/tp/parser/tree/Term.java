@@ -1,4 +1,4 @@
-package iaa.tp.tree;
+package iaa.tp.parser.tree;
 
 public class Term {
 

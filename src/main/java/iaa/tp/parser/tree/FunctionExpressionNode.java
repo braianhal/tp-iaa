@@ -1,6 +1,7 @@
-package iaa.tp.tree;
+package iaa.tp.parser.tree;
 
 import com.sun.tools.corba.se.idl.constExpr.EvaluationException;
+import iaa.tp.parser.ExpressionsWithArgumentStructures;
 
 import java.text.ParseException;
 
@@ -70,7 +71,7 @@ public class FunctionExpressionNode implements ExpressionNode{
 
         if (str.equals("ln")) return LN;
         if (str.equals("log"))return LOG;
-        if (str.equals("log2")) return LOG2;
+        if (str.equals("log2b")) return LOG2;
 
         if (str.equals("integral")) return INTEGRAL;
         if (str.equals("derivative")) return DERIVATIVE;
@@ -79,7 +80,7 @@ public class FunctionExpressionNode implements ExpressionNode{
     }
 
     public static String getAllFunctions() {
-        return "sin|cos|tan|asin|acos|atan|sqrt|exp|ln|log|log2|integral|derivative";
+        return "sin|cos|tan|asin|acos|atan|sqrt|exp|ln|log|log2b|integral|derivative";
     }
 
     public Boolean hasVariable() {
@@ -120,5 +121,10 @@ public class FunctionExpressionNode implements ExpressionNode{
         }
 
         return Math.max(functionLevel, this.argument.getLevel());
+    }
+
+    public ExpressionsWithArgumentStructures getStructureOf(ExpressionsWithArgumentStructures expressionsWithArgumentStructures){
+        // TODO: fixear
+        return null;
     }
 }

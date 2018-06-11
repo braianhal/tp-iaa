@@ -1,6 +1,6 @@
 package iaa.tp.parser;
 
-import iaa.tp.tree.*;
+import iaa.tp.parser.tree.*;
 import io.jenetics.ext.util.TreeNode;
 import io.jenetics.prog.op.Op;
 import sun.tools.jstat.ParserException;

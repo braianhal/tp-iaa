@@ -1,6 +1,7 @@
-package iaa.tp.tree;
+package iaa.tp.parser.tree;
 
 import com.sun.tools.corba.se.idl.constExpr.EvaluationException;
+import iaa.tp.parser.ExpressionsWithArgumentStructures;
 
 public interface ExpressionNode {
 
@@ -14,4 +15,5 @@ public interface ExpressionNode {
     double getValue() throws EvaluationException;
     Integer getLevel();
     Boolean hasVariable();
+    ExpressionsWithArgumentStructures getStructureOf(ExpressionsWithArgumentStructures expressionsWithArgumentStructures);
 }

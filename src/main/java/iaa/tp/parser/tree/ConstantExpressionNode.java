@@ -1,4 +1,6 @@
-package iaa.tp.tree;
+package iaa.tp.parser.tree;
+
+import iaa.tp.parser.ExpressionsWithArgumentStructures;
 
 public class ConstantExpressionNode implements ExpressionNode{
 
@@ -26,5 +28,10 @@ public class ConstantExpressionNode implements ExpressionNode{
 
     public Boolean hasVariable() {
         return false;
+    }
+
+    public ExpressionsWithArgumentStructures getStructureOf(ExpressionsWithArgumentStructures expressionsWithArgumentStructures){
+        // TODO: fixear
+        return null;
     }
 }

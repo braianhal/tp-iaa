@@ -1,6 +1,7 @@
-package iaa.tp.tree;
+package iaa.tp.parser.tree;
 
 import com.sun.tools.corba.se.idl.constExpr.EvaluationException;
+import iaa.tp.parser.ExpressionsWithArgumentStructures;
 
 public class ExponentiationExpressionNode implements ExpressionNode{
 
@@ -39,5 +40,10 @@ public class ExponentiationExpressionNode implements ExpressionNode{
         }
 
         return 7;
+    }
+
+    public ExpressionsWithArgumentStructures getStructureOf(ExpressionsWithArgumentStructures expressionsWithArgumentStructures){
+        // TODO: fixear
+        return null;
     }
 }

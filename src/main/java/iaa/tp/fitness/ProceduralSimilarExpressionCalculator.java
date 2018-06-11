@@ -1,7 +1,8 @@
 package iaa.tp.fitness;
 
+import iaa.tp.parser.ExpressionsWithArgumentStructures;
 import iaa.tp.parser.Parser;
-import iaa.tp.tree.ExpressionNode;
+import iaa.tp.parser.tree.ExpressionNode;
 import io.jenetics.ext.util.TreeNode;
 import io.jenetics.prog.op.Op;
 
@@ -20,16 +21,24 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
             ExpressionNode originalExpressionTree = parser.parse(this.cleanFormatOf(this.originalExpression));
             ExpressionNode candidateExpressionTree = parser.parse(this.cleanFormatOf(candidateExpression));
 
-            Double levelDifferenceBetween = this.levelDifferenceBetween(originalExpressionTree, candidateExpressionTree);
+            Double levelSimilarity = this.getLevelSimilarityBetween(originalExpressionTree, candidateExpressionTree);
+            Double structureSimilarity = this.getStructureSimilarityBetween(originalExpressionTree, candidateExpressionTree);
 
-            return levelDifferenceBetween;
+            return levelSimilarity;
         }catch (Exception e){
             System.out.println("Expresión inválida. Original: " + this.originalExpression + " Candidata: " + candidateExpression);
             return 0.0;
         }
     }
 
-    private Double levelDifferenceBetween(ExpressionNode originalExpressionTree, ExpressionNode candidateExpressionTree){
+    private Double getStructureSimilarityBetween(ExpressionNode originalExpressionTree, ExpressionNode candidateExpressionTree){
+        ExpressionsWithArgumentStructures originalExpressionsStructure = originalExpressionTree.getStructureOf(new ExpressionsWithArgumentStructures());
+        ExpressionsWithArgumentStructures candidateExpressionsStructure = candidateExpressionTree.getStructureOf(new ExpressionsWithArgumentStructures());
+
+        return 0.0;
+    }
+
+    private Double getLevelSimilarityBetween(ExpressionNode originalExpressionTree, ExpressionNode candidateExpressionTree){
         Integer originalExpressionTreeLevel = originalExpressionTree.getLevel();
         Integer candidateExpressionTreeLevel = candidateExpressionTree.getLevel();
 

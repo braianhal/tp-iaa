@@ -1,6 +1,6 @@
 package iaa.tp.parser;
 
-import iaa.tp.tree.FunctionExpressionNode;
+import iaa.tp.parser.tree.FunctionExpressionNode;
 import sun.tools.jstat.ParserException;
 
 import java.util.LinkedList;

@@ -1,6 +1,7 @@
-package iaa.tp.tree;
+package iaa.tp.parser.tree;
 
 import com.sun.tools.corba.se.idl.constExpr.EvaluationException;
+import iaa.tp.parser.ExpressionsWithArgumentStructures;
 
 public class AdditionExpressionNode extends SequenceExpressionNode{
 
@@ -31,5 +32,10 @@ public class AdditionExpressionNode extends SequenceExpressionNode{
 
     public Integer getLevel(){
         return this.getLevelFromBases(0, 3);
+    }
+
+    public ExpressionsWithArgumentStructures getStructureOf(ExpressionsWithArgumentStructures expressionsWithArgumentStructures){
+        // TODO: fixear
+        return null;
     }
 }
