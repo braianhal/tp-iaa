@@ -62,7 +62,8 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
 
         return expressionCleaned
                 .replaceAll("e", "2.718281828459045235360")
-                .replaceAll("pi", "3.14159265358979323846");
+                .replaceAll("pi", "3.14159265358979323846")
+                .replaceAll("\\)x", ")*x");
     }
 
     private String addMultiplicationSymbols(String expression){
