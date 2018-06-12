@@ -15,6 +15,14 @@ public class Term {
         return this.expression.hasVariable();
     }
 
+    public Boolean isVariable(){
+        return this.expression.isVariable();
+    }
+
+    public Boolean isNumber(){
+        return this.expression.isNumber();
+    }
+
     public Integer getLevel(){
         return expression.getLevel();
     }

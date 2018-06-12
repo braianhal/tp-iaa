@@ -2,6 +2,7 @@ package iaa.tp.parser.tree;
 
 import com.sun.tools.corba.se.idl.constExpr.EvaluationException;
 import iaa.tp.parser.ExpressionsWithArgumentStructures;
+import iaa.tp.parser.Operator;
 
 public class AdditionExpressionNode extends SequenceExpressionNode{
 
@@ -40,6 +41,14 @@ public class AdditionExpressionNode extends SequenceExpressionNode{
     }
 
     public Integer getToken() {
-        return null;
+        if(!this.hasVariable()){
+            if(this.allPositives()){
+                return Operator.N_PLUS_N;
+            }
+
+            return Operator.N_MINUS_N;
+        }
+
+        return Operator.PLUS_OR_MINUS_TERM_WITH_X;
     }
 }

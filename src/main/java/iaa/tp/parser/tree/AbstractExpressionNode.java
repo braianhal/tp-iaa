@@ -33,4 +33,12 @@ public class AbstractExpressionNode {
     public Boolean isFractionalNumber(){
         return false;
     }
+
+    public Boolean isPositiveNumber(){
+        return false;
+    }
+
+    public Boolean isEven(){
+        return false;
+    }
 }

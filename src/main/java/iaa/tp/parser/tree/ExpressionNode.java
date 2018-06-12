@@ -24,4 +24,6 @@ public interface ExpressionNode {
     Boolean isOne();
     Boolean isN();
     Boolean isFractionalNumber();
+    Boolean isPositiveNumber();
+    Boolean isEven();
 }

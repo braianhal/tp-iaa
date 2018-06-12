@@ -59,6 +59,14 @@ public class FunctionExpressionNode extends AbstractExpressionNode implements Ex
         throw new EvaluationException("Invalid function id " + function + "!");
     }
 
+    public Boolean isEven(){
+        try{
+            return this.getValue() % 2 == 0;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
     public static int stringToFunction(String str) throws ParseException{
         if (str.equals("sin")) return SIN;
         if (str.equals("cos")) return COS;
@@ -87,6 +95,10 @@ public class FunctionExpressionNode extends AbstractExpressionNode implements Ex
 
     public Boolean hasVariable() {
         return argument.hasVariable();
+    }
+
+    public Boolean isNumber() {
+        return this.function <= 8 && this.argument.isNumber();
     }
 
     public Integer getLevel(){

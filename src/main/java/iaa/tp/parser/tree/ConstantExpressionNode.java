@@ -50,4 +50,12 @@ public class ConstantExpressionNode extends AbstractExpressionNode implements Ex
     public Boolean isFractionalNumber(){
         return (value - (value.intValue())) > 0;
     }
+
+    public Boolean isPositiveNumber(){
+        return value > 0;
+    }
+
+    public Boolean isEven(){
+        return value % 2 == 0;
+    }
 }

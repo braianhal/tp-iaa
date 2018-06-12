@@ -23,6 +23,26 @@ public abstract class SequenceExpressionNode extends AbstractExpressionNode impl
         return terms.stream().anyMatch(Term::hasVariable);
     }
 
+    public Boolean isNumber() {
+        return this.terms.stream().allMatch(Term::isNumber);
+    }
+
+    public Boolean isPositiveNumber() {
+        try{
+            return this.isNumber() && this.getValue() >= 0;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    public Boolean isEven(){
+        try{
+            return this.isNumber() && this.getValue() % 2 == 0;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
     public Integer maxLevelAgainst(Integer level){
         return terms.stream().map(Term::getLevel).reduce(level, Math::max);
     }
@@ -33,52 +53,45 @@ public abstract class SequenceExpressionNode extends AbstractExpressionNode impl
         return this.maxLevelAgainst(base);
     }
 
-    public Boolean isMinusOne(){
+    private Boolean is(Integer number){
         if(this.hasVariable()){
             return false;
         }
 
         try{
-            return this.getValue() == -1;
+            return this.getValue() == number;
         }catch (Exception e){
             return false;
         }
+    }
+
+    private Boolean isGreaterThan(Integer number, Boolean positive){
+        if(this.hasVariable()){
+            return false;
+        }
+
+        try{
+            Double value = this.getValue();
+            return Math.abs(value) >= number && (positive ? value >= 0 : value < 0);
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    public Boolean isMinusOne(){
+        return this.is(-1);
     }
 
     public Boolean isMinusN(){
-        if(this.hasVariable()){
-            return false;
-        }
-
-        try{
-            return this.getValue() <= -2;
-        }catch (Exception e){
-            return false;
-        }
+        return this.isGreaterThan(2, false);
     }
 
     public Boolean isOne(){
-        if(this.hasVariable()){
-            return false;
-        }
-
-        try{
-            return this.getValue() == 1;
-        }catch (Exception e){
-            return false;
-        }
+        return this.is(1);
     }
 
     public Boolean isN(){
-        if(this.hasVariable()){
-            return false;
-        }
-
-        try{
-            return this.getValue() >= 2;
-        }catch (Exception e){
-            return false;
-        }
+        return this.isGreaterThan(2, true);
     }
 
     public Boolean isFractionalNumber(){
@@ -92,5 +105,9 @@ public abstract class SequenceExpressionNode extends AbstractExpressionNode impl
         }catch (Exception e){
             return false;
         }
+    }
+
+    protected Boolean allPositives(){
+        return this.terms.stream().allMatch(term -> term.positive);
     }
 }

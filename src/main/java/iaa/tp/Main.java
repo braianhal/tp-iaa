@@ -79,10 +79,8 @@ public class Main {
         Parser parser = new Parser();
         ProceduralSimilarExpressionCalculator calculator = new ProceduralSimilarExpressionCalculator("sqrt(log2b(1+3x))");
         try {
-
-            System.out.println(calculator.similarityWith("1+3x"));
-
-            ExpressionNode expression = parser.parse("3^(-1)");
+            ExpressionNode expression = parser.parse("sqrt(3^(1/6+x))");
+            System.out.println("Token " + expression.getToken());
             System.out.println("The value of the expression is " + expression.getValue());
         }
         catch (Exception e) {
