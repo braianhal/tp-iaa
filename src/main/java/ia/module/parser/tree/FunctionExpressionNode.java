@@ -98,7 +98,8 @@ public class FunctionExpressionNode extends AbstractExpressionNode implements Ex
     }
 
     public Boolean isNumber() {
-        return this.function <= 8 && this.argument.isNumber();
+        // Only integral returns expressions with variables when argument is a number
+        return (this.function <= DERIVATIVE) && this.argument.isNumber();
     }
 
     public Integer getLevel(){

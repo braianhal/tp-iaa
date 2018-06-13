@@ -57,6 +57,16 @@ public class TokenTests extends TestCase{
 
         assertEquals(N_BY_N, parser.parse("4*dx(2)").getToken().intValue());
         assertEquals(N_BY_N, parser.parse("4*int(2)").getToken().intValue());
+
+        assertEquals(N_BY_N, parser.parse("3^4").getToken().intValue());
+        assertEquals(N_BY_N, parser.parse("3^(4+2)").getToken().intValue());
+        assertEquals(N_BY_N, parser.parse("3^(4*2)").getToken().intValue());
+        assertEquals(N_BY_N, parser.parse("3^(4/2)").getToken().intValue());
+        assertEquals(N_BY_N, parser.parse("(3+2)^(4)").getToken().intValue());
+        assertEquals(N_BY_N, parser.parse("(1/2)^(4)").getToken().intValue());
+        assertEquals(N_BY_N, parser.parse("(1/2 + 1.5)^(4)").getToken().intValue());
+
+        assertEquals(N_BY_N, parser.parse("(dx(2))^2").getToken().intValue());
     }
 
     public void testTokenNumberByVariable() throws Exception {
