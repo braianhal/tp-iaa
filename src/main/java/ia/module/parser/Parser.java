@@ -87,9 +87,40 @@ public class Parser {
 
     public ExpressionNode parse(String expression) throws ParserException, ParseException{
         Tokenizer tokenizer = Tokenizer.getExpressionTokenizer();
-        tokenizer.tokenize(expression);
+        tokenizer.tokenize(this.cleanFormatOf(expression));
         LinkedList<Token> tokens = tokenizer.getTokens();
         return this.parse(tokens);
+    }
+
+    public String cleanFormatOf(String expression){
+        String expressionCleaned = expression;
+
+        expressionCleaned = addMultiplicationSymbols(expressionCleaned);
+
+        return expressionCleaned
+                .replaceAll("e", "2.718281828459045235360")
+                .replaceAll("pi", "3.14159265358979323846")
+                .replaceAll("\\)x", ")*x")
+                .replaceAll("x\\(", "x*(")
+                .replaceAll("dx\\*\\(", "dx(");
+    }
+
+    private String addMultiplicationSymbols(String expression){
+        for(int i = 0 ; i <= 9 ; i++){
+            expression = expression
+                    .replaceAll(i + "\\(", i + "*(")
+                    .replaceAll(i + "sqrt", i + "*sqrt")
+                    .replaceAll(i + "sin", i + "*sin")
+                    .replaceAll(i + "cos", i + "*cos")
+                    .replaceAll(i + "tan", i + "*tan")
+                    .replaceAll(i + "ln", i + "*ln")
+                    .replaceAll(i + "log", i + "*log")
+                    .replaceAll(i + "logb2", i + "*logb2")
+                    .replaceAll(i + "dx", i + "*dx")
+                    .replaceAll(i + "int", i + "*int")
+                    .replaceAll(i + "x", i + "*x");
+        }
+        return expression;
     }
 
     public ExpressionNode parse(LinkedList<Token> tokens) throws ParseException{

@@ -18,8 +18,8 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
     public Double similarityWith(String candidateExpression) {
         Parser parser = new Parser();
         try {
-            ExpressionNode originalExpressionTree = parser.parse(this.cleanFormatOf(this.originalExpression));
-            ExpressionNode candidateExpressionTree = parser.parse(this.cleanFormatOf(candidateExpression));
+            ExpressionNode originalExpressionTree = parser.parse(this.originalExpression);
+            ExpressionNode candidateExpressionTree = parser.parse(candidateExpression);
 
             Double levelSimilarity = this.getLevelSimilarityBetween(originalExpressionTree, candidateExpressionTree);
             Double structureSimilarity = this.getStructureSimilarityBetween(originalExpressionTree, candidateExpressionTree);
@@ -53,33 +53,5 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
     public ProceduralSimilarExpressionCalculator(String originalExpression) {
         super(null);
         this.originalExpression = originalExpression;
-    }
-
-    private String cleanFormatOf(String expression){
-        String expressionCleaned = expression;
-
-        expressionCleaned = this.addMultiplicationSymbols(expressionCleaned);
-
-        return expressionCleaned
-                .replaceAll("e", "2.718281828459045235360")
-                .replaceAll("pi", "3.14159265358979323846")
-                .replaceAll("\\)x", ")*x");
-    }
-
-    private String addMultiplicationSymbols(String expression){
-        for(int i = 0 ; i <= 9 ; i++){
-            expression = expression
-                    .replaceAll(i + "\\(", i + "*(")
-                    .replaceAll(i + "sqrt", i + "*sqrt")
-                    .replaceAll(i + "sin", i + "*sin")
-                    .replaceAll(i + "cos", i + "*cos")
-                    .replaceAll(i + "tan", i + "*tan")
-                    .replaceAll(i + "ln", i + "*ln")
-                    .replaceAll(i + "log2", i + "*log2")
-                    .replaceAll(i + "derivative", i + "*derivative")
-                    .replaceAll(i + "integral", i + "*integral")
-                    .replaceAll(i + "x", i + "*x");
-        }
-        return expression;
     }
 }

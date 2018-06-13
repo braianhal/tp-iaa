@@ -83,14 +83,14 @@ public class FunctionExpressionNode extends AbstractExpressionNode implements Ex
         if (str.equals("log"))return LOG;
         if (str.equals("log2b")) return LOG2;
 
-        if (str.equals("integral")) return INTEGRAL;
-        if (str.equals("derivative")) return DERIVATIVE;
+        if (str.equals("int")) return INTEGRAL;
+        if (str.equals("dx")) return DERIVATIVE;
 
         throw new ParseException("Unexpected Function " + str + " found!", 0);
     }
 
     public static String getAllFunctions() {
-        return "sin|cos|tan|asin|acos|atan|sqrt|exp|ln|log|log2b|integral|derivative";
+        return "sin|cos|tan|asin|acos|atan|sqrt|exp|ln|log|log2b|int|dx";
     }
 
     public Boolean hasVariable() {
