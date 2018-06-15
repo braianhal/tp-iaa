@@ -19,12 +19,13 @@ public interface ExpressionNode {
     Integer getToken();
     Boolean isNumber();
     Boolean isLineal();
+    Boolean isQuadraticX();
     Boolean isZero();
     Boolean isVariable();
     Boolean isMinusOne();
     Boolean isMinusN();
     Boolean isOne();
-    Boolean isN();
+    Boolean isTwo();
     Boolean isFractionalNumber();
     Boolean isPositiveNumber();
     Boolean isEven();

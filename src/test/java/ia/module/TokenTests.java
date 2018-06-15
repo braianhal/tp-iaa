@@ -53,10 +53,7 @@ public class TokenTests extends TestCase{
         assertEquals(N_BY_N, parser.parse("4*log2b(2)").getToken().intValue());
 
         assertEquals(N_BY_N, parser.parse("4dx(2)").getToken().intValue());
-        assertEquals(N_BY_N, parser.parse("4int(2)").getToken().intValue());
-
         assertEquals(N_BY_N, parser.parse("4*dx(2)").getToken().intValue());
-        assertEquals(N_BY_N, parser.parse("4*int(2)").getToken().intValue());
 
         assertEquals(N_BY_N, parser.parse("3^4").getToken().intValue());
         assertEquals(N_BY_N, parser.parse("3^(4+2)").getToken().intValue());
@@ -72,8 +69,10 @@ public class TokenTests extends TestCase{
         assertEquals(N_BY_N, parser.parse("(dx((1+2x)+3+x))^2").getToken().intValue());
 
         assertEquals(N_BY_N, parser.parse("(int(0))^2").getToken().intValue());
+        assertEquals(N_BY_N, parser.parse("(int(0(1+2)))^2").getToken().intValue());
         assertEquals(N_BY_N, parser.parse("(int(0*(1+2)))^2").getToken().intValue());
         assertEquals(N_BY_N, parser.parse("(int(0*(1+x)))^2").getToken().intValue());
+        assertEquals(N_BY_N, parser.parse("(int((1+x)*0))^2").getToken().intValue());
     }
 
     public void testTokenNumberByVariable() throws Exception {
@@ -93,6 +92,14 @@ public class TokenTests extends TestCase{
         assertEquals(N_BY_X, parser.parse("x*log2b(2)").getToken().intValue());
 
         assertEquals(N_BY_X, parser.parse("x*dx(2)").getToken().intValue());
-        assertEquals(N_BY_X, parser.parse("x*int(2)").getToken().intValue());
+        assertEquals(N_BY_X, parser.parse("x*dx(2x)").getToken().intValue());
+        assertEquals(N_BY_X, parser.parse("2*dx(3x^2)").getToken().intValue());
+        assertEquals(N_BY_X, parser.parse("2*dx(3x*x)").getToken().intValue());
+
+        assertEquals(N_BY_X, parser.parse("2*int(2)").getToken().intValue());
+        assertEquals(N_BY_X, parser.parse("2*int(2+3)").getToken().intValue());
+        assertEquals(N_BY_X, parser.parse("2*int(2*3)").getToken().intValue());
+        assertEquals(N_BY_X, parser.parse("2*int(2/3)").getToken().intValue());
+        assertEquals(N_BY_X, parser.parse("2*int(2+3*4/3)").getToken().intValue());
     }
 }

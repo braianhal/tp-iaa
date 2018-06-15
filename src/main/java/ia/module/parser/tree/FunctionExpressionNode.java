@@ -94,7 +94,14 @@ public class FunctionExpressionNode extends AbstractExpressionNode implements Ex
     }
 
     public Boolean hasVariable() {
-        return argument.hasVariable();
+        return (this.function < DERIVATIVE && this.argument.hasVariable()) ||
+                (this.function == DERIVATIVE && this.argument.hasVariable() && !this.argument.isLineal()) ||
+                (this.function == INTEGRAL && !this.argument.isZero());
+    }
+
+    public Boolean isVariable(){
+        return (this.function == DERIVATIVE && this.argument.isQuadraticX()) ||
+                this.function == INTEGRAL && this.argument.isNumber();
     }
 
     public Boolean isNumber() {

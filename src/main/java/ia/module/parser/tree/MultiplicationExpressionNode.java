@@ -69,7 +69,8 @@ public class MultiplicationExpressionNode extends SequenceExpressionNode{
     }
 
     private Boolean onlyOneTermIsVariable(){
-        return this.terms.stream().filter(Term::isVariable).count() == 1;
+        return this.terms.stream().filter(Term::hasVariable).count() == 1 &&
+                this.terms.stream().filter(Term::isVariable).count() == 1;
     }
 
     private Long countOfTermsWithVariableAsFactors(){
@@ -83,6 +84,11 @@ public class MultiplicationExpressionNode extends SequenceExpressionNode{
     private Boolean onlyOneTermHasVariableAsDividend(){
         return this.onlyOneTermHasVariableAsFactor() &&
                 this.terms.stream().filter(term -> term.isNumber() && !term.positive).count() == 1;
+    }
+
+    public Boolean isQuadraticX() {
+        return (this.terms.stream().filter(Term::hasVariable).count() == 1 && this.terms.stream().filter(Term::isQuadraticX).count() == 1) ||
+                (this.terms.stream().filter(Term::hasVariable).count() == 2 && this.terms.stream().filter(Term::isVariable).count() == 2);
     }
 
     private Boolean towOrMoreTermsWithVariableAsFactors(){

@@ -90,6 +90,10 @@ public abstract class SequenceExpressionNode extends AbstractExpressionNode impl
         return this.is(1);
     }
 
+    public Boolean isTwo(){
+        return this.is(2);
+    }
+
     public Boolean isZero(){
         return this.is(0);
     }

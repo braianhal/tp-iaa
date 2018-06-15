@@ -26,6 +26,10 @@ public class AbstractExpressionNode {
         return false;
     }
 
+    public Boolean isTwo(){
+        return false;
+    }
+
     public Boolean isN(){
         return false;
     }
@@ -43,6 +47,10 @@ public class AbstractExpressionNode {
     }
 
     public Boolean isZero(){
+        return false;
+    }
+
+    public Boolean isQuadraticX(){
         return false;
     }
 }

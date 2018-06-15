@@ -39,6 +39,10 @@ public class ConstantExpressionNode extends AbstractExpressionNode implements Ex
         return true;
     }
 
+    public Boolean isTwo(){
+        return value == 2;
+    }
+
     public Boolean isOne(){
         return value == 1;
     }

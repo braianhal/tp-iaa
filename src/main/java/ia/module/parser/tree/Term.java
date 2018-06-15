@@ -19,6 +19,10 @@ public class Term {
         return this.expression.isVariable();
     }
 
+    public Boolean isQuadraticX(){
+        return this.expression.isQuadraticX();
+    }
+
     public Boolean isNumber(){
         return this.expression.isNumber();
     }
