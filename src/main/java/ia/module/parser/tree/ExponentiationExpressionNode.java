@@ -125,4 +125,8 @@ public class ExponentiationExpressionNode extends AbstractExpressionNode impleme
     public Boolean isQuadraticX() {
         return this.base.isVariable() && this.exponent.isTwo();
     }
+
+    public Boolean isZero() {
+        return this.base.isZero() && this.exponent.isPositiveNumber();
+    }
 }

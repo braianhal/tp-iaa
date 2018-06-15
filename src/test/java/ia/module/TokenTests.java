@@ -55,6 +55,16 @@ public class TokenTests extends TestCase{
         assertEquals(N_BY_N, parser.parse("4dx(2)").getToken().intValue());
         assertEquals(N_BY_N, parser.parse("4*dx(2)").getToken().intValue());
 
+        assertEquals(N_BY_N, parser.parse("4int(0)").getToken().intValue());
+        assertEquals(N_BY_N, parser.parse("4int(0+0)").getToken().intValue());
+        assertEquals(N_BY_N, parser.parse("4int(0-0)").getToken().intValue());
+        assertEquals(N_BY_N, parser.parse("4int(0*0)").getToken().intValue());
+        assertEquals(N_BY_N, parser.parse("4int(0^2)").getToken().intValue());
+        assertEquals(N_BY_N, parser.parse("4*int(0+0)").getToken().intValue());
+        assertEquals(N_BY_N, parser.parse("4*int(0-0)").getToken().intValue());
+        assertEquals(N_BY_N, parser.parse("4*int(0*0)").getToken().intValue());
+        assertEquals(N_BY_N, parser.parse("4*int(0^2)").getToken().intValue());
+
         assertEquals(N_BY_N, parser.parse("3^4").getToken().intValue());
         assertEquals(N_BY_N, parser.parse("3^(4+2)").getToken().intValue());
         assertEquals(N_BY_N, parser.parse("3^(4*2)").getToken().intValue());
@@ -87,19 +97,28 @@ public class TokenTests extends TestCase{
         assertEquals(N_BY_X, parser.parse("x*sin(90)").getToken().intValue());
         assertEquals(N_BY_X, parser.parse("x*cos(90)").getToken().intValue());
         assertEquals(N_BY_X, parser.parse("x*tan(90)").getToken().intValue());
+        assertEquals(N_BY_X, parser.parse("x*sin(90)*cos(90)").getToken().intValue());
+        assertEquals(N_BY_X, parser.parse("x*(tan(90)^3)").getToken().intValue());
         assertEquals(N_BY_X, parser.parse("x*ln(2)").getToken().intValue());
         assertEquals(N_BY_X, parser.parse("x*log(2)").getToken().intValue());
         assertEquals(N_BY_X, parser.parse("x*log2b(2)").getToken().intValue());
+        assertEquals(N_BY_X, parser.parse("x*(log2b(2))^3").getToken().intValue());
 
         assertEquals(N_BY_X, parser.parse("x*dx(2)").getToken().intValue());
         assertEquals(N_BY_X, parser.parse("x*dx(2x)").getToken().intValue());
         assertEquals(N_BY_X, parser.parse("2*dx(3x^2)").getToken().intValue());
         assertEquals(N_BY_X, parser.parse("2*dx(3x*x)").getToken().intValue());
+        assertEquals(N_BY_X, parser.parse("(2^3)*dx(3x*x)").getToken().intValue());
 
         assertEquals(N_BY_X, parser.parse("2*int(2)").getToken().intValue());
+        assertEquals(N_BY_X, parser.parse("2*int(2^3)").getToken().intValue());
         assertEquals(N_BY_X, parser.parse("2*int(2+3)").getToken().intValue());
+        assertEquals(N_BY_X, parser.parse("2*int(2+3^4)").getToken().intValue());
         assertEquals(N_BY_X, parser.parse("2*int(2*3)").getToken().intValue());
         assertEquals(N_BY_X, parser.parse("2*int(2/3)").getToken().intValue());
         assertEquals(N_BY_X, parser.parse("2*int(2+3*4/3)").getToken().intValue());
+        assertEquals(N_BY_X, parser.parse("(2^3)*int(2+3*4/3)").getToken().intValue());
+        assertEquals(N_BY_X, parser.parse("(2*3)*int(2+3*4/3)").getToken().intValue());
+        assertEquals(N_BY_X, parser.parse("(2+3*4/3)*int(2+3*4/3)").getToken().intValue());
     }
 }
