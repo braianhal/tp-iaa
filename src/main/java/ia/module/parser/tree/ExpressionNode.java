@@ -18,6 +18,8 @@ public interface ExpressionNode {
     ExpressionsWithArgumentStructures getStructureOf(ExpressionsWithArgumentStructures expressionsWithArgumentStructures);
     Integer getToken();
     Boolean isNumber();
+    Boolean isLineal();
+    Boolean isZero();
     Boolean isVariable();
     Boolean isMinusOne();
     Boolean isMinusN();

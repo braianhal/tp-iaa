@@ -51,4 +51,8 @@ public class VariableExpressionNode extends AbstractExpressionNode implements Ex
     public Boolean isVariable(){
         return true;
     }
+
+    public Boolean isLineal() {
+        return true;
+    }
 }

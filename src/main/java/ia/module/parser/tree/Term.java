@@ -27,11 +27,11 @@ public class Term {
         return expression.getLevel();
     }
 
-    public Boolean isMinusOne(){
-        return !positive && expression.isOne();
+    public Boolean isLineal(){
+        return this.expression.isLineal();
     }
 
-    public Boolean isMinusN(){
-        return !positive && expression.isN();
+    public Boolean isZero(){
+        return this.expression.isZero();
     }
 }

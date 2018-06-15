@@ -43,6 +43,10 @@ public class ConstantExpressionNode extends AbstractExpressionNode implements Ex
         return value == 1;
     }
 
+    public Boolean isZero(){
+        return value == 0;
+    }
+
     public Boolean isN(){
         return value >= 2;
     }
@@ -57,5 +61,9 @@ public class ConstantExpressionNode extends AbstractExpressionNode implements Ex
 
     public Boolean isEven(){
         return value % 2 == 0;
+    }
+
+    public Boolean isLineal() {
+        return true;
     }
 }

@@ -92,4 +92,12 @@ public class MultiplicationExpressionNode extends SequenceExpressionNode{
     private Boolean anyTermWithVariableAsQuotient(){
         return this.terms.stream().filter(term -> term.hasVariable() && !term.positive).count() >= 1;
     }
+
+    public Boolean isLineal() {
+        return this.terms.stream().filter(term -> term.hasVariable() && term.isLineal()).count() <= 1;
+    }
+
+    public Boolean isZero(){
+        return this.terms.stream().anyMatch(Term::isZero);
+    }
 }

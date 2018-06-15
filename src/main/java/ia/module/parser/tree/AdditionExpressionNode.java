@@ -51,4 +51,8 @@ public class AdditionExpressionNode extends SequenceExpressionNode{
 
         return Operator.PLUS_OR_MINUS_TERM_WITH_X;
     }
+
+    public Boolean isLineal() {
+        return this.terms.stream().allMatch(Term::isLineal);
+    }
 }

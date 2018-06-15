@@ -117,4 +117,8 @@ public class ExponentiationExpressionNode extends AbstractExpressionNode impleme
         return Operator.N;
     }
 
+    public Boolean isLineal() {
+        return (this.base.isNumber() && this.exponent.isNumber()) ||
+                (this.base.isLineal() && this.exponent.isOne());
+    }
 }

@@ -41,4 +41,8 @@ public class AbstractExpressionNode {
     public Boolean isEven(){
         return false;
     }
+
+    public Boolean isZero(){
+        return false;
+    }
 }

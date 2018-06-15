@@ -83,8 +83,8 @@ public class FunctionExpressionNode extends AbstractExpressionNode implements Ex
         if (str.equals("log"))return LOG;
         if (str.equals("log2b")) return LOG2;
 
-        if (str.equals("int")) return INTEGRAL;
         if (str.equals("dx")) return DERIVATIVE;
+        if (str.equals("int")) return INTEGRAL;
 
         throw new ParseException("Unexpected Function " + str + " found!", 0);
     }
@@ -99,7 +99,15 @@ public class FunctionExpressionNode extends AbstractExpressionNode implements Ex
 
     public Boolean isNumber() {
         // Only integral returns expressions with variables when argument is a number
-        return (this.function <= DERIVATIVE) && this.argument.isNumber();
+        return (this.function <= DERIVATIVE && this.argument.isNumber()) ||
+                (this.function == DERIVATIVE && this.argument.isLineal()) ||
+                (this.function == INTEGRAL && this.argument.isZero());
+    }
+
+    public Boolean isLineal() {
+        return (this.function < DERIVATIVE && this.argument.isNumber()) ||
+                (this.function == DERIVATIVE && this.argument.isLineal()) ||
+                (this.function == INTEGRAL && this.argument.isNumber());
     }
 
     public Integer getLevel(){
