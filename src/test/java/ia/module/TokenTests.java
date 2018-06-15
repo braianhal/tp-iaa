@@ -228,4 +228,55 @@ public class TokenTests extends TestCase{
     public void testTokenX() throws Exception {
         assertEquals(X, parser.parse("x").getToken().intValue());
     }
+
+    public void testTokenPlusMinusX() throws Exception {
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("x+1").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("2+x+1").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("2+3x+1").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("2+3x+1+2x").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("(2+3)x+3").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("(2+3)x+3x").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("(2+3)x+(2*3x)").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("(2+3^3)x+(2*3x)").getToken().intValue());
+
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("sin(90)*x+(2*3x)").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("cos(90)*x+(2*3x)").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("tan(90)*x+(2*3x)").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("sin(x)*x+(2*3x)").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("cos(x)*x+(2*3x)").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("tan(x)*x+(2*3x)").getToken().intValue());
+
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("sin(x^2)*x+(2*3x)").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("cos(x^2)*x+(2*3x)").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("tan(x^2)*x+(2*3x)").getToken().intValue());
+
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("sin(x*x + x^3)*x+(2*3x)").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("cos(x*x + x^3)*x+(2*3x)").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("tan(x*x + x^3)*x+(2*3x)").getToken().intValue());
+
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("log(2)*x+(2*3x)").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("ln(2)*x+(2*3x)").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("log2b(2)*x+(2*3x)").getToken().intValue());
+
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("log(2x)*x+(2*3x)").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("ln(2x)*x+(2*3x)").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("log2b(2x)*x+(2*3x)").getToken().intValue());
+
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("log(3+2x)*x+(2*3x)").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("ln(3+2x)*x+(2*3x)").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("log2b(3+2x)*x+(2*3x)").getToken().intValue());
+
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("dx(2)-3x").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("dx(x^2)-3").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("dx(3+x^2)-3").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("dx(3+x^(4-2))-3").getToken().intValue());
+
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("int(2)-3").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("int(2x)-3").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("int(2x+3)-3").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("int(2x^2+3)-3").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("int(2x^3+3)-3").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("2+int(2x^3+3)-3x+2x+4").getToken().intValue());
+        assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("2+(int(2x^3+3))^4-3x^3+2x+4").getToken().intValue());
+    }
 }
