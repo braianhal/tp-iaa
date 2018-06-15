@@ -224,4 +224,8 @@ public class TokenTests extends TestCase{
         assertEquals(ROOT_OF_N, parser.parse("sqrt(int(0))").getToken().intValue());
         assertEquals(ROOT_OF_N, parser.parse("sqrt(int(0x))").getToken().intValue());
     }
+
+    public void testTokenX() throws Exception {
+        assertEquals(X, parser.parse("x").getToken().intValue());
+    }
 }
