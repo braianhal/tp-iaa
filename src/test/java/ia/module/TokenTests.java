@@ -167,4 +167,38 @@ public class TokenTests extends TestCase{
         assertEquals(N_DIVIDED_N, parser.parse("3/(int((1+x)*0))^2").getToken().intValue());
         assertEquals(N_DIVIDED_N, parser.parse("(int((1+x)*0))^2/4").getToken().intValue());
     }
+
+    public void testTokenNumberRaisedMinusN() throws Exception {
+        assertEquals(N_RAISED_TO_MINUS_N, parser.parse("1^-2").getToken().intValue());
+        assertEquals(N_RAISED_TO_MINUS_N, parser.parse("(1+2)^-3").getToken().intValue());
+        assertEquals(N_RAISED_TO_MINUS_N, parser.parse("(1*2)^(-3)").getToken().intValue());
+        assertEquals(N_RAISED_TO_MINUS_N, parser.parse("(1/2)^(-3)").getToken().intValue());
+        assertEquals(N_RAISED_TO_MINUS_N, parser.parse("(1-2)^(-3)").getToken().intValue());
+        assertEquals(N_RAISED_TO_MINUS_N, parser.parse("(3^2)^(-3)").getToken().intValue());
+        assertEquals(N_RAISED_TO_MINUS_N, parser.parse("4^(5-6)").getToken().intValue());
+        assertEquals(N_RAISED_TO_MINUS_N, parser.parse("4^(-2-3)").getToken().intValue());
+
+        assertEquals(N_RAISED_TO_MINUS_N, parser.parse("sin(3)^(-3)").getToken().intValue());
+        assertEquals(N_RAISED_TO_MINUS_N, parser.parse("cos(3)^(-3)").getToken().intValue());
+        assertEquals(N_RAISED_TO_MINUS_N, parser.parse("tan(3)^(-3)").getToken().intValue());
+        assertEquals(N_RAISED_TO_MINUS_N, parser.parse("sin(3+2)^(-3)").getToken().intValue());
+        assertEquals(N_RAISED_TO_MINUS_N, parser.parse("cos(3+2)^(-3)").getToken().intValue());
+        assertEquals(N_RAISED_TO_MINUS_N, parser.parse("tan(3+2)^(-3)").getToken().intValue());
+
+        assertEquals(N_RAISED_TO_MINUS_N, parser.parse("log(3)^(-3)").getToken().intValue());
+        assertEquals(N_RAISED_TO_MINUS_N, parser.parse("log(3+2)^(-3)").getToken().intValue());
+        assertEquals(N_RAISED_TO_MINUS_N, parser.parse("ln(3)^(-3)").getToken().intValue());
+        assertEquals(N_RAISED_TO_MINUS_N, parser.parse("ln(3+2)^(-3)").getToken().intValue());
+        assertEquals(N_RAISED_TO_MINUS_N, parser.parse("log2b(3)^(-3)").getToken().intValue());
+        assertEquals(N_RAISED_TO_MINUS_N, parser.parse("log2b(3+2)^(-3)").getToken().intValue());
+
+        assertEquals(N_RAISED_TO_MINUS_N, parser.parse("dx(4)^(-3)").getToken().intValue());
+        assertEquals(N_RAISED_TO_MINUS_N, parser.parse("dx(4+2)^(-3)").getToken().intValue());
+        assertEquals(N_RAISED_TO_MINUS_N, parser.parse("dx(4x)^(-3)").getToken().intValue());
+        assertEquals(N_RAISED_TO_MINUS_N, parser.parse("dx(4x+2)^(-3)").getToken().intValue());
+
+        assertEquals(N_RAISED_TO_MINUS_N, parser.parse("int(0)^(-3)").getToken().intValue());
+        assertEquals(N_RAISED_TO_MINUS_N, parser.parse("int(3-3)^(-3)").getToken().intValue());
+        assertEquals(N_RAISED_TO_MINUS_N, parser.parse("int(0x)^(-3)").getToken().intValue());
+    }
 }
