@@ -201,4 +201,27 @@ public class TokenTests extends TestCase{
         assertEquals(N_RAISED_TO_MINUS_N, parser.parse("int(3-3)^(-3)").getToken().intValue());
         assertEquals(N_RAISED_TO_MINUS_N, parser.parse("int(0x)^(-3)").getToken().intValue());
     }
+
+    public void testTokenRootOfN() throws Exception {
+        assertEquals(ROOT_OF_N, parser.parse("sqrt(4)").getToken().intValue());
+        assertEquals(ROOT_OF_N, parser.parse("sqrt(4+3)").getToken().intValue());
+        assertEquals(ROOT_OF_N, parser.parse("sqrt(4-3)").getToken().intValue());
+        assertEquals(ROOT_OF_N, parser.parse("sqrt(4*3)").getToken().intValue());
+        assertEquals(ROOT_OF_N, parser.parse("sqrt(4/3)").getToken().intValue());
+        assertEquals(ROOT_OF_N, parser.parse("sqrt(4^3)").getToken().intValue());
+
+        assertEquals(ROOT_OF_N, parser.parse("sqrt(sin(90))").getToken().intValue());
+        assertEquals(ROOT_OF_N, parser.parse("sqrt(cos(90))").getToken().intValue());
+        assertEquals(ROOT_OF_N, parser.parse("sqrt(tan(90))").getToken().intValue());
+
+        assertEquals(ROOT_OF_N, parser.parse("sqrt(log(2))").getToken().intValue());
+        assertEquals(ROOT_OF_N, parser.parse("sqrt(ln(2))").getToken().intValue());
+        assertEquals(ROOT_OF_N, parser.parse("sqrt(log2b(2))").getToken().intValue());
+
+        assertEquals(ROOT_OF_N, parser.parse("sqrt(dx(4))").getToken().intValue());
+        assertEquals(ROOT_OF_N, parser.parse("sqrt(dx(4x))").getToken().intValue());
+
+        assertEquals(ROOT_OF_N, parser.parse("sqrt(int(0))").getToken().intValue());
+        assertEquals(ROOT_OF_N, parser.parse("sqrt(int(0x))").getToken().intValue());
+    }
 }
