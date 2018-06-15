@@ -94,7 +94,8 @@ public class MultiplicationExpressionNode extends SequenceExpressionNode{
     }
 
     public Boolean isLineal() {
-        return this.terms.stream().filter(term -> term.hasVariable() && term.isLineal()).count() <= 1;
+        return this.terms.stream().filter(Term::hasVariable).count() <= 1 &&
+                this.terms.stream().filter(term -> term.hasVariable() && term.isLineal()).count() == 1;
     }
 
     public Boolean isZero(){
