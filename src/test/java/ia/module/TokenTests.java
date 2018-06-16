@@ -568,6 +568,10 @@ public class TokenTests extends TestCase{
         assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(4*3x)").getToken().intValue());
         assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(4/(3x))").getToken().intValue());
         assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(4^x)").getToken().intValue());
+        assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(sqrt(x))").getToken().intValue());
+        assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(sqrt(x+1))").getToken().intValue());
+        assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(sqrt(x^2))").getToken().intValue());
+        assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(sqrt(x*x))").getToken().intValue());
 
         assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(sin(x))").getToken().intValue());
         assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(cos(90)+x)").getToken().intValue());
@@ -587,5 +591,78 @@ public class TokenTests extends TestCase{
         assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(int(2)+3x)").getToken().intValue());
         assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(int(2)^4+3x)").getToken().intValue());
         assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(int(3)+dx(x^3))").getToken().intValue());
+    }
+
+    public void testTokenTrigonometric() throws Exception {
+        assertEquals(TRIGONOMETRIC, parser.parse("sin(4x)").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("sin(4x+3)").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("sin(4-3x)").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("sin(4*3x)").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("sin(4/(3x))").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("sin(4^x)").getToken().intValue());
+
+        assertEquals(TRIGONOMETRIC, parser.parse("sin(sin(x))").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("sin(cos(90)+x)").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("sin(x*tan(90))").getToken().intValue());
+
+        assertEquals(TRIGONOMETRIC, parser.parse("sin(x*log(2))").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("sin(ln(2x))").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("sin(log2b(2)+x+3)").getToken().intValue());
+
+        assertEquals(TRIGONOMETRIC, parser.parse("sin(dx(4x^2))").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("sin(dx(x^3))").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("sin(dx(sin(x)))").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("sin(dx(ln(x)+2))").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("sin(dx(x)^x)").getToken().intValue());
+
+        assertEquals(TRIGONOMETRIC, parser.parse("sin(int(2)+3)").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("sin(int(2)+3x)").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("sin(int(2)^4+3x)").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("sin(int(3)+dx(x^3))").getToken().intValue());
+
+        assertEquals(TRIGONOMETRIC, parser.parse("cos(4x)").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("cos(4x+3)").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("cos(4-3x)").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("cos(4*3x)").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("cos(4/(3x))").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("cos(4^x)").getToken().intValue());
+
+        assertEquals(TRIGONOMETRIC, parser.parse("cos(sin(x))").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("cos(cos(90)+x)").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("cos(x*tan(90))").getToken().intValue());
+
+        assertEquals(TRIGONOMETRIC, parser.parse("cos(x*log(2))").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("cos(ln(2x))").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("cos(log2b(2)+x+3)").getToken().intValue());
+
+        assertEquals(TRIGONOMETRIC, parser.parse("cos(dx(4x^2))").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("cos(dx(x^3))").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("cos(dx(sin(x)))").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("cos(dx(ln(x)+2))").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("cos(dx(x)^x)").getToken().intValue());
+
+        assertEquals(TRIGONOMETRIC, parser.parse("cos(int(2)+3)").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("cos(int(2)+3x)").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("cos(int(2)^4+3x)").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("cos(int(3)+dx(x^3))").getToken().intValue());
+
+        assertEquals(TRIGONOMETRIC, parser.parse("tan(sin(x))").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("tan(tan(90)+x)").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("tan(x*tan(90))").getToken().intValue());
+
+        assertEquals(TRIGONOMETRIC, parser.parse("tan(x*log(2))").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("tan(ln(2x))").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("tan(log2b(2)+x+3)").getToken().intValue());
+
+        assertEquals(TRIGONOMETRIC, parser.parse("tan(dx(4x^2))").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("tan(dx(x^3))").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("tan(dx(sin(x)))").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("tan(dx(ln(x)+2))").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("tan(dx(x)^x)").getToken().intValue());
+
+        assertEquals(TRIGONOMETRIC, parser.parse("tan(int(2)+3)").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("tan(int(2)+3x)").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("tan(int(2)^4+3x)").getToken().intValue());
+        assertEquals(TRIGONOMETRIC, parser.parse("tan(int(3)+dx(x^3))").getToken().intValue());
     }
 }
