@@ -68,7 +68,6 @@ public class ExponentiationExpressionNode extends AbstractExpressionNode impleme
         Boolean baseIsNumber = base.isNumber();
 
         Boolean exponentHasVariable = exponent.hasVariable();
-        Boolean exponentIsNumber = exponent.isNumber();
         Boolean exponentIsPositiveNumber = exponent.isPositiveNumber();
         Boolean exponentIsMinusOne = exponent.isMinusOne();
         Boolean exponentIsMinusN = exponent.isMinusN();
@@ -90,7 +89,7 @@ public class ExponentiationExpressionNode extends AbstractExpressionNode impleme
         }
 
         // x^2
-        if(baseHasVariable && exponentIsNumber){
+        if(baseHasVariable && exponentIsPositiveNumber){
             return Operator.TERM_WITH_X_BY_TERM_WITH_X;
         }
 
