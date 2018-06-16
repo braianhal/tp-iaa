@@ -1,5 +1,8 @@
 package ia.module.parser;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Operator {
 
     public static final int N = 0;
@@ -24,4 +27,11 @@ public class Operator {
     public static final int LOGARITHM = 19;
     public static final int DERIVATIVE = 20;
     public static final int INTEGRAL = 21;
+
+    public static final List<Integer> equivalentTokens(){
+        List<Integer> tokens = new ArrayList<>();
+        tokens.add(BY_TERM_WITH_X);
+        tokens.add(TERM_WITH_X_DIVIDED_N);
+        return tokens;
+    }
 }

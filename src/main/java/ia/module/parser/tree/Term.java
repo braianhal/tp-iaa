@@ -1,5 +1,7 @@
 package ia.module.parser.tree;
 
+import ia.module.parser.ExpressionsWithArgumentStructures;
+
 public class Term {
 
     public boolean positive;
@@ -41,5 +43,13 @@ public class Term {
 
     public Boolean isFractionalNumber(){
         return this.expression.isFractionalNumber();
+    }
+
+    public ExpressionsWithArgumentStructures getStructureOf(ExpressionsWithArgumentStructures expressionsWithArgumentStructures){
+        return this.expression.getStructureOf(expressionsWithArgumentStructures);
+    }
+
+    public Integer getToken(){
+        return this.expression.getToken();
     }
 }

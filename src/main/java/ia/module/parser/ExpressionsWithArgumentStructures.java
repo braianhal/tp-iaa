@@ -35,19 +35,29 @@ public class ExpressionsWithArgumentStructures {
 
     public Boolean has(ExpressionWithArgumentStructure expressionWithArgumentStructure){
         return this.expressionsWithArgument.stream().anyMatch(structure ->
-                structure.getDadToken().equals(expressionWithArgumentStructure.getDadToken()) &&
-                        structure.getChildToken().equals(expressionWithArgumentStructure.getChildToken()));
+                (structure.getDadToken().equals(expressionWithArgumentStructure.getDadToken()) &&
+                        structure.getChildToken().equals(expressionWithArgumentStructure.getChildToken())) ||
+                        haveEquivalentTokens(structure, expressionWithArgumentStructure));
     }
 
     public ExpressionWithArgumentStructure find(ExpressionWithArgumentStructure expressionWithArgumentStructure){
         List<ExpressionWithArgumentStructure> structures = this.expressionsWithArgument.stream().filter(structure ->
-                structure.getDadToken().equals(expressionWithArgumentStructure.getDadToken()) &&
-                structure.getChildToken().equals(expressionWithArgumentStructure.getChildToken())).collect(Collectors.toList());
+                (structure.getDadToken().equals(expressionWithArgumentStructure.getDadToken()) &&
+                        structure.getChildToken().equals(expressionWithArgumentStructure.getChildToken())) ||
+                        haveEquivalentTokens(structure, expressionWithArgumentStructure)).collect(Collectors.toList());
 
         if(structures.isEmpty()){
             return null;
         }
 
         return structures.get(0);
+    }
+
+    private Boolean haveEquivalentTokens(ExpressionWithArgumentStructure structure1, ExpressionWithArgumentStructure structure2){
+        return this.hasEquivalentToken(structure1) && this.hasEquivalentToken(structure2);
+    }
+
+    private Boolean hasEquivalentToken(ExpressionWithArgumentStructure structure){
+        return Operator.equivalentTokens().contains(structure.getDadToken()) && Operator.equivalentTokens().contains(structure.getChildToken());
     }
 }

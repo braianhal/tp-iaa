@@ -1,5 +1,7 @@
 package ia.module.parser.tree;
 
+import ia.module.parser.ExpressionsWithArgumentStructures;
+
 import java.util.LinkedList;
 
 public abstract class SequenceExpressionNode extends AbstractExpressionNode implements ExpressionNode{
@@ -117,5 +119,12 @@ public abstract class SequenceExpressionNode extends AbstractExpressionNode impl
 
     protected Boolean allPositives(){
         return this.terms.stream().allMatch(term -> term.positive);
+    }
+
+    public ExpressionsWithArgumentStructures getStructureOf(ExpressionsWithArgumentStructures expressionsWithArgumentStructures){
+        for(Term term : this.terms){
+            term.getStructureOf(expressionsWithArgumentStructures);
+        }
+        return expressionsWithArgumentStructures;
     }
 }

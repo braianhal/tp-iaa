@@ -153,7 +153,8 @@ public class FunctionExpressionNode extends AbstractExpressionNode implements Ex
     }
 
     public ExpressionsWithArgumentStructures getStructureOf(ExpressionsWithArgumentStructures expressionsWithArgumentStructures){
-        return expressionsWithArgumentStructures.addExpressionWithArguments(this.getToken(), this.argument.getToken());
+        expressionsWithArgumentStructures.addExpressionWithArguments(this.getToken(), this.argument.getToken());
+        return this.argument.getStructureOf(expressionsWithArgumentStructures);
     }
 
     public Integer getToken(){
