@@ -33,5 +33,9 @@ public class StructureSimilarityTests extends TestCase{
     public void testDifferentStructuresCardinality() throws Exception {
         assertEquals(1.0/2.0, calculator.getStructureSimilarityBetween(parser.parse("sin(x)"), parser.parse("cos(x)+sin(x)")));
         assertEquals(1.0/2.0, calculator.getStructureSimilarityBetween(parser.parse("sin(x)"), parser.parse("cos(x)+sin(x)+tan(x)")));
+        assertEquals(1.0/2.0, calculator.getStructureSimilarityBetween(parser.parse("sin(x)+ln(x)+ln(x)+ln(x)"), parser.parse("cos(x)+sin(x)+ln(x)")));
+        assertEquals(1.0/2.0, calculator.getStructureSimilarityBetween(parser.parse("sin(x)+ln(x)+ln(x)+ln(x)"), parser.parse("cos(x)+sin(x)+log(x)+ln(x)+log2b(x)")));
+        assertEquals(1.0/3.0, calculator.getStructureSimilarityBetween(parser.parse("sin(x)+ln(x)+ln(x)+ln(x)"), parser.parse("cos(x)+sin(x)+log(x)+ln(x)+log2b(x)+ln(x)")));
+        assertEquals(1.0/2.0, calculator.getStructureSimilarityBetween(parser.parse("dx(2)+int(2x)"), parser.parse("dx(3)+dx(5)+dx(x)+int(x/3)")));
     }
 }
