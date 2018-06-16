@@ -70,15 +70,15 @@ public class MultiplicationExpressionNode extends SequenceExpressionNode{
 
     private Boolean onlyOneTermIsVariable(){
         return this.terms.stream().filter(Term::hasVariable).count() == 1 &&
-                this.terms.stream().filter(Term::isVariable).count() == 1;
+                this.terms.stream().filter(term -> term.isVariable() && term.positive).count() == 1;
     }
 
-    private Long countOfTermsWithVariableAsFactors(){
+    private Long countOfTermsWithVariableAsFactor(){
         return this.terms.stream().filter(term -> term.hasVariable() && term.positive).count();
     }
 
     private Boolean onlyOneTermHasVariableAsFactor() {
-        return this.countOfTermsWithVariableAsFactors() == 1;
+        return this.countOfTermsWithVariableAsFactor() == 1 && this.terms.stream().filter(term -> term.hasVariable() && !term.positive).count() == 0;
     }
 
     private Boolean onlyOneTermHasVariableAsDividend(){
@@ -92,7 +92,7 @@ public class MultiplicationExpressionNode extends SequenceExpressionNode{
     }
 
     private Boolean towOrMoreTermsWithVariableAsFactors(){
-        return this.countOfTermsWithVariableAsFactors() >= 2;
+        return this.countOfTermsWithVariableAsFactor() >= 2;
     }
 
     private Boolean anyTermWithVariableAsQuotient(){

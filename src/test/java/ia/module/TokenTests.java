@@ -399,4 +399,89 @@ public class TokenTests extends TestCase{
         assertEquals(TERM_WITH_X_BY_TERM_WITH_X, parser.parse("3(x+1)*(int(2x+3)+4)").getToken().intValue());
         assertEquals(TERM_WITH_X_BY_TERM_WITH_X, parser.parse("3(x+1)*(int(2x^2-3)+4)").getToken().intValue());
     }
+
+    public void testTokenDividedTermWithVariable() throws Exception {
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("2/(x+1)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("x/(x+1)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("(2+1)/x").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("(x+1)/x").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("(x-1)/(x+1)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("2/(x+1)^2").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("4/(x+1)^3").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("(x-1)/(x+1)^2").getToken().intValue());
+
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("x/sin(x)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("(sin(x)+3)/x").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("(sin(x)+3)/(sin(x)+3)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("sin(x)/x").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("x^2/sin(x)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("x/sin(x+1)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("x/sin(x^2+x+1)").getToken().intValue());
+
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("x/cos(x)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("x/(cos(x)+3)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("(cos(x)+3)/x").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("(cos(x)+3)/(cos(x)+3)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("cos(x)/x").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("x^2/cos(x)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("x/cos(x+1)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("x/cos(x^2+x+1)").getToken().intValue());
+
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("x/tan(x)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("x/(tan(x)+3)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("(tan(x)+3)/x").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("(tan(x)+3)/(tan(x)+3)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("tan(x)/x").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("x^2/tan(x)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("x/tan(x+1)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("x/tan(x^2+x+1)").getToken().intValue());
+
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("(x^2+1)/log(5x)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("(x^2+1)/log2b(5x)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("(x^2+1)/ln(5x)").getToken().intValue());
+
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("log(5x)/(x^2+1)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("log(5x+2)/(x^2+1)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("(log(5x+2)+3)/(x^2+1)").getToken().intValue());
+
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("log2b(5x)/(x^2+1)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("log2b(5x+2)/(x^2+1)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("(log2b(5x+2)+3)/(x^2+1)").getToken().intValue());
+
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("ln(5x)/(x^2+1)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("ln(5x+2)/(x^2+1)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("(ln(5x+2)+3)/(x^2+1)").getToken().intValue());
+
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("(x^2+1)/dx(5x^2)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("(x^2+1)/dx(x^2)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("(x^2+1)/dx((x+1)^2)").getToken().intValue());
+
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("dx(5x^2)/(x^2+1)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("dx(x^2)/(x^2+1)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("dx((x+1)^2)/(x^2+1)").getToken().intValue());
+
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("dx(5)/(x^2+1)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("dx(5+3)/(x^2+1)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("dx(sin(90))/(x^2+1)").getToken().intValue());
+
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("3x/(int(2)+4)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("3x/(int(2x)+4)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("3x/(int(2x+3)+4)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("3x/(int(2x^2-3)+4)").getToken().intValue());
+
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("(int(2)+4)/(3x)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("(int(2x)+4)/(3x)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("(int(2x+3)+4)/(3x)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("(int(2x^2-3)+4)/(3x)").getToken().intValue());
+
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("3(x+1)/(int(2)+4)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("3(x+1)/(int(2x)+4)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("3(x+1)/(int(2x+3)+4)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("3(x+1)/(int(2x^2-3)+4)").getToken().intValue());
+
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("3/(int(2)+4)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("(2+1)/(int(2x)+4)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("sin(90)/(int(2x+3)+4)").getToken().intValue());
+        assertEquals(DIVIDED_TERM_WITH_X, parser.parse("dx(2x+1)/(int(2x^2-3)+4)").getToken().intValue());
+    }
 }
