@@ -5,7 +5,6 @@ import ia.module.fitness.NeuralNetworkSimilarExpressionCalculator;
 import ia.module.fitness.ProceduralSimilarExpressionCalculator;
 import ia.module.fitness.SimilarExpressionCalculator;
 import ia.module.parser.Parser;
-import ia.module.parser.tree.ExpressionNode;
 import io.jenetics.Genotype;
 import io.jenetics.engine.Codec;
 import io.jenetics.ext.util.TreeNode;
@@ -77,13 +76,9 @@ public class Main {
         //System.out.println(exp.toString());
 
         Parser parser = new Parser();
-        ProceduralSimilarExpressionCalculator calculator = new ProceduralSimilarExpressionCalculator("sqrt(log2b(1+3x))");
+        ProceduralSimilarExpressionCalculator calculator = new ProceduralSimilarExpressionCalculator("sqrt(ln(x))");
         try {
-            ExpressionNode expression = parser.parse("sqrt(3^(1/6))");
-
-            System.out.println("Token " + expression.getToken());
-            System.out.println("The value of the expression is " + expression.getValue());
-            System.out.println("Similarity: " + calculator.similarityWith("sqrt(3)x"));
+            System.out.println("Similarity: " + calculator.similarityWith("ln(sqrt(x))"));
         }
         catch (Exception e) {
             System.out.println(e.getMessage());

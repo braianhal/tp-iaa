@@ -50,7 +50,7 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
     }
 
     private Double toRatio(Long value){
-        return 1/ (1 + value.doubleValue());
+        return 1 / (1 + value.doubleValue());
     }
 
     private Double getLevelSimilarityBetween(ExpressionNode originalExpressionTree, ExpressionNode candidateExpressionTree){
