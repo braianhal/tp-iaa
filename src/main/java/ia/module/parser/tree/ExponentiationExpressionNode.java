@@ -45,18 +45,19 @@ public class ExponentiationExpressionNode extends AbstractExpressionNode impleme
     public Integer getLevel(){
         Boolean baseHasVariable = base.hasVariable();
         Boolean exponentHasVariable = exponent.hasVariable();
+        Integer minLevel = 7;
 
         // Base and exponent are numbers
         if(!baseHasVariable && !exponentHasVariable){
-            return 2;
+            minLevel = 2;
         }
 
         // Base has variable, but exponent is number
         if(baseHasVariable && !exponentHasVariable){
-            return 5;
+            minLevel = 5;
         }
 
-        return 7;
+        return Math.max(minLevel, Math.max(base.getLevel(), exponent.getLevel()));
     }
 
     public ExpressionsWithArgumentStructures getStructureOf(ExpressionsWithArgumentStructures expressionsWithArgumentStructures){

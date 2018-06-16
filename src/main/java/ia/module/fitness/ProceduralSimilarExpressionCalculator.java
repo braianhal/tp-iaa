@@ -53,7 +53,7 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
         return 1 / (1 + value.doubleValue());
     }
 
-    private Double getLevelSimilarityBetween(ExpressionNode originalExpressionTree, ExpressionNode candidateExpressionTree){
+    public Double getLevelSimilarityBetween(ExpressionNode originalExpressionTree, ExpressionNode candidateExpressionTree){
         Integer originalExpressionTreeLevel = originalExpressionTree.getLevel();
         Integer candidateExpressionTreeLevel = candidateExpressionTree.getLevel();
 
@@ -68,5 +68,9 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
     public ProceduralSimilarExpressionCalculator(String originalExpression) {
         super(null);
         this.originalExpression = originalExpression;
+    }
+
+    public ProceduralSimilarExpressionCalculator() {
+        super(null);
     }
 }
