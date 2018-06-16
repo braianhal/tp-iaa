@@ -560,4 +560,32 @@ public class TokenTests extends TestCase{
         assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("int(x^3+1)^-2").getToken().intValue());
         assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("int(ln(x)+sin(x))^-2").getToken().intValue());
     }
+
+    public void testTokenRootOfTermWithVariable() throws Exception {
+        assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(4x)").getToken().intValue());
+        assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(4x+3)").getToken().intValue());
+        assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(4-3x)").getToken().intValue());
+        assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(4*3x)").getToken().intValue());
+        assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(4/(3x))").getToken().intValue());
+        assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(4^x)").getToken().intValue());
+
+        assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(sin(x))").getToken().intValue());
+        assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(cos(90)+x)").getToken().intValue());
+        assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(x*tan(90))").getToken().intValue());
+
+        assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(x*log(2))").getToken().intValue());
+        assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(ln(2x))").getToken().intValue());
+        assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(log2b(2)+x+3)").getToken().intValue());
+
+        assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(dx(4x^2))").getToken().intValue());
+        assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(dx(x^3))").getToken().intValue());
+        assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(dx(sin(x)))").getToken().intValue());
+        assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(dx(ln(x)+2))").getToken().intValue());
+        assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(dx(x)^x)").getToken().intValue());
+
+        assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(int(2)+3)").getToken().intValue());
+        assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(int(2)+3x)").getToken().intValue());
+        assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(int(2)^4+3x)").getToken().intValue());
+        assertEquals(ROOT_OF_TERM_WITH_X, parser.parse("sqrt(int(3)+dx(x^3))").getToken().intValue());
+    }
 }
