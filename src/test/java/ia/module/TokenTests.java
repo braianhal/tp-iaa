@@ -665,4 +665,47 @@ public class TokenTests extends TestCase{
         assertEquals(TRIGONOMETRIC, parser.parse("tan(int(2)^4+3x)").getToken().intValue());
         assertEquals(TRIGONOMETRIC, parser.parse("tan(int(3)+dx(x^3))").getToken().intValue());
     }
+
+    public void testTokenRaisedToTermWithVariable() throws Exception {
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("2^x").getToken().intValue());
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("(2-4)^x").getToken().intValue());
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("(-2)^(x+1)").getToken().intValue());
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("(2+x)^(x*x+3)").getToken().intValue());
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("2^(1/x)").getToken().intValue());
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("(3x)^(x^2+1)").getToken().intValue());
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("4^(x^2+x)").getToken().intValue());
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("5^(x^2+x+3)").getToken().intValue());
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("(5/x)^(x^2+x+3)").getToken().intValue());
+
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("2^sin(x)").getToken().intValue());
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("2^cos(x)").getToken().intValue());
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("2^tan(x)").getToken().intValue());
+
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("3^sin(x+1)").getToken().intValue());
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("(3ln(x))^sin(x+1)").getToken().intValue());
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("(3log(x))^cos(x+1)").getToken().intValue());
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("(3log2b(x))^tan(x+1)").getToken().intValue());
+
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("4^log(x)").getToken().intValue());
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("4^log2b(x)").getToken().intValue());
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("4^ln(x)").getToken().intValue());
+
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("(4+x)^log(x+1)").getToken().intValue());
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("(x*x*x)^log2b(x+1)").getToken().intValue());
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("5^ln(x+1)").getToken().intValue());
+
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("5^dx(x^2)").getToken().intValue());
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("5^dx(x^3)").getToken().intValue());
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("(5+x)^dx(x^3)").getToken().intValue());
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("5^dx(x^3+2x^2+4x+3)").getToken().intValue());
+
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("6^int(3)").getToken().intValue());
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("(6x)^int(3)").getToken().intValue());
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("6^int(x)").getToken().intValue());
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("(6^x)^int(x)").getToken().intValue());
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("6^int(x+1)").getToken().intValue());
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("6^int(x^2+1)").getToken().intValue());
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("6^int(x^3+1)").getToken().intValue());
+        assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("6^int(ln(x)+sin(x))").getToken().intValue());
+    }
 }
