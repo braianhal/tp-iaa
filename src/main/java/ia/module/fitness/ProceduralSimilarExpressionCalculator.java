@@ -24,18 +24,33 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
             Double levelSimilarity = this.getLevelSimilarityBetween(originalExpressionTree, candidateExpressionTree);
             Double structureSimilarity = this.getStructureSimilarityBetween(originalExpressionTree, candidateExpressionTree);
 
-            return levelSimilarity;
+            return levelSimilarity * structureSimilarity;
         }catch (Exception e){
             System.out.println("Expresión inválida. Original: " + this.originalExpression + " Candidata: " + candidateExpression);
             return 0.0;
         }
     }
 
-    private Double getStructureSimilarityBetween(ExpressionNode originalExpressionTree, ExpressionNode candidateExpressionTree){
-        ExpressionsWithArgumentStructures originalExpressionsStructure = originalExpressionTree.getStructureOf(new ExpressionsWithArgumentStructures());
-        ExpressionsWithArgumentStructures candidateExpressionsStructure = candidateExpressionTree.getStructureOf(new ExpressionsWithArgumentStructures());
+    public Double getStructureSimilarityBetween(ExpressionNode originalExpressionTree, ExpressionNode candidateExpressionTree){
+        ExpressionsWithArgumentStructures originalExpressionsStructures = originalExpressionTree.getStructureOf(new ExpressionsWithArgumentStructures());
+        ExpressionsWithArgumentStructures candidateExpressionsStructures = candidateExpressionTree.getStructureOf(new ExpressionsWithArgumentStructures());
 
-        return 0.0;
+        Double structureExistenceSimilarity = this.getStructureExistenceSimilarity(originalExpressionsStructures, candidateExpressionsStructures);
+        Double structuresCountSimilarity = this.getStructuresCountSimilarity(originalExpressionsStructures, candidateExpressionsStructures);
+
+        return structureExistenceSimilarity * structuresCountSimilarity;
+    }
+
+    private Double getStructureExistenceSimilarity(ExpressionsWithArgumentStructures originalExpressionsStructures, ExpressionsWithArgumentStructures candidateExpressionsStructures){
+        return this.toRatio(originalExpressionsStructures.getCountOfStructuresNotIncludedInto(candidateExpressionsStructures));
+    }
+
+    private Double getStructuresCountSimilarity(ExpressionsWithArgumentStructures originalExpressionsStructures, ExpressionsWithArgumentStructures candidateExpressionsStructures){
+        return this.toRatio(candidateExpressionsStructures.getCountOfStructuresWithCountOfOccurrencesOutOfBoundOf(originalExpressionsStructures));
+    }
+
+    private Double toRatio(Long value){
+        return 1/ (1 + value.doubleValue());
     }
 
     private Double getLevelSimilarityBetween(ExpressionNode originalExpressionTree, ExpressionNode candidateExpressionTree){

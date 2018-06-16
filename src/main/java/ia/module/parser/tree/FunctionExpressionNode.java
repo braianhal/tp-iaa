@@ -1,7 +1,6 @@
 package ia.module.parser.tree;
 
 import com.sun.tools.corba.se.idl.constExpr.EvaluationException;
-import ia.module.parser.ExpressionWithArgumentStructure;
 import ia.module.parser.ExpressionsWithArgumentStructures;
 import ia.module.parser.Operator;
 
@@ -154,7 +153,7 @@ public class FunctionExpressionNode extends AbstractExpressionNode implements Ex
     }
 
     public ExpressionsWithArgumentStructures getStructureOf(ExpressionsWithArgumentStructures expressionsWithArgumentStructures){
-        return expressionsWithArgumentStructures.addExpressionWithArgument(new ExpressionWithArgumentStructure(this.getToken(), this.argument.getToken()));
+        return expressionsWithArgumentStructures.addExpressionWithArguments(this.getToken(), this.argument.getToken());
     }
 
     public Integer getToken(){

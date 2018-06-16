@@ -1,5 +1,7 @@
 package ia.module.parser.tree;
 
+import ia.module.parser.ExpressionsWithArgumentStructures;
+
 public class AbstractExpressionNode {
 
     public Boolean isNumber(){
@@ -52,5 +54,9 @@ public class AbstractExpressionNode {
 
     public Boolean isQuadraticX(){
         return false;
+    }
+
+    public ExpressionsWithArgumentStructures getStructureOf(ExpressionsWithArgumentStructures expressionsWithArgumentStructures){
+        return expressionsWithArgumentStructures;
     }
 }

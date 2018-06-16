@@ -2,37 +2,39 @@ package ia.module.parser;
 
 public class ExpressionWithArgumentStructure {
 
-    private Integer functionToken;
-    private Integer functionArgumentToken;
+    private Integer dadToken;
+    private Integer childToken;
     private Integer countOfOccurrences;
 
-    public ExpressionWithArgumentStructure(Integer functionToken, Integer functionArgumentToken) {
-        this.functionToken = functionToken;
-        this.functionArgumentToken = functionArgumentToken;
+    public ExpressionWithArgumentStructure(Integer dadToken, Integer childToken) {
+        this.dadToken = dadToken;
+        this.childToken = childToken;
         this.countOfOccurrences = 1;
     }
 
-    public Integer getFunctionToken() {
-        return functionToken;
+    public Integer getDadToken() {
+        return dadToken;
     }
 
-    public void setFunctionToken(Integer functionToken) {
-        this.functionToken = functionToken;
-    }
-
-    public Integer getFunctionArgumentToken() {
-        return functionArgumentToken;
-    }
-
-    public void setFunctionArgumentToken(Integer functionArgumentToken) {
-        this.functionArgumentToken = functionArgumentToken;
+    public Integer getChildToken() {
+        return childToken;
     }
 
     public Integer getCountOfOccurrences() {
         return countOfOccurrences;
     }
 
-    public void incrementCountOfOcurrencies(){
+    public void incrementCountOfOccurrences(){
         this.countOfOccurrences += 1;
+    }
+
+    public Boolean hasOccurrencesOutOfBoundsOf(ExpressionsWithArgumentStructures structures){
+        ExpressionWithArgumentStructure expressionWithArgumentStructureFound = structures.find(this);
+
+        if(expressionWithArgumentStructureFound == null){
+            return false;
+        }
+
+        return this.countOfOccurrences > expressionWithArgumentStructureFound.getCountOfOccurrences();
     }
 }
