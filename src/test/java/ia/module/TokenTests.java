@@ -838,4 +838,43 @@ public class TokenTests extends TestCase{
         assertEquals(DERIVATIVE, parser.parse("dx(int(2)^4+3x)").getToken().intValue());
         assertEquals(DERIVATIVE, parser.parse("dx(int(3)+dx(x^3))").getToken().intValue());
     }
+
+    public void testTokenIntegral() throws Exception {
+        assertEquals(INTEGRAL, parser.parse("int(0)").getToken().intValue());
+        assertEquals(INTEGRAL, parser.parse("int(4)").getToken().intValue());
+        assertEquals(INTEGRAL, parser.parse("int(4+4)").getToken().intValue());
+        assertEquals(INTEGRAL, parser.parse("int(4-4)").getToken().intValue());
+        assertEquals(INTEGRAL, parser.parse("int(4*4)").getToken().intValue());
+        assertEquals(INTEGRAL, parser.parse("int(4/4)").getToken().intValue());
+        assertEquals(INTEGRAL, parser.parse("int(4^4)").getToken().intValue());
+        assertEquals(INTEGRAL, parser.parse("int(4x)").getToken().intValue());
+        assertEquals(INTEGRAL, parser.parse("int(4x+3)").getToken().intValue());
+        assertEquals(INTEGRAL, parser.parse("int(4-3x)").getToken().intValue());
+        assertEquals(INTEGRAL, parser.parse("int(4*3x)").getToken().intValue());
+        assertEquals(INTEGRAL, parser.parse("int(4/(3x))").getToken().intValue());
+        assertEquals(INTEGRAL, parser.parse("int(4^x)").getToken().intValue());
+        assertEquals(INTEGRAL, parser.parse("int(int(x))").getToken().intValue());
+        assertEquals(INTEGRAL, parser.parse("int(sqrt(x+1))").getToken().intValue());
+        assertEquals(INTEGRAL, parser.parse("int(int(x^2))").getToken().intValue());
+        assertEquals(INTEGRAL, parser.parse("int(sqrt(x*x))").getToken().intValue());
+
+        assertEquals(INTEGRAL, parser.parse("int(sin(x))").getToken().intValue());
+        assertEquals(INTEGRAL, parser.parse("int(cos(90)+x)").getToken().intValue());
+        assertEquals(INTEGRAL, parser.parse("int(x*tan(90))").getToken().intValue());
+
+        assertEquals(INTEGRAL, parser.parse("int(x*log(2))").getToken().intValue());
+        assertEquals(INTEGRAL, parser.parse("int(ln(2x))").getToken().intValue());
+        assertEquals(INTEGRAL, parser.parse("int(log2b(2)+x+3)").getToken().intValue());
+
+        assertEquals(INTEGRAL, parser.parse("int(dx(4x^2))").getToken().intValue());
+        assertEquals(INTEGRAL, parser.parse("int(dx(x^3))").getToken().intValue());
+        assertEquals(INTEGRAL, parser.parse("int(dx(sin(x)))").getToken().intValue());
+        assertEquals(INTEGRAL, parser.parse("int(dx(ln(x)+2))").getToken().intValue());
+        assertEquals(INTEGRAL, parser.parse("int(dx(x)^x)").getToken().intValue());
+
+        assertEquals(INTEGRAL, parser.parse("int(int(2)+3)").getToken().intValue());
+        assertEquals(INTEGRAL, parser.parse("int(int(2)+3x)").getToken().intValue());
+        assertEquals(INTEGRAL, parser.parse("int(int(2)^4+3x)").getToken().intValue());
+        assertEquals(INTEGRAL, parser.parse("int(int(3)+dx(x^3))").getToken().intValue());
+    }
 }
