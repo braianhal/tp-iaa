@@ -800,4 +800,42 @@ public class TokenTests extends TestCase{
         assertEquals(LOGARITHM, parser.parse("ln(int(2)^4+3x)").getToken().intValue());
         assertEquals(LOGARITHM, parser.parse("ln(int(3)+dx(x^3))").getToken().intValue());
     }
+
+    public void testTokenDerivative() throws Exception {
+        assertEquals(DERIVATIVE, parser.parse("dx(4)").getToken().intValue());
+        assertEquals(DERIVATIVE, parser.parse("dx(4+4)").getToken().intValue());
+        assertEquals(DERIVATIVE, parser.parse("dx(4-4)").getToken().intValue());
+        assertEquals(DERIVATIVE, parser.parse("dx(4*4)").getToken().intValue());
+        assertEquals(DERIVATIVE, parser.parse("dx(4/4)").getToken().intValue());
+        assertEquals(DERIVATIVE, parser.parse("dx(4^4)").getToken().intValue());
+        assertEquals(DERIVATIVE, parser.parse("dx(4x)").getToken().intValue());
+        assertEquals(DERIVATIVE, parser.parse("dx(4x+3)").getToken().intValue());
+        assertEquals(DERIVATIVE, parser.parse("dx(4-3x)").getToken().intValue());
+        assertEquals(DERIVATIVE, parser.parse("dx(4*3x)").getToken().intValue());
+        assertEquals(DERIVATIVE, parser.parse("dx(4/(3x))").getToken().intValue());
+        assertEquals(DERIVATIVE, parser.parse("dx(4^x)").getToken().intValue());
+        assertEquals(DERIVATIVE, parser.parse("dx(dx(x))").getToken().intValue());
+        assertEquals(DERIVATIVE, parser.parse("dx(sqrt(x+1))").getToken().intValue());
+        assertEquals(DERIVATIVE, parser.parse("dx(dx(x^2))").getToken().intValue());
+        assertEquals(DERIVATIVE, parser.parse("dx(sqrt(x*x))").getToken().intValue());
+
+        assertEquals(DERIVATIVE, parser.parse("dx(sin(x))").getToken().intValue());
+        assertEquals(DERIVATIVE, parser.parse("dx(cos(90)+x)").getToken().intValue());
+        assertEquals(DERIVATIVE, parser.parse("dx(x*tan(90))").getToken().intValue());
+
+        assertEquals(DERIVATIVE, parser.parse("dx(x*log(2))").getToken().intValue());
+        assertEquals(DERIVATIVE, parser.parse("dx(ln(2x))").getToken().intValue());
+        assertEquals(DERIVATIVE, parser.parse("dx(log2b(2)+x+3)").getToken().intValue());
+
+        assertEquals(DERIVATIVE, parser.parse("dx(dx(4x^2))").getToken().intValue());
+        assertEquals(DERIVATIVE, parser.parse("dx(dx(x^3))").getToken().intValue());
+        assertEquals(DERIVATIVE, parser.parse("dx(dx(sin(x)))").getToken().intValue());
+        assertEquals(DERIVATIVE, parser.parse("dx(dx(ln(x)+2))").getToken().intValue());
+        assertEquals(DERIVATIVE, parser.parse("dx(dx(x)^x)").getToken().intValue());
+
+        assertEquals(DERIVATIVE, parser.parse("dx(int(2)+3)").getToken().intValue());
+        assertEquals(DERIVATIVE, parser.parse("dx(int(2)+3x)").getToken().intValue());
+        assertEquals(DERIVATIVE, parser.parse("dx(int(2)^4+3x)").getToken().intValue());
+        assertEquals(DERIVATIVE, parser.parse("dx(int(3)+dx(x^3))").getToken().intValue());
+    }
 }
