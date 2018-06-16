@@ -83,7 +83,7 @@ public class MultiplicationExpressionNode extends SequenceExpressionNode{
 
     private Boolean onlyOneTermHasVariableAsDividend(){
         return this.onlyOneTermHasVariableAsFactor() &&
-                this.terms.stream().filter(term -> term.isNumber() && !term.positive).count() == 1;
+                this.terms.stream().anyMatch(term -> (term.isNumber() && !term.positive) || term.isFractionalNumber());
     }
 
     public Boolean isQuadraticX() {

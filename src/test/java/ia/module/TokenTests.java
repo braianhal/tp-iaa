@@ -300,4 +300,54 @@ public class TokenTests extends TestCase{
         assertEquals(BY_TERM_WITH_X, parser.parse("3(int(2x)+4)").getToken().intValue());
         assertEquals(BY_TERM_WITH_X, parser.parse("3(int(2x+3)+4)").getToken().intValue());
     }
+
+    public void testTokenTermWithXDividedN() throws Exception {
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x+1)/2").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x+1)/(2+3)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x+1)/(2-3)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x+1)/(2*3)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x+1)*2/3").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("2/3(x+1)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x+1)*(2/3)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x+1)*3(2/3)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x+1)/(2^3)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x+1)^2/(2^3)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+1)/(2^3)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+2x+1)/(2^3)").getToken().intValue());
+
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+2x+1)/log(2)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+2x+1)/log(2+2)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+2x+1)/log(2-2)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+2x+1)/log(2*2)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+2x+1)/log(2/2)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+2x+1)/log(2^2)").getToken().intValue());
+
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+2x+1)/log2b(2)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+2x+1)/log2b(2+2)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+2x+1)/log2b(2-2)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+2x+1)/log2b(2*2)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+2x+1)/log2b(2/2)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+2x+1)/log2b(2^2)").getToken().intValue());
+
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+2x+1)/ln(2)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+2x+1)*1/ln(2)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+2x+1)/ln(2+2)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+2x+1)/ln(2-2)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+2x+1)/ln(2*2)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+2x+1)/ln(2/2)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+2x+1)/ln(2^2)").getToken().intValue());
+
+
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+2x+1)/dx(4)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+2x+1)/dx(2x)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+2x+1)/dx(2x+3)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+2x+1)/dx(2x+3)^2").getToken().intValue());
+
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(int(3)+3)*2/3").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(int(3x)+3x)*2/3").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(int(3x^2+x+2)+3x)*2/3").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(int(3x^2+x+2)+3x)/3").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("1/3int(3x^2+x+2)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(1/3)*int(3x^2+x+2)").getToken().intValue());
+    }
 }

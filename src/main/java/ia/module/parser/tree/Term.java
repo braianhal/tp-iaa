@@ -38,4 +38,8 @@ public class Term {
     public Boolean isZero(){
         return this.expression.isZero();
     }
+
+    public Boolean isFractionalNumber(){
+        return this.expression.isFractionalNumber();
+    }
 }
