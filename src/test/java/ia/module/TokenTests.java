@@ -522,4 +522,42 @@ public class TokenTests extends TestCase{
         assertEquals(TERM_WITH_X_RAISED_TO_MINUS_1, parser.parse("int(x^3+1)^-1").getToken().intValue());
         assertEquals(TERM_WITH_X_RAISED_TO_MINUS_1, parser.parse("int(ln(x)+sin(x))^-1").getToken().intValue());
     }
+
+    public void testTokenTermWithVariableRaisedToMinusNumber() throws Exception {
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("x^-2").getToken().intValue());
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("x^(2-4)").getToken().intValue());
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("(x+1)^-2").getToken().intValue());
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("(x*x+3)^-2").getToken().intValue());
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("(1/x)^-2").getToken().intValue());
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("(x^2+1)^-2").getToken().intValue());
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("(x^2+x)^-2").getToken().intValue());
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("(x^2+x+3)^-2").getToken().intValue());
+
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("sin(x)^-2").getToken().intValue());
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("cos(x)^-3").getToken().intValue());
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("tan(x)^-3").getToken().intValue());
+
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("sin(x+1)^-3").getToken().intValue());
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("cos(x+1)^-3").getToken().intValue());
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("tan(x+1)^-3").getToken().intValue());
+
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("log(x)^-4").getToken().intValue());
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("log2b(x)^-4").getToken().intValue());
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("ln(x)^-4").getToken().intValue());
+
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("log(x+1)^-4").getToken().intValue());
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("log2b(x+1)^-5").getToken().intValue());
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("ln(x+1)^-5").getToken().intValue());
+
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("dx(x^2)^-5").getToken().intValue());
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("dx(x^3)^-6").getToken().intValue());
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("dx(x^3+2x^2+4x+3)^-6").getToken().intValue());
+
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("int(3)^-6").getToken().intValue());
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("int(x)^-6").getToken().intValue());
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("int(x+1)^-6").getToken().intValue());
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("int(x^2+1)^-6").getToken().intValue());
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("int(x^3+1)^-2").getToken().intValue());
+        assertEquals(TERM_WITH_X_RAISED_TO_MINUS_N, parser.parse("int(ln(x)+sin(x))^-2").getToken().intValue());
+    }
 }
