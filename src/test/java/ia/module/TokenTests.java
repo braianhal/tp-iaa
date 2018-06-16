@@ -279,4 +279,25 @@ public class TokenTests extends TestCase{
         assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("2+int(2x^3+3)-3x+2x+4").getToken().intValue());
         assertEquals(PLUS_OR_MINUS_TERM_WITH_X, parser.parse("2+(int(2x^3+3))^4-3x^3+2x+4").getToken().intValue());
     }
+
+    public void testTokenByTermWithX() throws Exception {
+        assertEquals(BY_TERM_WITH_X, parser.parse("2(x+1)").getToken().intValue());
+        assertEquals(BY_TERM_WITH_X, parser.parse("(2+3)*(x+1)").getToken().intValue());
+        assertEquals(BY_TERM_WITH_X, parser.parse("(2-3)*(x+1)").getToken().intValue());
+        assertEquals(BY_TERM_WITH_X, parser.parse("(2*3)*(x+1)").getToken().intValue());
+        assertEquals(BY_TERM_WITH_X, parser.parse("(2^3)*(x+1)").getToken().intValue());
+        assertEquals(BY_TERM_WITH_X, parser.parse("(2^3)*(x+1)^2").getToken().intValue());
+
+        assertEquals(BY_TERM_WITH_X, parser.parse("(x^2+1)*log(5)").getToken().intValue());
+        assertEquals(BY_TERM_WITH_X, parser.parse("(x^2+1)*log2b(5)").getToken().intValue());
+        assertEquals(BY_TERM_WITH_X, parser.parse("(x^2+1)*ln(5)").getToken().intValue());
+
+        assertEquals(BY_TERM_WITH_X, parser.parse("(x^2+1)*dx(5)").getToken().intValue());
+        assertEquals(BY_TERM_WITH_X, parser.parse("(x^2+1)*dx(x)").getToken().intValue());
+        assertEquals(BY_TERM_WITH_X, parser.parse("(x^2+1)*dx(x+1)").getToken().intValue());
+
+        assertEquals(BY_TERM_WITH_X, parser.parse("3(int(2)+4)").getToken().intValue());
+        assertEquals(BY_TERM_WITH_X, parser.parse("3(int(2x)+4)").getToken().intValue());
+        assertEquals(BY_TERM_WITH_X, parser.parse("3(int(2x+3)+4)").getToken().intValue());
+    }
 }

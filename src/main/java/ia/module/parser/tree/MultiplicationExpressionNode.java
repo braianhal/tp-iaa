@@ -49,7 +49,7 @@ public class MultiplicationExpressionNode extends SequenceExpressionNode{
             return Operator.N_BY_X;
         }
 
-        if(this.onlyOneTermHasVariableAsFactor()){
+        if(this.onlyOneTermHasVariableAsFactor() && !this.onlyOneTermHasVariableAsDividend()){
             return Operator.BY_TERM_WITH_X;
         }
 
