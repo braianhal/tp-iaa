@@ -708,4 +708,96 @@ public class TokenTests extends TestCase{
         assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("6^int(x^3+1)").getToken().intValue());
         assertEquals(RAISED_TO_TERM_WITH_X, parser.parse("6^int(ln(x)+sin(x))").getToken().intValue());
     }
+
+    public void testTokenLogarithm() throws Exception {
+        assertEquals(LOGARITHM, parser.parse("log(4x)").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log(4x+3)").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log(4-3x)").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log(4*3x)").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log(4/(3x))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log(4^x)").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log(sqrt(x))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log(log(x+1))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log(sqrt(x^2))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log(log(x*x))").getToken().intValue());
+
+        assertEquals(LOGARITHM, parser.parse("log(sin(x))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log(cos(90)+x)").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log(x*tan(90))").getToken().intValue());
+
+        assertEquals(LOGARITHM, parser.parse("log(x*log(2))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log(ln(2x))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log(log2b(2)+x+3)").getToken().intValue());
+
+        assertEquals(LOGARITHM, parser.parse("log(dx(4x^2))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log(dx(x^3))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log(dx(sin(x)))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log(dx(ln(x)+2))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log(dx(x)^x)").getToken().intValue());
+
+        assertEquals(LOGARITHM, parser.parse("log(int(2)+3)").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log(int(2)+3x)").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log(int(2)^4+3x)").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log(int(3)+dx(x^3))").getToken().intValue());
+
+        assertEquals(LOGARITHM, parser.parse("log2b(4x)").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log2b(4x+3)").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log2b(4-3x)").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log2b(4*3x)").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log2b(4/(3x))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log2b(4^x)").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log2b(log2b(x))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log2b(sqrt(x+1))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log2b(log2b(x^2))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log2b(ln(x*x))").getToken().intValue());
+
+        assertEquals(LOGARITHM, parser.parse("log2b(sin(x))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log2b(cos(90)+x)").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log2b(x*tan(90))").getToken().intValue());
+
+        assertEquals(LOGARITHM, parser.parse("log2b(x*log(2))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log2b(ln(2x))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log2b(log2b(2)+x+3)").getToken().intValue());
+
+        assertEquals(LOGARITHM, parser.parse("log2b(dx(4x^2))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log2b(dx(x^3))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log2b(dx(sin(x)))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log2b(dx(ln(x)+2))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log2b(dx(x)^x)").getToken().intValue());
+
+        assertEquals(LOGARITHM, parser.parse("log2b(int(2)+3)").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log2b(int(2)+3x)").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log2b(int(2)^4+3x)").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("log2b(int(3)+dx(x^3))").getToken().intValue());
+
+        assertEquals(LOGARITHM, parser.parse("ln(4x)").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("ln(4x+3)").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("ln(4-3x)").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("ln(4*3x)").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("ln(4/(3x))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("ln(4^x)").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("ln(ln(x))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("ln(ln(x+1))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("ln(ln(x^2))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("ln(ln(x*x))").getToken().intValue());
+
+        assertEquals(LOGARITHM, parser.parse("ln(sin(x))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("ln(cos(90)+x)").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("ln(x*tan(90))").getToken().intValue());
+
+        assertEquals(LOGARITHM, parser.parse("ln(x*log(2))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("ln(ln(2x))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("ln(log2b(2)+x+3)").getToken().intValue());
+
+        assertEquals(LOGARITHM, parser.parse("ln(dx(4x^2))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("ln(dx(x^3))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("ln(dx(sin(x)))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("ln(dx(ln(x)+2))").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("ln(dx(x)^x)").getToken().intValue());
+
+        assertEquals(LOGARITHM, parser.parse("ln(int(2)+3)").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("ln(int(2)+3x)").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("ln(int(2)^4+3x)").getToken().intValue());
+        assertEquals(LOGARITHM, parser.parse("ln(int(3)+dx(x^3))").getToken().intValue());
+    }
 }
