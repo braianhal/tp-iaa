@@ -26,11 +26,17 @@ public class ExpressionsWithArgumentStructures {
     }
 
     public Long getCountOfStructuresNotIncludedInto(ExpressionsWithArgumentStructures structures){
-        return this.expressionsWithArgument.stream().filter(structure -> !structures.has(structure)).count();
+        return this.expressionsWithArgument.stream()
+                .filter(structure -> !structures.has(structure))
+                .map(structure -> structure.getDiffOfOccurrences(structures))
+                .reduce(0, (total, diff) -> total + diff).longValue();
     }
 
     public Long getCountOfStructuresWithCountOfOccurrencesOutOfBoundOf(ExpressionsWithArgumentStructures structures){
-        return this.expressionsWithArgument.stream().filter(structure -> structure.hasOccurrencesOutOfBoundsOf(structures)).count();
+        return this.expressionsWithArgument.stream()
+                .filter(structure -> structure.hasOccurrencesOutOfBoundsOf(structures))
+                .map(structure -> structure.getDiffOfOccurrences(structures))
+                .reduce(0, (total, diff) -> total + diff).longValue();
     }
 
     public Boolean has(ExpressionWithArgumentStructure expressionWithArgumentStructure){

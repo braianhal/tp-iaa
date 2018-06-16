@@ -32,9 +32,19 @@ public class ExpressionWithArgumentStructure {
         ExpressionWithArgumentStructure expressionWithArgumentStructureFound = structures.find(this);
 
         if(expressionWithArgumentStructureFound == null){
-            return false;
+            return true;
         }
 
         return this.countOfOccurrences > expressionWithArgumentStructureFound.getCountOfOccurrences();
+    }
+
+    public Integer getDiffOfOccurrences(ExpressionsWithArgumentStructures structures){
+        ExpressionWithArgumentStructure expressionWithArgumentStructureFound = structures.find(this);
+
+        if(expressionWithArgumentStructureFound == null){
+            return this.countOfOccurrences;
+        }
+
+        return Math.abs(this.countOfOccurrences - expressionWithArgumentStructureFound.getCountOfOccurrences());
     }
 }
