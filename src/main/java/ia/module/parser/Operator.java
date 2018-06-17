@@ -60,7 +60,7 @@ public class Operator {
 
     @Override
     public String toString() {
-        return "Token: " + this.tokenName() + " - Grado: " + this.degree;
+        return "(" + this.tokenName() + ", " + this.degree + ")";
     }
 
     public boolean equals(Operator operator1) {

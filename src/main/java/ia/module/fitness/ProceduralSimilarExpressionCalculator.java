@@ -9,6 +9,7 @@ import io.jenetics.prog.op.Op;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalculator {
 
@@ -38,12 +39,30 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
 
     public Double getComplexitySimilarity(ExpressionNode originalExpressionTree, ExpressionNode candidateExpressionTree){
         ExpressionNode originalExpressionTreeNormalized = originalExpressionTree.normalize();
-        ExpressionNode candidateExpressionTreeNormalized = originalExpressionTree.normalize();
+        ExpressionNode candidateExpressionTreeNormalized = candidateExpressionTree.normalize();
 
         List<Operator> originalExpressionTokens = this.removeDuplicates(originalExpressionTreeNormalized.getListOfTokens());
         List<Operator> candidateExpressionTokens = this.removeDuplicates(candidateExpressionTreeNormalized.getListOfTokens());
 
+        List<Operator> intersection = this.getIntersection(originalExpressionTokens, candidateExpressionTokens);
+        List<Operator> union = this.getUnion(originalExpressionTokens, candidateExpressionTokens);
+
         return 1.0;
+    }
+
+    private List<Operator> getIntersection(List<Operator> originalExpressionTokens, List<Operator> candidateExpressionTokens){
+        List<Operator> intersection = originalExpressionTokens.stream()
+                .filter(token -> candidateExpressionTokens.stream().anyMatch(token1 -> token1.equals(token)))
+                .collect(Collectors.toList());
+
+        return this.chooseTermWithVariableByTermWithVariableDegree(candidateExpressionTokens, intersection, false);
+    }
+
+    private List<Operator> getUnion(List<Operator> originalExpressionTokens, List<Operator> candidateExpressionTokens){
+        List<Operator> union = new ArrayList<>();
+        union.addAll(originalExpressionTokens);
+        union.addAll(candidateExpressionTokens);
+        return this.removeDuplicates(union);
     }
 
     private List<Operator> removeDuplicates(List<Operator> operators){
@@ -51,17 +70,36 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
 
         for(Operator operator : operators){
             if(operatorsWithoutDuplicates.stream().noneMatch(operator1 -> operator1.equals(operator))){
-                operatorsWithoutDuplicates.add(operator);
-            }else if(operator.getOperator() == Operator.TERM_WITH_X_BY_TERM_WITH_X){
-                for(Operator operator1 : operatorsWithoutDuplicates){
-                    if(operator.equals(operator1)){
-                        operator1.setDegree(Math.max(operator1.getDegree(), operator.getDegree()));
-                    }
-                }
+                operatorsWithoutDuplicates.add(new Operator(operator.getOperator(), operator.getDegree()));
             }
         }
 
-        return operatorsWithoutDuplicates;
+        return this.chooseTermWithVariableByTermWithVariableDegree(operators, operatorsWithoutDuplicates, true);
+    }
+
+    private List<Operator> chooseTermWithVariableByTermWithVariableDegree(List<Operator> reference, List<Operator> result, Boolean chooseMax){
+        Integer maxDegree = reference.stream()
+                .filter(operator -> operator.getOperator().equals(Operator.TERM_WITH_X_BY_TERM_WITH_X))
+                .map(Operator::getDegree)
+                .reduce(0, Math::max);
+
+        Integer degreeToUse;
+
+        if(chooseMax){
+            degreeToUse = maxDegree;
+        }else{
+            degreeToUse = reference.stream()
+                    .filter(operator -> operator.getOperator().equals(Operator.TERM_WITH_X_BY_TERM_WITH_X))
+                    .map(Operator::getDegree)
+                    .reduce(maxDegree, Math::min);
+        }
+
+        return result.stream()
+                .map(operator ->
+                        operator.getOperator().equals(Operator.TERM_WITH_X_BY_TERM_WITH_X) ?
+                        new Operator(operator.getOperator(), degreeToUse) :
+                        operator)
+                .collect(Collectors.toList());
     }
 
     public Double getStructureSimilarityBetween(ExpressionNode originalExpressionTree, ExpressionNode candidateExpressionTree){
