@@ -4,6 +4,9 @@ import com.sun.tools.corba.se.idl.constExpr.EvaluationException;
 import ia.module.parser.ExpressionsWithArgumentStructures;
 import ia.module.parser.Operator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class VariableExpressionNode extends AbstractExpressionNode implements ExpressionNode{
 
     private String name;
@@ -62,5 +65,11 @@ public class VariableExpressionNode extends AbstractExpressionNode implements Ex
 
     public Integer getDegree(){
         return 1;
+    }
+
+    public List<Operator> getListOfTokens(){
+        List<Operator> tokens = new ArrayList<>();
+        tokens.add(Operator.newToken(this.getToken(), this.getDegree()));
+        return tokens;
     }
 }

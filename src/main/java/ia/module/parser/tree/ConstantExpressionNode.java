@@ -3,6 +3,9 @@ package ia.module.parser.tree;
 import ia.module.parser.ExpressionsWithArgumentStructures;
 import ia.module.parser.Operator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ConstantExpressionNode extends AbstractExpressionNode implements ExpressionNode{
 
     private Double value;
@@ -73,5 +76,11 @@ public class ConstantExpressionNode extends AbstractExpressionNode implements Ex
 
     public ExpressionNode normalize(){
         return this;
+    }
+
+    public List<Operator> getListOfTokens(){
+        List<Operator> tokens = new ArrayList<>();
+        tokens.add(Operator.newToken(this.getToken(), this.getDegree()));
+        return tokens;
     }
 }

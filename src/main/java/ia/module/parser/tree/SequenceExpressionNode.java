@@ -1,7 +1,9 @@
 package ia.module.parser.tree;
 
 import ia.module.parser.ExpressionsWithArgumentStructures;
+import ia.module.parser.Operator;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -127,5 +129,16 @@ public abstract class SequenceExpressionNode extends AbstractExpressionNode impl
             term.getStructureOf(expressionsWithArgumentStructures);
         }
         return expressionsWithArgumentStructures;
+    }
+
+    public List<Operator> getListOfTokens(){
+        List<Operator> tokens = new ArrayList<>();
+        tokens.add(Operator.newToken(this.getToken(), this.getDegree()));
+
+        for(Term term : this.terms){
+            tokens.addAll(term.getListOfTokens());
+        }
+
+        return tokens;
     }
 }

@@ -5,6 +5,8 @@ import ia.module.parser.ExpressionsWithArgumentStructures;
 import ia.module.parser.Operator;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FunctionExpressionNode extends AbstractExpressionNode implements ExpressionNode{
 
@@ -196,5 +198,12 @@ public class FunctionExpressionNode extends AbstractExpressionNode implements Ex
     public ExpressionNode normalize(){
         this.argument = this.argument.normalize();
         return this;
+    }
+
+    public List<Operator> getListOfTokens(){
+        List<Operator> tokens = new ArrayList<>();
+        tokens.add(Operator.newToken(this.getToken(), this.getDegree()));
+        tokens.addAll(this.argument.getListOfTokens());
+        return tokens;
     }
 }

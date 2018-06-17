@@ -1,6 +1,10 @@
 package ia.module.parser.tree;
 
 import ia.module.parser.ExpressionsWithArgumentStructures;
+import ia.module.parser.Operator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Term {
 
@@ -59,5 +63,11 @@ public class Term {
 
     public Integer getDegree(){
         return this.expression.getDegree();
+    }
+
+    public List<Operator> getListOfTokens(){
+        List<Operator> tokens = new ArrayList<>();
+        tokens.add(Operator.newToken(this.getToken(), this.getDegree()));
+        return tokens;
     }
 }

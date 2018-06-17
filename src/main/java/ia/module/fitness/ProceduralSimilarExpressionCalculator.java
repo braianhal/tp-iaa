@@ -1,10 +1,14 @@
 package ia.module.fitness;
 
 import ia.module.parser.ExpressionsWithArgumentStructures;
+import ia.module.parser.Operator;
 import ia.module.parser.Parser;
 import ia.module.parser.tree.ExpressionNode;
 import io.jenetics.ext.util.TreeNode;
 import io.jenetics.prog.op.Op;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalculator {
 
@@ -36,7 +40,28 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
         ExpressionNode originalExpressionTreeNormalized = originalExpressionTree.normalize();
         ExpressionNode candidateExpressionTreeNormalized = originalExpressionTree.normalize();
 
+        List<Operator> originalExpressionTokens = this.removeDuplicates(originalExpressionTreeNormalized.getListOfTokens());
+        List<Operator> candidateExpressionTokens = this.removeDuplicates(candidateExpressionTreeNormalized.getListOfTokens());
+
         return 1.0;
+    }
+
+    private List<Operator> removeDuplicates(List<Operator> operators){
+        List<Operator> operatorsWithoutDuplicates = new ArrayList<>();
+
+        for(Operator operator : operators){
+            if(operatorsWithoutDuplicates.stream().noneMatch(operator1 -> operator1.equals(operator))){
+                operatorsWithoutDuplicates.add(operator);
+            }else if(operator.getOperator() == Operator.TERM_WITH_X_BY_TERM_WITH_X){
+                for(Operator operator1 : operatorsWithoutDuplicates){
+                    if(operator.equals(operator1)){
+                        operator1.setDegree(Math.max(operator1.getDegree(), operator.getDegree()));
+                    }
+                }
+            }
+        }
+
+        return operatorsWithoutDuplicates;
     }
 
     public Double getStructureSimilarityBetween(ExpressionNode originalExpressionTree, ExpressionNode candidateExpressionTree){

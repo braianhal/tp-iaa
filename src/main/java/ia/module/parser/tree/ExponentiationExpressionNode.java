@@ -4,6 +4,7 @@ import com.sun.tools.corba.se.idl.constExpr.EvaluationException;
 import ia.module.parser.ExpressionsWithArgumentStructures;
 import ia.module.parser.Operator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExponentiationExpressionNode extends AbstractExpressionNode implements ExpressionNode{
@@ -145,9 +146,7 @@ public class ExponentiationExpressionNode extends AbstractExpressionNode impleme
                     for(int i = 2 ; i <= exponentValue ; i++){
                         multiplication.add(this.base, true);
                     }
-
-                    multiplication.setDegree(exponentValue);
-
+                    
                     return multiplication;
                 }else{
                     return new ConstantExpressionNode(1);
@@ -160,5 +159,13 @@ public class ExponentiationExpressionNode extends AbstractExpressionNode impleme
         this.base = this.base.normalize();
         this.exponent = this.exponent.normalize();
         return this;
+    }
+
+    public List<Operator> getListOfTokens(){
+        List<Operator> tokens = new ArrayList<>();
+        tokens.add(Operator.newToken(this.getToken(), this.getDegree()));
+        tokens.addAll(this.base.getListOfTokens());
+        tokens.addAll(this.exponent.getListOfTokens());
+        return tokens;
     }
 }

@@ -2,6 +2,9 @@ package ia.module.parser.tree;
 
 import com.sun.tools.corba.se.idl.constExpr.EvaluationException;
 import ia.module.parser.ExpressionsWithArgumentStructures;
+import ia.module.parser.Operator;
+
+import java.util.List;
 
 public interface ExpressionNode {
 
@@ -31,4 +34,5 @@ public interface ExpressionNode {
     Boolean isEven();
     ExpressionNode normalize();
     Integer getDegree();
+    List<Operator> getListOfTokens();
 }
