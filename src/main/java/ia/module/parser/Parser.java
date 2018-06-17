@@ -95,6 +95,7 @@ public class Parser {
     public String cleanFormatOf(String expression){
         String expressionCleaned = expression;
 
+        expressionCleaned = replaceComplexOperatorsNames(expressionCleaned);
         expressionCleaned = addMultiplicationSymbols(expressionCleaned);
 
         return expressionCleaned
@@ -104,6 +105,12 @@ public class Parser {
                 .replaceAll("\\)\\(", ")*(")
                 .replaceAll("x\\(", "x*(")
                 .replaceAll("dx\\*\\(", "dx(");
+    }
+
+    private String replaceComplexOperatorsNames(String expression) {
+        return expression
+                .replaceAll("derivative", "dx")
+                .replaceAll("integral", "int");
     }
 
     private String addMultiplicationSymbols(String expression){

@@ -24,7 +24,7 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
 
             return levelSimilarity * structureSimilarity * complexitySimilarity;
         }catch (Exception e){
-            System.out.println("Expresión inválida. Original: " + this.originalExpression + " Candidata: " + candidateExpression);
+            //System.out.println("Expresión inválida. Original: " + this.originalExpression + " Candidata: " + candidateExpression);
             return 0.0;
         }
     }
