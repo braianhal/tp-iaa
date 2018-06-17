@@ -1,5 +1,7 @@
 package ia.module.fitness;
 
+import ia.module.parser.Parser;
+import ia.module.parser.tree.ExpressionNode;
 import io.jenetics.ext.util.TreeNode;
 import io.jenetics.prog.op.Op;
 import org.neuroph.core.data.DataSet;
@@ -15,15 +17,24 @@ public class NeuralNetworkSimilarExpressionCalculator extends SimilarExpressionC
     private Kohonen network;
     private double[] originalExpressionOutput;
 
-    public NeuralNetworkSimilarExpressionCalculator(TreeNode<Op<Double>> original) {
+    public NeuralNetworkSimilarExpressionCalculator(String original) {
         super(original);
         trainNetwork();
-        originalExpressionOutput = calculateOutput(original);
+        try {
+            originalExpressionOutput = calculateOutput(new Parser().parse(original));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public Double similarityWith(TreeNode<Op<Double>> otherExpression) {
-        double[] otherExpressionOutput = calculateOutput(otherExpression);
+    public Double similarityWith(String otherExpression) {
+        double[] otherExpressionOutput = new double[0];
+        try {
+            otherExpressionOutput = calculateOutput(new Parser().parse(otherExpression));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         double baseSimilarity = baseSimilarity(originalExpressionOutput, otherExpressionOutput);
         double fineSimilarity = fineSimilarity(originalExpressionOutput, otherExpressionOutput, 1 - baseSimilarity);
         return baseSimilarity + fineSimilarity;
@@ -38,14 +49,19 @@ public class NeuralNetworkSimilarExpressionCalculator extends SimilarExpressionC
         DataSet ds = new DataSet(INPUTS);
         for (int example = 0; example < TRAINING_EXAMPLES; example++) {
             TreeNode<Op<Double>> exampleExpression = TreeNode.ofTree(CHROMOSOME.newInstance().getGene());
-            double[] features = extractFeaturesForExpression(exampleExpression);
+            double[] features = new double[0];
+            try {
+                features = extractFeaturesForExpression(new Parser().parse(exampleExpression));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             ds.addRow(features);
         }
         return ds;
     }
 
     // TODO calculate actual features
-    private double[] extractFeaturesForExpression(TreeNode<Op<Double>> expression) {
+    private double[] extractFeaturesForExpression(ExpressionNode expression) {
         double[] features = new double[INPUTS];
         for (int i = 0; i < INPUTS; i++) {
             features[i] = new Random().nextDouble();
@@ -53,7 +69,7 @@ public class NeuralNetworkSimilarExpressionCalculator extends SimilarExpressionC
         return features;
     }
 
-    private double[] calculateOutput(TreeNode<Op<Double>> expression) {
+    private double[] calculateOutput(ExpressionNode expression) {
         double[] input = extractFeaturesForExpression(expression);
         network.setInput(input);
         network.calculate();

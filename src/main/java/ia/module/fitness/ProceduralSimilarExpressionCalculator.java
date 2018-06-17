@@ -4,8 +4,6 @@ import ia.module.parser.ExpressionsWithArgumentStructures;
 import ia.module.parser.Operator;
 import ia.module.parser.Parser;
 import ia.module.parser.tree.ExpressionNode;
-import io.jenetics.ext.util.TreeNode;
-import io.jenetics.prog.op.Op;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +14,6 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
     private String originalExpression;
 
     @Override
-    public Double similarityWith(TreeNode<Op<Double>> otherExpression) {
-        return this.similarityWith(new Parser().getAsInfix(otherExpression));
-    }
-
     public Double similarityWith(String candidateExpression) {
         Parser parser = new Parser();
         try {
@@ -165,10 +159,6 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
 
         Integer difference = Math.abs(originalExpressionTreeLevel - candidateExpressionTreeLevel);
         return (10 - difference.doubleValue()) / 10;
-    }
-
-    public ProceduralSimilarExpressionCalculator(TreeNode<Op<Double>> originalExpression) {
-        super(originalExpression);
     }
 
     public ProceduralSimilarExpressionCalculator(String originalExpression) {
