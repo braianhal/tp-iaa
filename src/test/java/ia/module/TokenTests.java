@@ -85,40 +85,14 @@ public class TokenTests extends TestCase{
     }
 
     public void testTokenNumberByVariable() throws Exception {
-        assertEquals(N_BY_X, parser.parse("2*x").getToken().intValue());
-        assertEquals(N_BY_X, parser.parse("(1+2)*x").getToken().intValue());
-        assertEquals(N_BY_X, parser.parse("x(sqrt(4))").getToken().intValue());
-        assertEquals(N_BY_X, parser.parse("x*(sqrt(2))").getToken().intValue());
+        assertEquals(N_BY_X, parser.parse("3(x+2)").getToken().intValue());
+        assertEquals(N_BY_X, parser.parse("(3+5)*(x+2)").getToken().intValue());
+        assertEquals(N_BY_X, parser.parse("3(3+x+x+4x+2)").getToken().intValue());
+        assertEquals(N_BY_X, parser.parse("3(x+2)/4").getToken().intValue());
+
         assertEquals(N_BY_X, parser.parse("(2*x)*(sqrt(5))").getToken().intValue());
-        assertEquals(N_BY_X, parser.parse("(2*3+sqrt(4)*ln(2))*x").getToken().intValue());
-        assertEquals(N_BY_X, parser.parse("(2*3+sqrt(4)*ln(2))x").getToken().intValue());
-
-        assertEquals(N_BY_X, parser.parse("x*sin(90)").getToken().intValue());
-        assertEquals(N_BY_X, parser.parse("x*cos(90)").getToken().intValue());
-        assertEquals(N_BY_X, parser.parse("x*tan(90)").getToken().intValue());
         assertEquals(N_BY_X, parser.parse("x*sin(90)*cos(90)").getToken().intValue());
-        assertEquals(N_BY_X, parser.parse("x*(tan(90)^3)").getToken().intValue());
-        assertEquals(N_BY_X, parser.parse("x*ln(2)").getToken().intValue());
-        assertEquals(N_BY_X, parser.parse("x*log(2)").getToken().intValue());
-        assertEquals(N_BY_X, parser.parse("x*log2b(2)").getToken().intValue());
-        assertEquals(N_BY_X, parser.parse("x*(log2b(2))^3").getToken().intValue());
-
-        assertEquals(N_BY_X, parser.parse("x*dx(2)").getToken().intValue());
-        assertEquals(N_BY_X, parser.parse("x*dx(2x)").getToken().intValue());
-        assertEquals(N_BY_X, parser.parse("2*dx(3x^2)").getToken().intValue());
-        assertEquals(N_BY_X, parser.parse("2*dx(3x*x)").getToken().intValue());
-        assertEquals(N_BY_X, parser.parse("(2^3)*dx(3x*x)").getToken().intValue());
-
-        assertEquals(N_BY_X, parser.parse("2*int(2)").getToken().intValue());
-        assertEquals(N_BY_X, parser.parse("2*int(2^3)").getToken().intValue());
-        assertEquals(N_BY_X, parser.parse("2*int(2+3)").getToken().intValue());
-        assertEquals(N_BY_X, parser.parse("2*int(2+3^4)").getToken().intValue());
-        assertEquals(N_BY_X, parser.parse("2*int(2*3)").getToken().intValue());
-        assertEquals(N_BY_X, parser.parse("2*int(2/3)").getToken().intValue());
-        assertEquals(N_BY_X, parser.parse("2*int(2+3*4/3)").getToken().intValue());
-        assertEquals(N_BY_X, parser.parse("(2^3)*int(2+3*4/3)").getToken().intValue());
         assertEquals(N_BY_X, parser.parse("(2*3)*int(2+3*4/3)").getToken().intValue());
-        assertEquals(N_BY_X, parser.parse("(2+3*4/3)*int(2+3*4/3)").getToken().intValue());
     }
 
     public void testTokenNumberDivideNumber() throws Exception {
@@ -227,6 +201,39 @@ public class TokenTests extends TestCase{
 
     public void testTokenVariable() throws Exception {
         assertEquals(X, parser.parse("x").getToken().intValue());
+        assertEquals(X, parser.parse("2x").getToken().intValue());
+        assertEquals(X, parser.parse("2*x").getToken().intValue());
+        assertEquals(X, parser.parse("(1+2)*x").getToken().intValue());
+        assertEquals(X, parser.parse("x(sqrt(4))").getToken().intValue());
+        assertEquals(X, parser.parse("x*(sqrt(2))").getToken().intValue());
+
+        assertEquals(X, parser.parse("(2*3+sqrt(4)*ln(2))*x").getToken().intValue());
+        assertEquals(X, parser.parse("(2*3+sqrt(4)*ln(2))x").getToken().intValue());
+
+        assertEquals(X, parser.parse("x*sin(90)").getToken().intValue());
+        assertEquals(X, parser.parse("x*cos(90)").getToken().intValue());
+        assertEquals(X, parser.parse("x*tan(90)").getToken().intValue());
+        assertEquals(X, parser.parse("x*(tan(90)^3)").getToken().intValue());
+        assertEquals(X, parser.parse("x*ln(2)").getToken().intValue());
+        assertEquals(X, parser.parse("x*log(2)").getToken().intValue());
+        assertEquals(X, parser.parse("x*log2b(2)").getToken().intValue());
+        assertEquals(X, parser.parse("x*(log2b(2))^3").getToken().intValue());
+
+        assertEquals(X, parser.parse("x*dx(2)").getToken().intValue());
+        assertEquals(X, parser.parse("x*dx(2x)").getToken().intValue());
+        assertEquals(X, parser.parse("2*dx(3x^2)").getToken().intValue());
+        assertEquals(X, parser.parse("2*dx(3x*x)").getToken().intValue());
+        assertEquals(X, parser.parse("(2^3)*dx(3x*x)").getToken().intValue());
+
+        assertEquals(X, parser.parse("2*int(2)").getToken().intValue());
+        assertEquals(X, parser.parse("2*int(2^3)").getToken().intValue());
+        assertEquals(X, parser.parse("2*int(2+3)").getToken().intValue());
+        assertEquals(X, parser.parse("2*int(2+3^4)").getToken().intValue());
+        assertEquals(X, parser.parse("2*int(2*3)").getToken().intValue());
+        assertEquals(X, parser.parse("2*int(2/3)").getToken().intValue());
+        assertEquals(X, parser.parse("2*int(2+3*4/3)").getToken().intValue());
+        assertEquals(X, parser.parse("(2^3)*int(2+3*4/3)").getToken().intValue());
+        assertEquals(X, parser.parse("(2+3*4/3)*int(2+3*4/3)").getToken().intValue());
     }
 
     public void testTokenPlusMinusVariable() throws Exception {
@@ -281,12 +288,12 @@ public class TokenTests extends TestCase{
     }
 
     public void testTokenByTermWithVariable() throws Exception {
-        assertEquals(BY_TERM_WITH_X, parser.parse("2(x+1)").getToken().intValue());
-        assertEquals(BY_TERM_WITH_X, parser.parse("(2+3)*(x+1)").getToken().intValue());
-        assertEquals(BY_TERM_WITH_X, parser.parse("(2-3)*(x+1)").getToken().intValue());
-        assertEquals(BY_TERM_WITH_X, parser.parse("(2*3)*(x+1)").getToken().intValue());
-        assertEquals(BY_TERM_WITH_X, parser.parse("(2^3)*(x+1)").getToken().intValue());
-        assertEquals(BY_TERM_WITH_X, parser.parse("(2^3)*(x+1)^2").getToken().intValue());
+        assertEquals(BY_TERM_WITH_X, parser.parse("2(x^2+1)").getToken().intValue());
+        assertEquals(BY_TERM_WITH_X, parser.parse("(2+3)*(x^2+1)").getToken().intValue());
+        assertEquals(BY_TERM_WITH_X, parser.parse("(2-3)*(x^2+1)").getToken().intValue());
+        assertEquals(BY_TERM_WITH_X, parser.parse("(2*3)*(x^2+1)").getToken().intValue());
+        assertEquals(BY_TERM_WITH_X, parser.parse("(2^3)*(x^2+1)").getToken().intValue());
+        assertEquals(BY_TERM_WITH_X, parser.parse("(2^3)*(x^2+1)^2").getToken().intValue());
 
         assertEquals(BY_TERM_WITH_X, parser.parse("(x^2+1)*log(5)").getToken().intValue());
         assertEquals(BY_TERM_WITH_X, parser.parse("(x^2+1)*log2b(5)").getToken().intValue());
@@ -296,21 +303,21 @@ public class TokenTests extends TestCase{
         assertEquals(BY_TERM_WITH_X, parser.parse("(x^2+1)*dx(x)").getToken().intValue());
         assertEquals(BY_TERM_WITH_X, parser.parse("(x^2+1)*dx(x+1)").getToken().intValue());
 
-        assertEquals(BY_TERM_WITH_X, parser.parse("3(int(2)+4)").getToken().intValue());
+        assertEquals(BY_TERM_WITH_X, parser.parse("3(int(2)^2+4)").getToken().intValue());
         assertEquals(BY_TERM_WITH_X, parser.parse("3(int(2x)+4)").getToken().intValue());
         assertEquals(BY_TERM_WITH_X, parser.parse("3(int(2x+3)+4)").getToken().intValue());
     }
 
     public void testTokenTermWithVariableDividedNumber() throws Exception {
-        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x+1)/2").getToken().intValue());
-        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x+1)/(2+3)").getToken().intValue());
-        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x+1)/(2-3)").getToken().intValue());
-        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x+1)/(2*3)").getToken().intValue());
-        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x+1)*2/3").getToken().intValue());
-        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("2/3(x+1)").getToken().intValue());
-        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x+1)*(2/3)").getToken().intValue());
-        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x+1)*3(2/3)").getToken().intValue());
-        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x+1)/(2^3)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+1)/2").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+1)/(2+3)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+1)/(2-3)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+1)/(2*3)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+1)*2/3").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("2/3(x^2+1)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+1)*(2/3)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+1)*3(2/3)").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+1)/(2^3)").getToken().intValue());
         assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x+1)^2/(2^3)").getToken().intValue());
         assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+1)/(2^3)").getToken().intValue());
         assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+2x+1)/(2^3)").getToken().intValue());
@@ -349,7 +356,7 @@ public class TokenTests extends TestCase{
         assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+2x+1)/dx(2x+3)").getToken().intValue());
         assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(x^2+2x+1)/dx(2x+3)^2").getToken().intValue());
 
-        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(int(3)+3)*2/3").getToken().intValue());
+        assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(int(3)^2+3)*2/3").getToken().intValue());
         assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(int(3x)+3x)*2/3").getToken().intValue());
         assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(int(3x^2+x+2)+3x)*2/3").getToken().intValue());
         assertEquals(TERM_WITH_X_DIVIDED_N, parser.parse("(int(3x^2+x+2)+3x)/3").getToken().intValue());

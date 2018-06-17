@@ -101,6 +101,7 @@ public class Parser {
                 .replaceAll("e", "2.718281828459045235360")
                 .replaceAll("pi", "3.14159265358979323846")
                 .replaceAll("\\)x", ")*x")
+                .replaceAll("\\)\\(", ")*(")
                 .replaceAll("x\\(", "x*(")
                 .replaceAll("dx\\*\\(", "dx(");
     }

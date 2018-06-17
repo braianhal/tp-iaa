@@ -6,6 +6,7 @@ import ia.module.parser.Operator;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class SequenceExpressionNode extends AbstractExpressionNode implements ExpressionNode{
 
@@ -140,5 +141,10 @@ public abstract class SequenceExpressionNode extends AbstractExpressionNode impl
         }
 
         return tokens;
+    }
+
+    public ExpressionNode normalize(){
+        this.terms = this.terms.stream().map(term -> new Term(term.positive, term.normalize())).collect(Collectors.toList());
+        return this;
     }
 }

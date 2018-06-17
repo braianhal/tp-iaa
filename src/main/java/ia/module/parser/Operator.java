@@ -124,7 +124,9 @@ public class Operator {
             FIBONACCI = this.recursiveFibonacci(FIBONACCI);
         }
 
-        return FIBONACCI.get(token);
+        Integer additional = this.operator == TERM_WITH_X_BY_TERM_WITH_X ? this.degree : 0;
+
+        return FIBONACCI.get(token > BY_TERM_WITH_X ? token - 1 : token) + additional;
     }
 
     private List<Long> recursiveFibonacci(List<Long> fibonacci){

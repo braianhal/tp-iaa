@@ -67,7 +67,7 @@ public class Term {
 
     public List<Operator> getListOfTokens(){
         List<Operator> tokens = new ArrayList<>();
-        tokens.add(Operator.newToken(this.getToken(), this.getDegree()));
+        tokens.addAll(this.expression.getListOfTokens());
         return tokens;
     }
 }

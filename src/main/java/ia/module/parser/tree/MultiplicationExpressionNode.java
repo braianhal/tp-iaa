@@ -3,12 +3,7 @@ package ia.module.parser.tree;
 import com.sun.tools.corba.se.idl.constExpr.EvaluationException;
 import ia.module.parser.Operator;
 
-import java.util.stream.Collectors;
-
 public class MultiplicationExpressionNode extends SequenceExpressionNode{
-
-    private Integer degree;
-
     public MultiplicationExpressionNode(ExpressionNode a, boolean positive) {
         super(a, positive);
     }
@@ -51,7 +46,11 @@ public class MultiplicationExpressionNode extends SequenceExpressionNode{
             return Operator.N_DIVIDED_N;
         }
 
-        if(this.onlyOneTermIsVariable()){
+        if(this.terms.size() == 2 && this.onlyOneTermIsVariable()){
+            return Operator.X;
+        }
+
+        if(this.onlyOneTermIsVariable() || this.onlyOneTermIsLineal()){
             return Operator.N_BY_X;
         }
 
@@ -77,6 +76,11 @@ public class MultiplicationExpressionNode extends SequenceExpressionNode{
     private Boolean onlyOneTermIsVariable(){
         return this.terms.stream().filter(Term::hasVariable).count() == 1 &&
                 this.terms.stream().filter(term -> term.isVariable() && term.positive).count() == 1;
+    }
+
+    private Boolean onlyOneTermIsLineal(){
+        return this.terms.stream().filter(Term::hasVariable).count() == 1 &&
+                this.terms.stream().filter(term -> term.hasVariable() && term.isLineal() && term.positive).count() == 1;
     }
 
     private Long countOfTermsWithVariableAsFactor(){
@@ -112,10 +116,5 @@ public class MultiplicationExpressionNode extends SequenceExpressionNode{
 
     public Boolean isZero(){
         return this.terms.stream().anyMatch(Term::isZero);
-    }
-
-    public ExpressionNode normalize(){
-        this.terms = this.terms.stream().map(term -> new Term(term.positive, term.normalize())).collect(Collectors.toList());
-        return this;
     }
 }
