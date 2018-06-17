@@ -27,6 +27,8 @@ public class Operator {
     public static final int DERIVATIVE = 20;
     public static final int INTEGRAL = 21;
 
+    public static List<Long> FIBONACCI;
+
     private Integer operator;
     private Integer degree;
 
@@ -36,10 +38,6 @@ public class Operator {
 
     public Integer getDegree() {
         return degree;
-    }
-
-    public void setDegree(Integer degree) {
-        this.degree = degree;
     }
 
     public static final List<Integer> equivalentTokens(){
@@ -114,5 +112,26 @@ public class Operator {
             default:
                 return "INTEGRAL";
         }
+    }
+
+    public Long getFibonacciWeight(Operator operator){
+        Integer token = operator.getOperator();
+
+        if(FIBONACCI == null){
+            FIBONACCI = new ArrayList<>();
+            FIBONACCI.add(1L);
+            FIBONACCI.add(1L);
+            FIBONACCI = this.recursiveFibonacci(FIBONACCI);
+        }
+
+        return FIBONACCI.get(token);
+    }
+
+    private List<Long> recursiveFibonacci(List<Long> fibonacci){
+        if(fibonacci.size() >= 21){
+            return fibonacci;
+        }
+        fibonacci.add(fibonacci.get(fibonacci.size() - 1) + fibonacci.get(fibonacci.size() - 2));
+        return this.recursiveFibonacci(fibonacci);
     }
 }

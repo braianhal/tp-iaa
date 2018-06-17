@@ -47,7 +47,13 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
         List<Operator> intersection = this.getIntersection(originalExpressionTokens, candidateExpressionTokens);
         List<Operator> union = this.getUnion(originalExpressionTokens, candidateExpressionTokens);
 
-        return 1.0;
+        return getWeight(intersection).doubleValue() / getWeight(union).doubleValue();
+    }
+
+    private Long getWeight(List<Operator> operators){
+        return operators.stream()
+                .map(operator -> operator.getFibonacciWeight(operator))
+                .reduce(0L, (total, nextFibonacciValue) -> total + nextFibonacciValue);
     }
 
     private List<Operator> getIntersection(List<Operator> originalExpressionTokens, List<Operator> candidateExpressionTokens){

@@ -76,7 +76,7 @@ public class Main {
         //System.out.println(exp.toString());
 
         Parser parser = new Parser();
-        ProceduralSimilarExpressionCalculator calculator = new ProceduralSimilarExpressionCalculator("3^(4*5x*x*x*x)");
+        ProceduralSimilarExpressionCalculator calculator = new ProceduralSimilarExpressionCalculator("x+(cos(x))");
         try {
             System.out.println("Similarity: " + calculator.similarityWith("x*(cos(x))"));
         }
