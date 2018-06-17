@@ -11,8 +11,6 @@ import java.util.stream.Collectors;
 
 public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalculator {
 
-    private String originalExpression;
-
     @Override
     public Double similarityWith(String candidateExpression) {
         Parser parser = new Parser();
@@ -162,8 +160,7 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
     }
 
     public ProceduralSimilarExpressionCalculator(String originalExpression) {
-        super(null);
-        this.originalExpression = originalExpression;
+        super(originalExpression);
     }
 
     public ProceduralSimilarExpressionCalculator() {
