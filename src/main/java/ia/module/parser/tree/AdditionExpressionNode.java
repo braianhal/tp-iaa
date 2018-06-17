@@ -49,4 +49,8 @@ public class AdditionExpressionNode extends SequenceExpressionNode{
     public Boolean isLineal() {
         return this.terms.stream().allMatch(Term::isLineal);
     }
+
+    public ExpressionNode normalize(){
+        return this;
+    }
 }

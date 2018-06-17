@@ -52,4 +52,12 @@ public class Term {
     public Integer getToken(){
         return this.expression.getToken();
     }
+
+    public ExpressionNode normalize(){
+        return this.expression.normalize();
+    }
+
+    public Integer getDegree(){
+        return this.expression.getDegree();
+    }
 }

@@ -76,9 +76,9 @@ public class Main {
         //System.out.println(exp.toString());
 
         Parser parser = new Parser();
-        ProceduralSimilarExpressionCalculator calculator = new ProceduralSimilarExpressionCalculator("sqrt(ln(x))");
+        ProceduralSimilarExpressionCalculator calculator = new ProceduralSimilarExpressionCalculator("x");
         try {
-            System.out.println("Similarity: " + calculator.similarityWith("ln(sqrt(x))"));
+            System.out.println("Similarity: " + calculator.similarityWith("x*(cos(x))"));
         }
         catch (Exception e) {
             System.out.println(e.getMessage());

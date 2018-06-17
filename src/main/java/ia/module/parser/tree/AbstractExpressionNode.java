@@ -59,4 +59,8 @@ public class AbstractExpressionNode {
     public ExpressionsWithArgumentStructures getStructureOf(ExpressionsWithArgumentStructures expressionsWithArgumentStructures){
         return expressionsWithArgumentStructures;
     }
+
+    public Integer getDegree(){
+        return 0;
+    }
 }

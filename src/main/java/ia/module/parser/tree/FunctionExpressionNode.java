@@ -192,4 +192,9 @@ public class FunctionExpressionNode extends AbstractExpressionNode implements Ex
 
         return token;
     }
+
+    public ExpressionNode normalize(){
+        this.argument = this.argument.normalize();
+        return this;
+    }
 }

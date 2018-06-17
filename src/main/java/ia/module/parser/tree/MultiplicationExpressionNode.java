@@ -3,10 +3,15 @@ package ia.module.parser.tree;
 import com.sun.tools.corba.se.idl.constExpr.EvaluationException;
 import ia.module.parser.Operator;
 
+import java.util.stream.Collectors;
+
 public class MultiplicationExpressionNode extends SequenceExpressionNode{
+
+    private Integer degree;
 
     public MultiplicationExpressionNode(ExpressionNode a, boolean positive) {
         super(a, positive);
+        degree = 0;
     }
 
     public int getType() {
@@ -24,6 +29,17 @@ public class MultiplicationExpressionNode extends SequenceExpressionNode{
             }
         }
         return prod;
+    }
+
+    public Integer getDegree() {
+        return degree + this.terms.stream()
+                .filter(term -> !term.isVariable())
+                .map(Term::getDegree)
+                .reduce(0, (total, aDegree) -> total + aDegree);
+    }
+
+    public void setDegree(Integer degree) {
+        this.degree = degree;
     }
 
     public Integer getLevel(){
@@ -100,5 +116,20 @@ public class MultiplicationExpressionNode extends SequenceExpressionNode{
 
     public Boolean isZero(){
         return this.terms.stream().anyMatch(Term::isZero);
+    }
+
+    public ExpressionNode normalize(){
+        if(this.hasVariable()){
+            this.setDegree(1);
+        }
+
+        if(this.getToken() == Operator.TERM_WITH_X_BY_TERM_WITH_X){
+            Integer countOfTermsWithVariableExceptXByX = (int)this.terms.stream().filter(term -> term.hasVariable() && term.getToken() != Operator.TERM_WITH_X_BY_TERM_WITH_X).count();
+            this.setDegree(countOfTermsWithVariableExceptXByX);
+        }
+
+        this.terms = this.terms.stream().map(term -> new Term(term.positive, term.normalize())).collect(Collectors.toList());
+
+        return this;
     }
 }

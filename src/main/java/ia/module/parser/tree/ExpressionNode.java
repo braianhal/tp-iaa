@@ -29,4 +29,6 @@ public interface ExpressionNode {
     Boolean isFractionalNumber();
     Boolean isPositiveNumber();
     Boolean isEven();
+    ExpressionNode normalize();
+    Integer getDegree();
 }

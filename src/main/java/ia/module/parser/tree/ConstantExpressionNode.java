@@ -70,4 +70,8 @@ public class ConstantExpressionNode extends AbstractExpressionNode implements Ex
     public Boolean isLineal() {
         return true;
     }
+
+    public ExpressionNode normalize(){
+        return this;
+    }
 }

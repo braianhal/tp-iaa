@@ -3,10 +3,11 @@ package ia.module.parser.tree;
 import ia.module.parser.ExpressionsWithArgumentStructures;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public abstract class SequenceExpressionNode extends AbstractExpressionNode implements ExpressionNode{
 
-    protected LinkedList<Term> terms;
+    protected List<Term> terms;
 
     public SequenceExpressionNode() {
         this.terms = new LinkedList<Term>();
