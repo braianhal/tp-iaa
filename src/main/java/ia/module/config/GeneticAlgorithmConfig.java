@@ -6,7 +6,7 @@ import static ia.module.config.ExpressionsConfig.*;
 
 public class GeneticAlgorithmConfig {
 
-    public static final int INITIAL_POPULATION_SIZE = 50;
+    public static final int INITIAL_POPULATION_SIZE = 200;
 
     public static final double MUTATION_PROB = 0.01;
 

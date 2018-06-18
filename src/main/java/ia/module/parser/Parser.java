@@ -51,6 +51,10 @@ public class Parser {
                     return this.functionOperation(expression, "integral");
                 case "DERIVATIVE":
                     return this.functionOperation(expression, "derivative");
+                case "INT":
+                    return this.functionOperation(expression, "integral");
+                case "DX":
+                    return this.functionOperation(expression, "derivative");
                 default:
                     return currentExpression;
             }

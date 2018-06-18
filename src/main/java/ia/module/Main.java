@@ -20,7 +20,7 @@ import static ia.module.config.GeneticAlgorithmConfig.*;
 
 public class Main {
 
-    static final String EXPRESSION = "4+sqrt(25)/(3*2-1)";
+    static final String EXPRESSION = "4*x";
 
     // Define the fitness function
     // static final SimilarExpressionCalculator SIMILAR_EXPRESSION_CALCULATOR = new NeuralNetworkSimilarExpressionCalculator(EXPRESSION);
