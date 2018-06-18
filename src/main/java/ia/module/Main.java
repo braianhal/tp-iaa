@@ -6,6 +6,7 @@ import ia.module.parser.Parser;
 import io.jenetics.Genotype;
 import io.jenetics.Mutator;
 import io.jenetics.Phenotype;
+import io.jenetics.RouletteWheelSelector;
 import io.jenetics.engine.Codec;
 import io.jenetics.engine.Engine;
 import io.jenetics.engine.EvolutionResult;
@@ -20,13 +21,13 @@ import static ia.module.config.GeneticAlgorithmConfig.*;
 
 public class Main {
 
-    static final String EXPRESSION = "4*x";
+    static final String EXPRESSION = "int(cos(x)+(3*x))";
 
     // Define the fitness function
     // static final SimilarExpressionCalculator SIMILAR_EXPRESSION_CALCULATOR = new NeuralNetworkSimilarExpressionCalculator(EXPRESSION);
     static final SimilarExpressionCalculator SIMILAR_EXPRESSION_CALCULATOR = new ProceduralSimilarExpressionCalculator(EXPRESSION);
 
-    // Define the structure of solutions (max iaa.tp.parser.tree depth, operations and terminals to consider, etc)
+    // Define the structure of solutions (max tree depth, operations and terminals to consider, etc)
     static final Codec<ProgramGene<Double>, ProgramGene<Double>> CODEC = Codec.of(
             Genotype.of(CHROMOSOME),
             Genotype::getGene
@@ -47,7 +48,7 @@ public class Main {
                 .build();
 
         Phenotype<ProgramGene<Double>, Double> bestExpression = engine.stream()
-                .limit(Limits.byFitnessThreshold(EXPECTED_FITNESS))
+                //.limit(Limits.byFitnessThreshold(0.85))
                 .limit(Limits.byExecutionTime(Duration.ofSeconds(30)))
                 .limit(MAX_ITERATIONS)
                 .peek(Main::showGeneration)

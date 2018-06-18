@@ -22,8 +22,6 @@ public class ExpressionsConfig {
             MathOp.DIV,
             MathOp.POW,
             MathOp.SQRT,
-            MathOp.LOG,
-            MathOp.LOG10,
             MathOp.COS,
             MathOp.SIN,
             MathOp.TAN,
