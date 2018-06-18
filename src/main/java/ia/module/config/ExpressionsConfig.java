@@ -21,9 +21,13 @@ public class ExpressionsConfig {
             MathOp.MUL,
             MathOp.DIV,
             MathOp.POW,
+            MathOp.SQRT,
+            MathOp.LOG,
+            MathOp.LOG10,
             MathOp.COS,
             MathOp.SIN,
             MathOp.TAN,
+            ExtraMathOp.LN,
             ExtraMathOp.INTEGRAL,
             ExtraMathOp.DERIVATIVE
     );

@@ -33,6 +33,14 @@ public class Parser {
                     return this.mulOrDivOperation(expression, "/");
                 case "POW":
                     return this.powOperation(expression);
+                case "SQRT":
+                    return this.functionOperation(expression, "sqrt");
+                case "LN":
+                    return this.functionOperation(expression, "ln");
+                case "LOG10":
+                    return this.functionOperation(expression, "log");
+                case "LOG":
+                    return this.functionOperation(expression, "logb2");
                 case "SIN":
                     return this.functionOperation(expression, "sin");
                 case "COS":

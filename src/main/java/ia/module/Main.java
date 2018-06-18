@@ -1,6 +1,5 @@
 package ia.module;
 
-import ia.module.fitness.NeuralNetworkSimilarExpressionCalculator;
 import ia.module.fitness.ProceduralSimilarExpressionCalculator;
 import ia.module.fitness.SimilarExpressionCalculator;
 import ia.module.parser.Parser;
@@ -12,9 +11,10 @@ import io.jenetics.engine.Engine;
 import io.jenetics.engine.EvolutionResult;
 import io.jenetics.engine.Limits;
 import io.jenetics.ext.SingleNodeCrossover;
-import io.jenetics.ext.util.Tree;
 import io.jenetics.ext.util.TreeNode;
 import io.jenetics.prog.ProgramGene;
+
+import java.time.Duration;
 
 import static ia.module.config.GeneticAlgorithmConfig.*;
 
@@ -48,6 +48,7 @@ public class Main {
 
         Phenotype<ProgramGene<Double>, Double> bestExpression = engine.stream()
                 .limit(Limits.byFitnessThreshold(EXPECTED_FITNESS))
+                .limit(Limits.byExecutionTime(Duration.ofSeconds(30)))
                 .limit(MAX_ITERATIONS)
                 .peek(Main::showGeneration)
                 .collect(EvolutionResult.toBestPhenotype());

@@ -7,6 +7,7 @@ import java.util.function.Function;
 // Class to add new operations that aren't defined in MathOp
 public enum ExtraMathOp implements Op<Double> {
     // Here goes all the operation definitions (name, arity, function to evaluate)
+    LN("ln", 1, (v) -> v[0]), // Dummy
     INTEGRAL("integral", 1, (v) -> v[0]), // Dummy
     DERIVATIVE("derivative", 1, (v) -> v[0]); // Dummy
 
