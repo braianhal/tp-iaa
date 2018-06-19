@@ -1,11 +1,10 @@
 package ia.module.fitness;
 
-import ia.module.parser.ExpressionsWithArgumentStructures;
-import ia.module.parser.Operator;
-import ia.module.parser.Parser;
+import ia.module.parser.*;
 import ia.module.parser.tree.ExpressionNode;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +25,14 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
             return levelSimilarity * structureSimilarity * complexitySimilarity;
 
         }catch (Exception e){
-            System.out.println("Expresión inválida -> Candidata original: >>>" + candidateExpression + "<<< luego de arreglar formato: >>>" + parser.cleanFormatOf(candidateExpression) + "<<< Exceptión: " + e);
+            Tokenizer tokenizer = Tokenizer.getExpressionTokenizer();
+            try{
+                tokenizer.tokenize(parser.cleanFormatOf(candidateExpression));
+                LinkedList<Token> tokens = tokenizer.getTokens();
+                System.out.println("Expresión inválida -> " + tokens + e);
+            }catch (Exception e2){
+
+            }
             return 0.0;
         }
     }
