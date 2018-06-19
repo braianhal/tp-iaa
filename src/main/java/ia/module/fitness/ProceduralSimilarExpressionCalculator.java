@@ -1,10 +1,11 @@
 package ia.module.fitness;
 
-import ia.module.parser.*;
+import ia.module.parser.ExpressionsWithArgumentStructures;
+import ia.module.parser.Operator;
+import ia.module.parser.Parser;
 import ia.module.parser.tree.ExpressionNode;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,16 +24,8 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
             Double complexitySimilarity = this.getComplexitySimilarity(originalExpressionTree, candidateExpressionTree);
 
             return levelSimilarity * structureSimilarity * complexitySimilarity;
-
         }catch (Exception e){
-            Tokenizer tokenizer = Tokenizer.getExpressionTokenizer();
-            try{
-                tokenizer.tokenize(parser.cleanFormatOf(candidateExpression));
-                LinkedList<Token> tokens = tokenizer.getTokens();
-                System.out.println("Expresión inválida -> " + tokens + e + " ; " + candidateExpression);
-            }catch (Exception e2){
-
-            }
+            System.out.println();
             return 0.0;
         }
     }
@@ -173,7 +166,7 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
         try {
             this.originalExpressionTree = this.parser.parse(originalExpression);
         }catch (Exception e){
-            System.out.println("Expresión inválida -> Patrón original: >>>" + this.originalExpression + "<<< luego de arreglar formato: >>>" + parser.cleanFormatOf(this.originalExpression) + "<<< Exceptión: " + e);
+            System.out.println("Expresión patrón inválida: " + this.originalExpression + " Exceptión: " + e);
         }
     }
 

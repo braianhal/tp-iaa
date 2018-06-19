@@ -26,5 +26,9 @@ public class ComplexitySimilarityTests extends TestCase{
         assertEquals(90.0/1224.0, calculator.getComplexitySimilarity(parser.parse("x^3-1"), parser.parse("sqrt(x+2)")));
         assertEquals(236.0/237.0, calculator.getComplexitySimilarity(parser.parse("x^3-1"), parser.parse("-x^2+1")));
         assertEquals(181.0/1834.0, calculator.getComplexitySimilarity(parser.parse("x^3-1"), parser.parse("sin(x^3)")));
+        assertEquals(4270.0/5957.0, calculator.getComplexitySimilarity(parser.parse("ln(x+16)*12"), parser.parse("sin(ln(x-x))")));
+        assertEquals(1.0, calculator.getComplexitySimilarity(parser.parse("dx((4*x)/(x+1))"), parser.parse("2.0+dx((x)/(x))")));
+        assertEquals(22.0/36.0, calculator.getComplexitySimilarity(parser.parse("4+sqrt(25)/(3*2-1)"), parser.parse("sqrt(0.0)")));
+        assertEquals(20385.0/23062.0, calculator.getComplexitySimilarity(parser.parse("int(dx(cos(x)+3sin(x)^(4x^x+x*x^-4)))/(3-x)"), parser.parse("dx(int(4^(dx(x^x+5))))")));
     }
 }

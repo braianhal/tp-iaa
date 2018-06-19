@@ -140,11 +140,6 @@ public class Parser {
     }
 
     public ExpressionNode parse(LinkedList<Token> tokens) throws ParseException, ParserException{
-        /*String expression = this.tryToFixExpression(tokens);
-        Tokenizer tokenizer = Tokenizer.getExpressionTokenizer();
-        tokenizer.tokenize(expression);
-        tokens = tokenizer.getTokens();*/
-
         this.tokens = (LinkedList<Token>)tokens.clone();
         lookahead = this.tokens.getFirst();
 
@@ -156,84 +151,6 @@ public class Parser {
         }
 
         return expr;
-    }
-
-    private String tokensAsString(LinkedList<Token> tokens){
-        return tokens.stream()
-                .map(token -> token.sequence)
-                .reduce("", (string, sequence) -> string + sequence);
-    }
-
-    private String tryToFixExpression(LinkedList<Token> tokens){
-        return this.cleanFormatOf(this.replaceInvalidStrings(this.replaceInvalidStrings(this.replaceInvalidStrings(this.tokensAsString(tokens)))));
-    }
-
-    private String replaceInvalidStrings(String sequence){
-        return this.addMissingBrackets(sequence)
-                .replaceAll("\\(\\)", "")
-                .replaceAll("\\)\\(", ")*(")
-                .replaceAll("x\\)", ")")
-                .replaceAll("\\.\\)", ")")
-                .replaceAll("sqrt\\)", ")")
-                .replaceAll("sin\\)", ")")
-                .replaceAll("cos\\)", ")")
-                .replaceAll("tan\\)", ")")
-                .replaceAll("log\\)", ")")
-                .replaceAll("ln\\)", ")")
-                .replaceAll("log2b\\)", ")")
-                .replaceAll("int\\)", ")")
-                .replaceAll("dx\\)", ")")
-                .replaceAll("\\*\\)", ")")
-                .replaceAll("\\+\\)", ")")
-                .replaceAll("-\\)", ")")
-                .replaceAll("/\\)", ")")
-                .replaceAll("\\^\\)", ")")
-                .replaceAll("\\^\\(\\)", "")
-                .replaceAll("intdx", "dx")
-                .replaceAll("dxdx", "dx")
-                .replaceAll("dxint", "dx")
-                .replaceAll("sinsin", "sin")
-                .replaceAll("coscos", "cos")
-                .replaceAll("tantan", "tan")
-                .replaceAll("sincos", "cos")
-                .replaceAll("cossin", "sin")
-                .replaceAll("sintan", "tan")
-                .replaceAll("tansin", "sin")
-                .replaceAll("costan", "tan")
-                .replaceAll("tancos", "cos")
-                .replaceAll("sinint", "int")
-                .replaceAll("intsin", "sin")
-                .replaceAll("intint", "int")
-                .replaceAll("intln", "ln")
-                .replaceAll("lnint", "ln");
-    }
-
-    private String addMissingBrackets(String sequence){
-        Integer openBrackets = this.amountOfCharacter(sequence, '(');
-        Integer closeBrackets = this.amountOfCharacter(sequence, ')');
-
-        if(openBrackets > closeBrackets){
-            for(int i = 0 ; i < openBrackets - closeBrackets ; i++){
-                sequence = sequence + ")";
-            }
-        }else if (closeBrackets > openBrackets){
-            for(int i = 0 ; i < closeBrackets - openBrackets ; i++){
-                sequence = "(" + sequence;
-            }
-        }
-
-        return sequence;
-    }
-
-    private Integer amountOfCharacter(String sequence, char c){
-        int times = 0;
-        char[] characters = sequence.toCharArray();
-        for(int i = 0 ; i <= characters.length - 1 ; i++){
-            if(c == characters[i]){
-                times++;
-            }
-        }
-        return times;
     }
 
     private void nextToken() {

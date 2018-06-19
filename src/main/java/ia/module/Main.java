@@ -15,7 +15,6 @@ import io.jenetics.ext.util.TreeNode;
 import io.jenetics.prog.ProgramGene;
 
 import java.time.Duration;
-import java.util.concurrent.Executor;
 
 import static ia.module.config.GeneticAlgorithmConfig.*;
 
