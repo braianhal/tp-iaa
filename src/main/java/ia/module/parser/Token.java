@@ -22,4 +22,9 @@ public class Token {
         this.sequence = sequence;
         this.pos = pos;
     }
+
+    @Override
+    public String toString() {
+        return this.sequence;
+    }
 }

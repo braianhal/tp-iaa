@@ -27,7 +27,10 @@ public class ExpressionsConfig {
             MathOp.TAN,
             ExtraMathOp.LN,
             ExtraMathOp.INTEGRAL,
-            ExtraMathOp.DERIVATIVE
+            ExtraMathOp.DERIVATIVE,
+            ExtraMathOp.LN,
+            ExtraMathOp.LOG,
+            ExtraMathOp.LOG2B
     );
 
     // Define terminals

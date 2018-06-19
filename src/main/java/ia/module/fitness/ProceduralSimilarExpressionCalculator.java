@@ -11,11 +11,12 @@ import java.util.stream.Collectors;
 
 public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalculator {
 
+    private ExpressionNode originalExpressionTree;
+    private Parser parser = new Parser();
+
     @Override
     public Double similarityWith(String candidateExpression) {
-        Parser parser = new Parser();
-        try {
-            ExpressionNode originalExpressionTree = parser.parse(this.originalExpression);
+        try{
             ExpressionNode candidateExpressionTree = parser.parse(candidateExpression);
 
             Double levelSimilarity = this.getLevelSimilarityBetween(originalExpressionTree, candidateExpressionTree);
@@ -23,8 +24,9 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
             Double complexitySimilarity = this.getComplexitySimilarity(originalExpressionTree, candidateExpressionTree);
 
             return levelSimilarity * structureSimilarity * complexitySimilarity;
+
         }catch (Exception e){
-            //System.out.println("Expresión inválida. Original: " + this.originalExpression + " Candidata: " + candidateExpression);
+            System.out.println("Expresión inválida -> Candidata original: >>>" + candidateExpression + "<<< luego de arreglar formato: >>>" + parser.cleanFormatOf(candidateExpression) + "<<< Exceptión: " + e);
             return 0.0;
         }
     }
@@ -161,6 +163,12 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
 
     public ProceduralSimilarExpressionCalculator(String originalExpression) {
         super(originalExpression);
+
+        try {
+            this.originalExpressionTree = this.parser.parse(originalExpression);
+        }catch (Exception e){
+            System.out.println("Expresión inválida -> Patrón original: >>>" + this.originalExpression + "<<< luego de arreglar formato: >>>" + parser.cleanFormatOf(this.originalExpression) + "<<< Exceptión: " + e);
+        }
     }
 
     public ProceduralSimilarExpressionCalculator() {

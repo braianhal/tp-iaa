@@ -37,10 +37,10 @@ public class Parser {
                     return this.functionOperation(expression, "sqrt");
                 case "LN":
                     return this.functionOperation(expression, "ln");
-                case "LOG10":
-                    return this.functionOperation(expression, "log");
                 case "LOG":
-                    return this.functionOperation(expression, "logb2");
+                    return this.functionOperation(expression, "log");
+                case "LOG2B":
+                    return this.functionOperation(expression, "log2b");
                 case "SIN":
                     return this.functionOperation(expression, "sin");
                 case "COS":
@@ -48,13 +48,9 @@ public class Parser {
                 case "TAN":
                     return this.functionOperation(expression, "tan");
                 case "INTEGRAL":
-                    return this.functionOperation(expression, "integral");
+                    return this.functionOperation(expression, "int");
                 case "DERIVATIVE":
-                    return this.functionOperation(expression, "derivative");
-                case "INT":
-                    return this.functionOperation(expression, "integral");
-                case "DX":
-                    return this.functionOperation(expression, "derivative");
+                    return this.functionOperation(expression, "dx");
                 default:
                     return currentExpression;
             }
@@ -135,7 +131,7 @@ public class Parser {
                     .replaceAll(i + "tan", i + "*tan")
                     .replaceAll(i + "ln", i + "*ln")
                     .replaceAll(i + "log", i + "*log")
-                    .replaceAll(i + "logb2", i + "*logb2")
+                    .replaceAll(i + "log2b", i + "*log2b")
                     .replaceAll(i + "dx", i + "*dx")
                     .replaceAll(i + "int", i + "*int")
                     .replaceAll(i + "x", i + "*x");
@@ -143,17 +139,101 @@ public class Parser {
         return expression;
     }
 
-    public ExpressionNode parse(LinkedList<Token> tokens) throws ParseException{
+    public ExpressionNode parse(LinkedList<Token> tokens) throws ParseException, ParserException{
+        /*String expression = this.tryToFixExpression(tokens);
+        Tokenizer tokenizer = Tokenizer.getExpressionTokenizer();
+        tokenizer.tokenize(expression);
+        tokens = tokenizer.getTokens();*/
+
         this.tokens = (LinkedList<Token>)tokens.clone();
         lookahead = this.tokens.getFirst();
 
         ExpressionNode expr = expression();
 
         if (lookahead.token != Token.EPSILON){
+            //System.out.println(expression);
             throw new ParseException("Unexpected symbol " + lookahead + " found", 0);
         }
 
         return expr;
+    }
+
+    private String tokensAsString(LinkedList<Token> tokens){
+        return tokens.stream()
+                .map(token -> token.sequence)
+                .reduce("", (string, sequence) -> string + sequence);
+    }
+
+    private String tryToFixExpression(LinkedList<Token> tokens){
+        return this.cleanFormatOf(this.replaceInvalidStrings(this.replaceInvalidStrings(this.replaceInvalidStrings(this.tokensAsString(tokens)))));
+    }
+
+    private String replaceInvalidStrings(String sequence){
+        return this.addMissingBrackets(sequence)
+                .replaceAll("\\(\\)", "")
+                .replaceAll("\\)\\(", ")*(")
+                .replaceAll("x\\)", ")")
+                .replaceAll("\\.\\)", ")")
+                .replaceAll("sqrt\\)", ")")
+                .replaceAll("sin\\)", ")")
+                .replaceAll("cos\\)", ")")
+                .replaceAll("tan\\)", ")")
+                .replaceAll("log\\)", ")")
+                .replaceAll("ln\\)", ")")
+                .replaceAll("log2b\\)", ")")
+                .replaceAll("int\\)", ")")
+                .replaceAll("dx\\)", ")")
+                .replaceAll("\\*\\)", ")")
+                .replaceAll("\\+\\)", ")")
+                .replaceAll("-\\)", ")")
+                .replaceAll("/\\)", ")")
+                .replaceAll("\\^\\)", ")")
+                .replaceAll("\\^\\(\\)", "")
+                .replaceAll("intdx", "dx")
+                .replaceAll("dxdx", "dx")
+                .replaceAll("dxint", "dx")
+                .replaceAll("sinsin", "sin")
+                .replaceAll("coscos", "cos")
+                .replaceAll("tantan", "tan")
+                .replaceAll("sincos", "cos")
+                .replaceAll("cossin", "sin")
+                .replaceAll("sintan", "tan")
+                .replaceAll("tansin", "sin")
+                .replaceAll("costan", "tan")
+                .replaceAll("tancos", "cos")
+                .replaceAll("sinint", "int")
+                .replaceAll("intsin", "sin")
+                .replaceAll("intint", "int")
+                .replaceAll("intln", "ln")
+                .replaceAll("lnint", "ln");
+    }
+
+    private String addMissingBrackets(String sequence){
+        Integer openBrackets = this.amountOfCharacter(sequence, '(');
+        Integer closeBrackets = this.amountOfCharacter(sequence, ')');
+
+        if(openBrackets > closeBrackets){
+            for(int i = 0 ; i < openBrackets - closeBrackets ; i++){
+                sequence = sequence + ")";
+            }
+        }else if (closeBrackets > openBrackets){
+            for(int i = 0 ; i < closeBrackets - openBrackets ; i++){
+                sequence = "(" + sequence;
+            }
+        }
+
+        return sequence;
+    }
+
+    private Integer amountOfCharacter(String sequence, char c){
+        int times = 0;
+        char[] characters = sequence.toCharArray();
+        for(int i = 0 ; i <= characters.length - 1 ; i++){
+            if(c == characters[i]){
+                times++;
+            }
+        }
+        return times;
     }
 
     private void nextToken() {

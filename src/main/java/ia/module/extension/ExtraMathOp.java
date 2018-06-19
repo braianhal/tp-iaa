@@ -8,8 +8,10 @@ import java.util.function.Function;
 public enum ExtraMathOp implements Op<Double> {
     // Here goes all the operation definitions (name, arity, function to evaluate)
     LN("ln", 1, (v) -> v[0]), // Dummy
-    INTEGRAL("integral", 1, (v) -> v[0]), // Dummy
-    DERIVATIVE("derivative", 1, (v) -> v[0]); // Dummy
+    LOG("ln", 1, (v) -> v[0]), // Dummy
+    LOG2B("log2b", 1, (v) -> v[0]), // Dummy
+    INTEGRAL("int", 1, (v) -> v[0]), // Dummy
+    DERIVATIVE("dx", 1, (v) -> v[0]); // Dummy
 
     // Copy pasted from MathOp (Can't be inherited)
     private final String _name;
