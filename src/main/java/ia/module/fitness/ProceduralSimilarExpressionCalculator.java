@@ -29,7 +29,7 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
             try{
                 tokenizer.tokenize(parser.cleanFormatOf(candidateExpression));
                 LinkedList<Token> tokens = tokenizer.getTokens();
-                System.out.println("Expresión inválida -> " + tokens + e);
+                System.out.println("Expresión inválida -> " + tokens + e + " ; " + candidateExpression);
             }catch (Exception e2){
 
             }

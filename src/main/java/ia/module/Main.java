@@ -15,6 +15,7 @@ import io.jenetics.ext.util.TreeNode;
 import io.jenetics.prog.ProgramGene;
 
 import java.time.Duration;
+import java.util.concurrent.Executor;
 
 import static ia.module.config.GeneticAlgorithmConfig.*;
 
@@ -43,11 +44,12 @@ public class Main {
                         new Mutator<>(MUTATION_PROB),
                         new SingleNodeCrossover<>())
                 .populationSize(INITIAL_POPULATION_SIZE)
+                .executor(Runnable::run)
                 .maximizing()
                 .build();
 
         Phenotype<ProgramGene<Double>, Double> bestExpression = engine.stream()
-                //.limit(Limits.byFitnessThreshold(0.85))
+                //.limit(Limits.byFitnessThreshold(0.9))
                 .limit(Limits.byExecutionTime(Duration.ofSeconds(30)))
                 .limit(MAX_ITERATIONS)
                 .peek(Main::showGeneration)
