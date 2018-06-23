@@ -36,4 +36,5 @@ public interface ExpressionNode {
     Integer getDegree();
     List<Operator> getListOfTokens();
     Boolean contains(Integer operator);
+    double[] extractFeaturesForExpression();
 }
