@@ -2,7 +2,7 @@ package ia.module.config;
 
 public class NeuralNetworkConfig {
 
-    public static int INPUTS = 10; // Expression features
+    public static int INPUTS = 21; // Expression features
     public static int OUTPUTS = 9; // Expression categories
 
     public static int TRAINING_EXAMPLES = 1000;

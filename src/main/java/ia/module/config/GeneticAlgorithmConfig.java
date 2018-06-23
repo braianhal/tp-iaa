@@ -12,7 +12,7 @@ public class GeneticAlgorithmConfig {
 
     public static final double EXPECTED_FITNESS = 0.9;
 
-    public static final int MIN_ITERATIONS = 7;
+    public static final int MIN_ITERATIONS = 10;
 
     public static final ProgramChromosome<Double> CHROMOSOME = ProgramChromosome.of(
             TREE_MAX_DEPTH,

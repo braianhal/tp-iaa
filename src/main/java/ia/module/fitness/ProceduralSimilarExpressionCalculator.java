@@ -31,11 +31,8 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
     }
 
     public Double getComplexitySimilarity(ExpressionNode originalExpressionTree, ExpressionNode candidateExpressionTree){
-        ExpressionNode originalExpressionTreeNormalized = originalExpressionTree.normalize();
-        ExpressionNode candidateExpressionTreeNormalized = candidateExpressionTree.normalize();
-
-        List<Operator> originalExpressionTokens = this.removeDuplicates(originalExpressionTreeNormalized.getListOfTokens());
-        List<Operator> candidateExpressionTokens = this.removeDuplicates(candidateExpressionTreeNormalized.getListOfTokens());
+        List<Operator> originalExpressionTokens = this.getListOfTokensOfNormalizedExpression(originalExpressionTree);
+        List<Operator> candidateExpressionTokens = this.getListOfTokensOfNormalizedExpression(candidateExpressionTree);
 
         List<Operator> intersection = this.getIntersection(originalExpressionTokens, candidateExpressionTokens);
         List<Operator> union = this.getUnion(originalExpressionTokens, candidateExpressionTokens);
@@ -75,43 +72,6 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
         union.addAll(originalExpressionTokens);
         union.addAll(candidateExpressionTokens);
         return this.removeDuplicates(union);
-    }
-
-    private List<Operator> removeDuplicates(List<Operator> operators){
-        List<Operator> operatorsWithoutDuplicates = new ArrayList<>();
-
-        for(Operator operator : operators){
-            if(operatorsWithoutDuplicates.stream().noneMatch(operator1 -> operator1.equals(operator))){
-                operatorsWithoutDuplicates.add(new Operator(operator.getOperator(), operator.getDegree()));
-            }
-        }
-
-        return this.chooseTermWithVariableByTermWithVariableDegree(operators, operatorsWithoutDuplicates, true);
-    }
-
-    private List<Operator> chooseTermWithVariableByTermWithVariableDegree(List<Operator> reference, List<Operator> result, Boolean chooseMax){
-        Integer maxDegree = reference.stream()
-                .filter(operator -> operator.getOperator().equals(Operator.TERM_WITH_X_BY_TERM_WITH_X))
-                .map(Operator::getDegree)
-                .reduce(0, Math::max);
-
-        Integer degreeToUse;
-
-        if(chooseMax){
-            degreeToUse = maxDegree;
-        }else{
-            degreeToUse = reference.stream()
-                    .filter(operator -> operator.getOperator().equals(Operator.TERM_WITH_X_BY_TERM_WITH_X))
-                    .map(Operator::getDegree)
-                    .reduce(maxDegree, Math::min);
-        }
-
-        return result.stream()
-                .map(operator ->
-                        operator.getOperator().equals(Operator.TERM_WITH_X_BY_TERM_WITH_X) ?
-                        new Operator(operator.getOperator(), degreeToUse) :
-                        operator)
-                .collect(Collectors.toList());
     }
 
     public Double getStructureSimilarityBetween(ExpressionNode originalExpressionTree, ExpressionNode candidateExpressionTree){

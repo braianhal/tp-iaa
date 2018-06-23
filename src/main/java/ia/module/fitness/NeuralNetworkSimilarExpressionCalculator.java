@@ -1,5 +1,6 @@
 package ia.module.fitness;
 
+import ia.module.parser.Operator;
 import ia.module.parser.Parser;
 import ia.module.parser.tree.ExpressionNode;
 import io.jenetics.ext.util.TreeNode;
@@ -7,7 +8,8 @@ import io.jenetics.prog.op.Op;
 import org.neuroph.core.data.DataSet;
 import org.neuroph.nnet.Kohonen;
 
-import java.util.Random;
+import java.util.Arrays;
+import java.util.List;
 
 import static ia.module.config.GeneticAlgorithmConfig.CHROMOSOME;
 import static ia.module.config.NeuralNetworkConfig.*;
@@ -60,13 +62,22 @@ public class NeuralNetworkSimilarExpressionCalculator extends SimilarExpressionC
         return ds;
     }
 
-    // TODO calculate actual features
     private double[] extractFeaturesForExpression(ExpressionNode expression) {
         double[] features = new double[INPUTS];
-        for (int i = 0; i < INPUTS; i++) {
-            features[i] = new Random().nextDouble();
+        List<Operator> operators = this.getListOfTokensOfNormalizedExpression(expression);
+        Integer index;
+        for(Operator operator : operators){
+            index = operator.getOperator() > Operator.BY_TERM_WITH_X ? operator.getOperator() - 1 : operator.getOperator();
+            features[index]++;
         }
-        return features;
+
+        return this.normalizeFeatures(features);
+    }
+
+    private double[] normalizeFeatures(double[] features){
+        return Arrays.stream(features).map(feature -> feature == 0
+                ? 0
+                : (feature == 1 ? 0.1 : (1 - Math.abs(Math.log(1 - 1/feature)))) / 2).toArray();
     }
 
     private double[] calculateOutput(ExpressionNode expression) {

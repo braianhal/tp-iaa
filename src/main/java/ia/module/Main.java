@@ -1,5 +1,6 @@
 package ia.module;
 
+import ia.module.fitness.NeuralNetworkSimilarExpressionCalculator;
 import ia.module.fitness.ProceduralSimilarExpressionCalculator;
 import ia.module.fitness.SimilarExpressionCalculator;
 import ia.module.parser.Parser;
@@ -18,11 +19,11 @@ import static ia.module.config.GeneticAlgorithmConfig.*;
 
 public class Main {
 
-    static final String EXPRESSION = "2(3+5)";
+    static String EXPRESSION;
 
     // Define the fitness function
     // static final SimilarExpressionCalculator SIMILAR_EXPRESSION_CALCULATOR = new NeuralNetworkSimilarExpressionCalculator(EXPRESSION);
-    static final SimilarExpressionCalculator SIMILAR_EXPRESSION_CALCULATOR = new ProceduralSimilarExpressionCalculator(EXPRESSION);
+    static SimilarExpressionCalculator SIMILAR_EXPRESSION_CALCULATOR;
 
     // Define the structure of solutions (max tree depth, operations and terminals to consider, etc)
     static final Codec<ProgramGene<Double>, ProgramGene<Double>> CODEC = Codec.of(
@@ -36,6 +37,14 @@ public class Main {
     }
 
     public static void main(final String[] args) {
+        // Fitness
+        EXPRESSION = args[1];
+        if(args[0].equals("tradicional")){
+            SIMILAR_EXPRESSION_CALCULATOR = new ProceduralSimilarExpressionCalculator(EXPRESSION);
+        }else if(args[0].equals("inteligente")){
+            SIMILAR_EXPRESSION_CALCULATOR = new NeuralNetworkSimilarExpressionCalculator(EXPRESSION);
+        }
+
         Engine<ProgramGene<Double>, Double> engine = Engine.builder(Main::fitnessFunction, CODEC)
                 .alterers(
                         new Mutator<>(MUTATION_PROB),
@@ -46,8 +55,6 @@ public class Main {
                 .build();
 
         Phenotype<ProgramGene<Double>, Double> bestExpression = engine.stream()
-                //.limit(Limits.byExecutionTime(Duration.ofSeconds(30)))
-                //.limit(Limits.byFixedGeneration(MIN_ITERATIONS))
                 .limit(Limits.bySteadyFitness(MIN_ITERATIONS))
                 .peek(Main::showGeneration)
                 .collect(EvolutionResult.toBestPhenotype());

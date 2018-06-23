@@ -2,7 +2,7 @@ package ia.module.parser.tree;
 
 import ia.module.parser.ExpressionsWithArgumentStructures;
 
-public class AbstractExpressionNode {
+public abstract class AbstractExpressionNode {
 
     public Boolean isNumber(){
         return false;
