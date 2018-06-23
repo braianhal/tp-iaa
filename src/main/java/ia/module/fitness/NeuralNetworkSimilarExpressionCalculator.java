@@ -18,8 +18,7 @@ public class NeuralNetworkSimilarExpressionCalculator extends SimilarExpressionC
 
     public NeuralNetworkSimilarExpressionCalculator(String original) {
         super(original);
-        network = new Kohonen(INPUTS, OUTPUTS);
-        //trainNetwork();
+        trainNetwork();
         try {
             originalExpressionOutput = calculateOutput(new Parser().parse(original));
         } catch (Exception e) {
@@ -29,7 +28,7 @@ public class NeuralNetworkSimilarExpressionCalculator extends SimilarExpressionC
 
     @Override
     public Double similarityWith(String otherExpression) {
-        double[] otherExpressionOutput = new double[21];
+        double[] otherExpressionOutput = new double[0];
         try {
             otherExpressionOutput = calculateOutput(new Parser().parse(otherExpression));
         } catch (Exception e) {
@@ -41,6 +40,7 @@ public class NeuralNetworkSimilarExpressionCalculator extends SimilarExpressionC
     }
 
     private void trainNetwork() {
+        network = new Kohonen(INPUTS, OUTPUTS);
         network.learn(generateTrainingSet());
     }
 
@@ -80,7 +80,6 @@ public class NeuralNetworkSimilarExpressionCalculator extends SimilarExpressionC
 
     private double[] calculateOutput(ExpressionNode expression) {
         double[] input = expression.extractFeaturesForExpression();
-        trainNetwork();
         network.setInput(input);
         network.calculate();
         return network.getOutput();

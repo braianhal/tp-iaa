@@ -17,7 +17,7 @@ public abstract class SimilarExpressionCalculator {
         this.originalExpression = expression;
     }
 
-    public List<Operator> getListOfTokensOfNormalizedExpression(ExpressionNode expressionNode){
+    protected List<Operator> getListOfTokensOfNormalizedExpression(ExpressionNode expressionNode){
         return this.removeDuplicates(expressionNode.normalize().getListOfTokens());
     }
 
