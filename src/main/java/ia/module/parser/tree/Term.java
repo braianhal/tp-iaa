@@ -70,4 +70,8 @@ public class Term {
         tokens.addAll(this.expression.getListOfTokens());
         return tokens;
     }
+
+    public Boolean contains(Integer operator){
+        return this.expression.contains(operator);
+    }
 }

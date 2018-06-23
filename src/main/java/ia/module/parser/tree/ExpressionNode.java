@@ -35,4 +35,5 @@ public interface ExpressionNode {
     ExpressionNode normalize();
     Integer getDegree();
     List<Operator> getListOfTokens();
+    Boolean contains(Integer operator);
 }

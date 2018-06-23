@@ -14,13 +14,11 @@ import io.jenetics.ext.SingleNodeCrossover;
 import io.jenetics.ext.util.TreeNode;
 import io.jenetics.prog.ProgramGene;
 
-import java.time.Duration;
-
 import static ia.module.config.GeneticAlgorithmConfig.*;
 
 public class Main {
 
-    static final String EXPRESSION = "int(cos(x)+(3*x))";
+    static final String EXPRESSION = "2(3+5)";
 
     // Define the fitness function
     // static final SimilarExpressionCalculator SIMILAR_EXPRESSION_CALCULATOR = new NeuralNetworkSimilarExpressionCalculator(EXPRESSION);
@@ -48,21 +46,26 @@ public class Main {
                 .build();
 
         Phenotype<ProgramGene<Double>, Double> bestExpression = engine.stream()
-                //.limit(Limits.byFitnessThreshold(0.9))
-                .limit(Limits.byExecutionTime(Duration.ofSeconds(30)))
-                .limit(MAX_ITERATIONS)
+                //.limit(Limits.byExecutionTime(Duration.ofSeconds(30)))
+                //.limit(Limits.byFixedGeneration(MIN_ITERATIONS))
+                .limit(Limits.bySteadyFitness(MIN_ITERATIONS))
                 .peek(Main::showGeneration)
                 .collect(EvolutionResult.toBestPhenotype());
 
-        System.out.println(new Parser().getAsInfix(TreeNode.ofTree(bestExpression.getGenotype().getGene())));
-        System.out.println(bestExpression.getFitness());
+        TreeNode bestCandidate = TreeNode.ofTree(bestExpression.getGenotype().getGene());
+        String candidateAsInfix = new Parser().getAsInfix(bestCandidate);
+
+        System.out.println("Best fitness: " + SIMILAR_EXPRESSION_CALCULATOR.similarityWith(candidateAsInfix) + "; " + "Best genotype: " + candidateAsInfix);
     }
 
     public static void showGeneration(EvolutionResult<ProgramGene<Double>, Double> generation) {
+        TreeNode bestCandidate = TreeNode.ofTree(generation.getBestPhenotype().getGenotype().getGene());
+        String candidateAsInfix = new Parser().getAsInfix(bestCandidate);
+
         System.out.println(
                 "Generation: " + generation.getGeneration() + "; " +
-                "Best fitness: " + generation.getBestFitness() + "; " +
-                "Best genotype: " + new Parser().getAsInfix(TreeNode.ofTree(generation.getBestPhenotype().getGenotype().getGene())));
+                "Best fitness: " + SIMILAR_EXPRESSION_CALCULATOR.similarityWith(candidateAsInfix) + "; " +
+                "Best genotype: " + candidateAsInfix);
     }
 
 }

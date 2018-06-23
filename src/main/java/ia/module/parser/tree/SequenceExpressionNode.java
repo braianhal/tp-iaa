@@ -147,4 +147,8 @@ public abstract class SequenceExpressionNode extends AbstractExpressionNode impl
         this.terms = this.terms.stream().map(term -> new Term(term.positive, term.normalize())).collect(Collectors.toList());
         return this;
     }
+
+    public Boolean contains(Integer operator){
+        return this.getToken().equals(operator) || this.terms.stream().anyMatch(term -> term.contains(operator));
+    }
 }

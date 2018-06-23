@@ -49,4 +49,10 @@ public class AdditionExpressionNode extends SequenceExpressionNode{
     public Boolean isLineal() {
         return this.terms.stream().allMatch(Term::isLineal);
     }
+
+    public Integer getDegree(){
+        return this.terms.stream()
+                .map(Term::getDegree)
+                .reduce(0, (max, nextDegree) -> Math.max(max, nextDegree));
+    }
 }

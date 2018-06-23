@@ -63,4 +63,8 @@ public class AbstractExpressionNode {
     public Integer getDegree(){
         return 0;
     }
+
+    public Boolean contains(Integer operator){
+        return false;
+    }
 }

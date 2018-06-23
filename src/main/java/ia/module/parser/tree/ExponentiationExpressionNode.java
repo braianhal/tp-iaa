@@ -152,7 +152,9 @@ public class ExponentiationExpressionNode extends AbstractExpressionNode impleme
                     return new ConstantExpressionNode(1);
                 }
             }catch (Exception e){
-                System.out.println("Error: " + e);
+                this.base = this.base.normalize();
+                this.exponent = this.exponent.normalize();
+                return this;
             }
         }
 
@@ -167,5 +169,22 @@ public class ExponentiationExpressionNode extends AbstractExpressionNode impleme
         tokens.addAll(this.base.getListOfTokens());
         tokens.addAll(this.exponent.getListOfTokens());
         return tokens;
+    }
+
+    public Boolean contains(Integer operator){
+        return this.base.contains(operator) || this.exponent.contains(operator);
+    }
+
+    @Override
+    public Integer getDegree() {
+        Integer baseDegree = this.base.hasVariable() ? this.base.getDegree() : 0;
+        Integer exponentDegree;
+        try{
+            exponentDegree = this.exponent.hasVariable() ? this.exponent.getDegree() : (int)this.exponent.getValue();
+        }catch (Exception e){
+            exponentDegree = 1;
+        }
+
+        return baseDegree * exponentDegree;
     }
 }

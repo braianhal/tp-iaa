@@ -50,11 +50,24 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
     }
 
     private List<Operator> getIntersection(List<Operator> originalExpressionTokens, List<Operator> candidateExpressionTokens){
-        List<Operator> intersection = originalExpressionTokens.stream()
+        return originalExpressionTokens.stream()
                 .filter(token -> candidateExpressionTokens.stream().anyMatch(token1 -> token1.equals(token)))
+                .map(token -> token.getOperator().equals(Operator.TERM_WITH_X_BY_TERM_WITH_X)
+                        ? new Operator(Operator.TERM_WITH_X_BY_TERM_WITH_X, getIntersectionOfTermWithXByTermWithXDegrees(originalExpressionTokens, candidateExpressionTokens))
+                        : token)
                 .collect(Collectors.toList());
+    }
 
-        return this.chooseTermWithVariableByTermWithVariableDegree(candidateExpressionTokens, intersection, false);
+    private Integer getIntersectionOfTermWithXByTermWithXDegrees(List<Operator> originalExpressionTokens, List<Operator> candidateExpressionTokens){
+        Integer originalExpressionMaxDegree = this.maxDegreeOf(originalExpressionTokens);
+        Integer candidateExpressionMaxDegree = this.maxDegreeOf(candidateExpressionTokens);
+        return Math.min(originalExpressionMaxDegree, candidateExpressionMaxDegree);
+    }
+
+    private Integer maxDegreeOf(List<Operator> operators){
+        return operators.stream()
+                .map(token -> token.getOperator().equals(Operator.TERM_WITH_X_BY_TERM_WITH_X) ? token.getDegree() : 0)
+                .reduce(0, (max, nextDegree) -> Math.max(max, nextDegree));
     }
 
     private List<Operator> getUnion(List<Operator> originalExpressionTokens, List<Operator> candidateExpressionTokens){

@@ -26,9 +26,7 @@ public class MultiplicationExpressionNode extends SequenceExpressionNode{
     }
 
     public Integer getDegree() {
-        Integer countOfTermsWithVariableExceptXByX = (int)this.terms.stream().filter(term -> term.hasVariable() && term.getToken() != Operator.TERM_WITH_X_BY_TERM_WITH_X).count();
-        return countOfTermsWithVariableExceptXByX + this.terms.stream()
-                .filter(term -> !term.isVariable())
+        return this.terms.stream()
                 .map(Term::getDegree)
                 .reduce(0, (total, aDegree) -> total + aDegree);
     }
