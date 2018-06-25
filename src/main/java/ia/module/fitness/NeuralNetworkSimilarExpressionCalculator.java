@@ -44,9 +44,21 @@ public class NeuralNetworkSimilarExpressionCalculator extends SimilarExpressionC
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return similarity(originalExpressionOutput, otherExpressionOutput);
+                /*
         double baseSimilarity = baseSimilarity(originalExpressionOutput, otherExpressionOutput);
         double fineSimilarity = fineSimilarity(originalExpressionOutput, otherExpressionOutput, 1 - baseSimilarity);
-        return baseSimilarity + fineSimilarity;
+        return baseSimilarity + fineSimilarity;*/
+    }
+
+    private double similarity(double[] output1, double[] output2) {
+        double total = 0.0;
+        for (int i = 0; i < OUTPUTS; i++) {
+            if (output1[i] == output2[i]) {
+                total += 1;
+            }
+        }
+        return total / (double) OUTPUTS;
     }
 
     private void trainNetwork() {
