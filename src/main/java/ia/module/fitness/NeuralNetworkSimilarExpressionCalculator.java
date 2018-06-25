@@ -1,26 +1,36 @@
 package ia.module.fitness;
 
+import ia.module.extension.FixedKohonen;
+import ia.module.extension.FixedNeuron;
 import ia.module.parser.Parser;
 import ia.module.parser.tree.ExpressionNode;
+import org.neuroph.core.Connection;
+import org.neuroph.core.Layer;
+import org.neuroph.core.NeuralNetwork;
+import org.neuroph.core.Neuron;
 import org.neuroph.core.data.DataSet;
 import org.neuroph.nnet.Kohonen;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 import static ia.module.config.NeuralNetworkConfig.*;
+import static io.jenetics.util.IO.object;
 
 public class NeuralNetworkSimilarExpressionCalculator extends SimilarExpressionCalculator {
 
-    private Kohonen network;
+    private FixedKohonen network;
     public double[] originalExpressionOutput;
 
     public NeuralNetworkSimilarExpressionCalculator(String original) {
         super(original);
         trainNetwork();
         try {
-            originalExpressionOutput = calculateOutput(new Parser().parse(original));
+            originalExpressionOutput = calculateOutput(new Parser().parse(original), original);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -30,7 +40,7 @@ public class NeuralNetworkSimilarExpressionCalculator extends SimilarExpressionC
     public Double similarityWith(String otherExpression) {
         double[] otherExpressionOutput = new double[0];
         try {
-            otherExpressionOutput = calculateOutput(new Parser().parse(otherExpression));
+            otherExpressionOutput = calculateOutput(new Parser().parse(otherExpression), otherExpression);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -40,7 +50,7 @@ public class NeuralNetworkSimilarExpressionCalculator extends SimilarExpressionC
     }
 
     private void trainNetwork() {
-        network = new Kohonen(INPUTS, OUTPUTS);
+        network = new FixedKohonen(INPUTS, OUTPUTS);
         network.learn(generateTrainingSet());
     }
 
@@ -78,7 +88,7 @@ public class NeuralNetworkSimilarExpressionCalculator extends SimilarExpressionC
         }
     }
 
-    private double[] calculateOutput(ExpressionNode expression) {
+    private double[] calculateOutput(ExpressionNode expression, String expressionString) {
         double[] input = expression.extractFeaturesForExpression();
         network.setInput(input);
         network.calculate();
