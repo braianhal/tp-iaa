@@ -81,17 +81,32 @@ public abstract class AbstractExpressionNode {
     public double[] extractFeaturesForExpression(){
         double[] features = new double[INPUTS];
         Integer index;
-        for(Operator operator : this.getListOfTokens()){
+        for(Operator operator : this.normalize().getListOfTokens()){
             index = operator.getOperator() > Operator.BY_TERM_WITH_X ? operator.getOperator() - 1 : operator.getOperator();
-            features[index]++;
+            features = this.incrementFeaturesUntil(features, index);
         }
 
         return this.normalizeFeatures(features);
     }
 
+    private double[] incrementFeaturesUntil(double[] features, Integer index){
+        for(int i = 0 ; i <= index ; i++){
+            features[i] += 1;
+        }
+        return features;
+    }
+
     private double[] normalizeFeatures(double[] features){
-        return Arrays.stream(features).map(feature -> feature == 0
-                ? 0
-                : (feature == 1 ? 0.1 : (1 - Math.abs(Math.log(1 - 1/feature)))) / 2).toArray();
+        Long maxOrder = this.getMaxOrder(features);
+        return Arrays.stream(features).map(feature -> feature / maxOrder).toArray();
+    }
+
+    private Long getMaxOrder(double[] features){
+        Double max = Arrays.stream(features).reduce(0, Math::max);
+        Long quotient = 1L;
+        while(max / quotient >= 1){
+            quotient *= 10;
+        }
+        return quotient;
     }
 }

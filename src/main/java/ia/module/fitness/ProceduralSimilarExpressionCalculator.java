@@ -42,7 +42,7 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
 
     private Long getWeight(List<Operator> operators){
         return operators.stream()
-                .map(operator -> operator.getFibonacciWeight(operator))
+                .map(operator -> operator.getFibonacciWeight())
                 .reduce(0L, (total, nextFibonacciValue) -> total + nextFibonacciValue);
     }
 

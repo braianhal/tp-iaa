@@ -3,6 +3,8 @@ package ia.module.parser;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ia.module.config.NeuralNetworkConfig.INPUTS;
+
 public class Operator {
     public static final int N = 0;
     public static final int N_PLUS_N = 1;
@@ -114,8 +116,8 @@ public class Operator {
         }
     }
 
-    public Long getFibonacciWeight(Operator operator){
-        Integer token = operator.getOperator();
+    public Long getFibonacciWeight(){
+        Integer token = this.getOperator();
 
         if(FIBONACCI == null){
             FIBONACCI = new ArrayList<>();
@@ -130,10 +132,31 @@ public class Operator {
     }
 
     private List<Long> recursiveFibonacci(List<Long> fibonacci){
-        if(fibonacci.size() >= 21){
+        if(fibonacci.size() >= INPUTS){
             return fibonacci;
         }
         fibonacci.add(fibonacci.get(fibonacci.size() - 1) + fibonacci.get(fibonacci.size() - 2));
         return this.recursiveFibonacci(fibonacci);
+    }
+
+    public static Long getFibonacciWeight(Integer index){
+        Operator operator = new Operator(index, 0);
+        return operator.getFibonacciWeight();
+    }
+
+    public static Long getFibonacciWeightsSum(){
+        Long sum = 0L;
+        for(int i = 0 ; i < 21 ; i++){
+            sum += getFibonacciWeight(i);
+        }
+        return sum;
+    }
+
+    public static double[] getFibonacci(Integer size){
+        double[] fibonacci = new double[size];
+        for(int i = 0 ; i < size ; i++){
+            fibonacci[i] = getFibonacciWeight(i);
+        }
+        return fibonacci;
     }
 }
