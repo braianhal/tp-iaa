@@ -36,7 +36,7 @@ public class ExpressionsConfig {
     // Define terminals
     public static final Op<Double> VAR_X = Var.of("x", 0);
     public static final Op<Double> anyNumber(){
-        return EphemeralConst.of(() -> (double) RandomRegistry.getRandom().nextInt(10)); // N between 0 and 10 exclusive
+        return EphemeralConst.of(() -> (double) RandomRegistry.getRandom().nextInt(10) + 1); // N between 0 and 10 exclusive
     }
     public static final ISeq<Op<Double>> TERMINALS = ISeq.of(VAR_X, anyNumber());
 
