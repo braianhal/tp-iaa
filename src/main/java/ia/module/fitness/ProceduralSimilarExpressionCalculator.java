@@ -22,12 +22,24 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
             Double levelSimilarity = this.getLevelSimilarityBetween(originalExpressionTree, candidateExpressionTree);
             Double structureSimilarity = this.getStructureSimilarityBetween(originalExpressionTree, candidateExpressionTree);
             Double complexitySimilarity = this.getComplexitySimilarity(originalExpressionTree, candidateExpressionTree);
+            Double syntacticSimilarity = this.getSyntacticSimilarity(originalExpressionTree, candidateExpressionTree);
 
-            return levelSimilarity * structureSimilarity * complexitySimilarity;
+            return levelSimilarity * structureSimilarity * complexitySimilarity * syntacticSimilarity;
         }catch (Exception e){
             System.out.println();
             return 0.0;
         }
+    }
+
+    public Double getSyntacticSimilarity(ExpressionNode originalExpressionTree, ExpressionNode candidateExpressionTree){
+        List<Operator> originalExpressionTokens = originalExpressionTree.getListOfTokens();
+        List<Operator> candidateExpressionTokens = candidateExpressionTree.getListOfTokens();
+
+        if(originalExpressionTokens.size() == candidateExpressionTokens.size() &&
+                originalExpressionTokens.stream().allMatch(operator -> candidateExpressionTokens.stream().anyMatch(candidateOperator -> candidateOperator.totallyEquals(operator)))){
+            return 0.0;
+        }
+        return 1.0;
     }
 
     public Double getComplexitySimilarity(ExpressionNode originalExpressionTree, ExpressionNode candidateExpressionTree){

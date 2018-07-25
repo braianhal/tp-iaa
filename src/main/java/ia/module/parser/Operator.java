@@ -67,6 +67,10 @@ public class Operator {
         return this.operator.equals(operator1.getOperator());
     }
 
+    public boolean totallyEquals(Operator operator1) {
+        return this.equals(operator1) && this.degree.equals(operator1.getDegree());
+    }
+
     public String tokenName(){
         switch (this.operator){
             case 0:
