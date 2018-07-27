@@ -206,4 +206,19 @@ public class FunctionExpressionNode extends AbstractExpressionNode implements Ex
         tokens.addAll(this.argument.getListOfTokens());
         return tokens;
     }
+
+    public ExpressionNode simplify() {
+        // TODO: pending simplification of functions
+        ExpressionNode argumentSimplified = this.argument.simplify();
+
+        if(argumentSimplified.isNumber() && this.function != INTEGRAL){
+            try{
+                return new ConstantExpressionNode(argumentSimplified.getValue());
+            }catch (Exception e){
+                return new FunctionExpressionNode(this.function, argumentSimplified);
+            }
+        }
+
+        return new FunctionExpressionNode(this.function, argumentSimplified);
+    }
 }

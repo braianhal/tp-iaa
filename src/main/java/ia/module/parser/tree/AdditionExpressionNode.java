@@ -3,10 +3,17 @@ package ia.module.parser.tree;
 import com.sun.tools.corba.se.idl.constExpr.EvaluationException;
 import ia.module.parser.Operator;
 
+import java.util.List;
+
 public class AdditionExpressionNode extends SequenceExpressionNode{
 
     public AdditionExpressionNode() {
         super();
+    }
+
+    public AdditionExpressionNode(List<Term> terms) {
+        super();
+        this.terms = terms;
     }
 
     public AdditionExpressionNode(ExpressionNode a, boolean positive) {
@@ -54,5 +61,9 @@ public class AdditionExpressionNode extends SequenceExpressionNode{
         return this.terms.stream()
                 .map(Term::getDegree)
                 .reduce(0, (max, nextDegree) -> Math.max(max, nextDegree));
+    }
+
+    public AdditionExpressionNode newSequenceWithTerms(List<Term> terms){
+        return new AdditionExpressionNode(terms);
     }
 }

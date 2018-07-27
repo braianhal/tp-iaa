@@ -80,7 +80,11 @@ public class ConstantExpressionNode extends AbstractExpressionNode implements Ex
 
     public List<Operator> getListOfTokens(){
         List<Operator> tokens = new ArrayList<>();
-        tokens.add(Operator.newToken(this.getToken(), this.getDegree()));
+        tokens.add(Operator.newToken(this.getToken(), this.value.intValue()));
         return tokens;
+    }
+
+    public ExpressionNode simplify() {
+        return new ConstantExpressionNode(this.value);
     }
 }

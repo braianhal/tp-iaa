@@ -3,9 +3,7 @@ package ia.module.parser.tree;
 import ia.module.parser.ExpressionsWithArgumentStructures;
 import ia.module.parser.Operator;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public abstract class SequenceExpressionNode extends AbstractExpressionNode implements ExpressionNode{
@@ -151,4 +149,47 @@ public abstract class SequenceExpressionNode extends AbstractExpressionNode impl
     public Boolean contains(Integer operator){
         return this.getToken().equals(operator) || this.terms.stream().anyMatch(term -> term.contains(operator));
     }
+
+    public ExpressionNode simplify() {
+        if(this.isNumber()){
+            try{
+                return new ConstantExpressionNode(this.getValue());
+            }catch (Exception e){
+                return this.simplifySequenceWithVariables();
+            }
+        }
+        return this.simplifySequenceWithVariables();
+    }
+
+    private ExpressionNode simplifySequenceWithVariables(){
+        List<Term> termsSimplified = this.terms.stream().map(Term::simplify).collect(Collectors.toList());
+        Map<String, Map<Term, Integer>> countOfTermsBySign = new HashMap<>();
+        Integer count;
+
+        // Detect the terms to cancel
+        for(Term term : termsSimplified){
+            Map<Term, Integer> value = new HashMap<>();
+            count = 0;
+            if(countOfTermsBySign.containsKey(term.getListOfTokens().toString())){
+                Term termToTake = countOfTermsBySign.get(term.getListOfTokens().toString()).keySet().stream().findFirst().get();
+                count = countOfTermsBySign.get(term.getListOfTokens().toString()).get(termToTake);
+                countOfTermsBySign.remove(term.getListOfTokens().toString());
+            }
+            value.put(term, count + (term.positive ? 1 : -1));
+            countOfTermsBySign.put(term.getListOfTokens().toString(), value);
+        }
+
+        // Take only terms with count != 0
+        List<Term> newTerms = new ArrayList<>();
+        for(String tokensKey : countOfTermsBySign.keySet()){
+            Term newTerm = countOfTermsBySign.get(tokensKey).keySet().stream().findFirst().get();
+            if(countOfTermsBySign.get(tokensKey).get(newTerm) != 0){
+                newTerms.add(newTerm);
+            }
+        }
+
+        return this.newSequenceWithTerms(newTerms);
+    }
+
+    public abstract SequenceExpressionNode newSequenceWithTerms(List<Term> terms);
 }

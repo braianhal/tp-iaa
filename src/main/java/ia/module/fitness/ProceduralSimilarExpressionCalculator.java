@@ -17,29 +17,37 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
     @Override
     public Double similarityWith(String candidateExpression) {
         try{
-            ExpressionNode candidateExpressionTree = parser.parse(candidateExpression);
-
-            Double levelSimilarity = this.getLevelSimilarityBetween(originalExpressionTree, candidateExpressionTree);
-            Double structureSimilarity = this.getStructureSimilarityBetween(originalExpressionTree, candidateExpressionTree);
-            Double complexitySimilarity = this.getComplexitySimilarity(originalExpressionTree, candidateExpressionTree);
-            Double syntacticSimilarity = this.getSyntacticSimilarity(originalExpressionTree, candidateExpressionTree);
-
-            return levelSimilarity * structureSimilarity * complexitySimilarity * syntacticSimilarity;
+            ExpressionNode originalExpressionSimplified = originalExpressionTree.simplify();
+            ExpressionNode candidateExpressionSimplified = parser.parse(candidateExpression).simplify();
+            return this.getSimilarity(originalExpressionSimplified, candidateExpressionSimplified);
         }catch (Exception e){
             System.out.println();
             return 0.0;
         }
     }
 
+    public Double getSimilarity(ExpressionNode originalExpression, ExpressionNode candidateExpressionTree){
+        Double levelSimilarity = this.getLevelSimilarityBetween(originalExpression, candidateExpressionTree);
+        Double structureSimilarity = this.getStructureSimilarityBetween(originalExpression, candidateExpressionTree);
+        Double complexitySimilarity = this.getComplexitySimilarity(originalExpression, candidateExpressionTree);
+        Double syntacticSimilarity = this.getSyntacticSimilarity(originalExpression, candidateExpressionTree);
+
+        return levelSimilarity * structureSimilarity * complexitySimilarity * syntacticSimilarity;
+    }
+
     public Double getSyntacticSimilarity(ExpressionNode originalExpressionTree, ExpressionNode candidateExpressionTree){
-        List<Operator> originalExpressionTokens = originalExpressionTree.getListOfTokens();
-        List<Operator> candidateExpressionTokens = candidateExpressionTree.getListOfTokens();
+        List<Operator> originalExpressionTokens = this.ignoreNumberValues(originalExpressionTree.getListOfTokens());
+        List<Operator> candidateExpressionTokens = this.ignoreNumberValues(candidateExpressionTree.getListOfTokens());
 
         if(originalExpressionTokens.size() == candidateExpressionTokens.size() &&
                 originalExpressionTokens.stream().allMatch(operator -> candidateExpressionTokens.stream().anyMatch(candidateOperator -> candidateOperator.totallyEquals(operator)))){
             return 0.0;
         }
         return 1.0;
+    }
+
+    public List<Operator> ignoreNumberValues(List<Operator> operators){
+        return operators.stream().map(operator -> operator.getOperator().equals(Operator.N) ? new Operator(operator.getOperator(), 0) : operator).collect(Collectors.toList());
     }
 
     public Double getComplexitySimilarity(ExpressionNode originalExpressionTree, ExpressionNode candidateExpressionTree){

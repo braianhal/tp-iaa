@@ -72,4 +72,8 @@ public class VariableExpressionNode extends AbstractExpressionNode implements Ex
         tokens.add(Operator.newToken(this.getToken(), this.getDegree()));
         return tokens;
     }
+
+    public ExpressionNode simplify() {
+        return new VariableExpressionNode(this.name);
+    }
 }

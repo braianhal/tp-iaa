@@ -187,4 +187,16 @@ public class ExponentiationExpressionNode extends AbstractExpressionNode impleme
 
         return baseDegree * exponentDegree;
     }
+
+    public ExpressionNode simplify() {
+        // TODO: pending simplification of exponentials
+        ExpressionNode baseSimplified = this.base.simplify();
+        ExpressionNode exponentSimplified = this.exponent.simplify();
+
+        if(exponentSimplified.isZero()){
+            return new ConstantExpressionNode(1);
+        }
+
+        return new ExponentiationExpressionNode(baseSimplified, exponentSimplified);
+    }
 }

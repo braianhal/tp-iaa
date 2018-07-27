@@ -37,4 +37,5 @@ public interface ExpressionNode {
     List<Operator> getListOfTokens();
     Boolean contains(Integer operator);
     double[] extractFeaturesForExpression();
+    ExpressionNode simplify();
 }

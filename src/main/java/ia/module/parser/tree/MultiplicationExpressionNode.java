@@ -3,9 +3,17 @@ package ia.module.parser.tree;
 import com.sun.tools.corba.se.idl.constExpr.EvaluationException;
 import ia.module.parser.Operator;
 
+import java.util.List;
+
 public class MultiplicationExpressionNode extends SequenceExpressionNode{
+
     public MultiplicationExpressionNode(ExpressionNode a, boolean positive) {
         super(a, positive);
+    }
+
+    public MultiplicationExpressionNode(List<Term> terms) {
+        super();
+        this.terms = terms;
     }
 
     public int getType() {
@@ -114,5 +122,9 @@ public class MultiplicationExpressionNode extends SequenceExpressionNode{
 
     public Boolean isZero(){
         return this.terms.stream().anyMatch(Term::isZero);
+    }
+
+    public MultiplicationExpressionNode newSequenceWithTerms(List<Term> terms){
+        return new MultiplicationExpressionNode(terms);
     }
 }

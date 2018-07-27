@@ -74,4 +74,8 @@ public class Term {
     public Boolean contains(Integer operator){
         return this.expression.contains(operator);
     }
+
+    public Term simplify(){
+        return new Term(this.positive, this.expression.simplify());
+    }
 }
