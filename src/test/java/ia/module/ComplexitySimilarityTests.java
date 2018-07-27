@@ -17,7 +17,7 @@ public class ComplexitySimilarityTests extends TestCase{
         assertEquals(1.0, calculator.getComplexitySimilarity(parser.parse("x^2+1"), parser.parse("(x+1)^2")));
         assertEquals(1.0, calculator.getComplexitySimilarity(parser.parse("dx((4*x)/(x+1))"), parser.parse("2.0+dx((x+1)/(x))")));
 
-        assertEquals(325.0/331.0, calculator.getComplexitySimilarity(parser.parse("3(x^2+1)"), parser.parse("(x)*((6.0)*((x)*((x)*(x)))+7.0-6.0)")));
+        assertEquals(325.0/327.0, calculator.getComplexitySimilarity(parser.parse("3(x^2+1)"), parser.parse("(x)*((6.0)*((x)*((x)*(x)))+7.0-6.0)")));
         assertEquals(4215.0/4305.0, calculator.getComplexitySimilarity(parser.parse("ln(ln(x))"), parser.parse("3ln(x)")));
         assertEquals(1686.0/1776.0, calculator.getComplexitySimilarity(parser.parse("x+cos(x)"), parser.parse("3cos(x)+x")));
         assertEquals(90.0/236.0, calculator.getComplexitySimilarity(parser.parse("x^2+1"), parser.parse("x+2+3")));
@@ -29,10 +29,9 @@ public class ComplexitySimilarityTests extends TestCase{
         assertEquals(90.0/1224.0, calculator.getComplexitySimilarity(parser.parse("x^3-1"), parser.parse("sqrt(x+2)")));
         assertEquals(236.0/237.0, calculator.getComplexitySimilarity(parser.parse("x^3-1"), parser.parse("-x^2+1")));
         assertEquals(181.0/1834.0, calculator.getComplexitySimilarity(parser.parse("x^3-1"), parser.parse("sin(x^3)")));
-        assertEquals(1/4360.0, calculator.getComplexitySimilarity(parser.parse("ln(x+16)*12"), parser.parse("sin(ln(x-x))")));
-        assertEquals(4270.0/5957.0, calculator.getComplexitySimilarity(parser.parse("ln(x+16)*12"), parser.parse("sin(ln(x+x))")));
-        assertEquals(1.0, calculator.getComplexitySimilarity(parser.parse("4+sqrt(25)/(3*2-1)"), parser.parse("sqrt(0.0)")));
-        assertEquals(20385.0/22448.0, calculator.getComplexitySimilarity(parser.parse("int(dx(cos(x)+3sin(x)^(4x^x+x*x^-4)))/(3-x)"), parser.parse("dx(int(4^(dx(x^x+5))))")));
-        assertEquals(20529.0/22450.0, calculator.getComplexitySimilarity(parser.parse("int(dx(cos(x)+3sin(x)^(4x^x+x*x^-4)))/(3-x)"), parser.parse("dx(int(4^(dx(x^x+5))))+2-x+4-3+x^2")));
+        assertEquals(4270.0/5957.0, calculator.getComplexitySimilarity(parser.parse("ln(x+16)*12"), parser.parse("sin(ln(x-x))")));
+        assertEquals(22.0/36.0, calculator.getComplexitySimilarity(parser.parse("4+sqrt(25)/(3*2-1)"), parser.parse("sqrt(0.0)")));
+        assertEquals(20385.0/23060.0, calculator.getComplexitySimilarity(parser.parse("int(dx(cos(x)+3sin(x)^(4x^x+x*x^-4)))/(3-x)"), parser.parse("dx(int(4^(dx(x^x+5))))")));
+        assertEquals(20529.0/23062.0, calculator.getComplexitySimilarity(parser.parse("int(dx(cos(x)+3sin(x)^(4x^x+x*x^-4)))/(3-x)"), parser.parse("dx(int(4^(dx(x^x+5))))+2-x+4-3+x^2")));
     }
 }

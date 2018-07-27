@@ -49,8 +49,8 @@ public class ProceduralSimilarExpressionCalculator extends SimilarExpressionCalc
     }
 
     public Double getComplexitySimilarity(ExpressionNode originalExpressionTree, ExpressionNode candidateExpressionTree){
-        List<Operator> originalExpressionTokens = this.getListOfTokensOfNormalizedExpression(originalExpressionTree.simplify());
-        List<Operator> candidateExpressionTokens = this.getListOfTokensOfNormalizedExpression(candidateExpressionTree.simplify());
+        List<Operator> originalExpressionTokens = this.getListOfTokensOfNormalizedExpression(originalExpressionTree);
+        List<Operator> candidateExpressionTokens = this.getListOfTokensOfNormalizedExpression(candidateExpressionTree);
 
         List<Operator> intersection = this.getIntersection(originalExpressionTokens, candidateExpressionTokens);
         List<Operator> union = this.getUnion(originalExpressionTokens, candidateExpressionTokens);
